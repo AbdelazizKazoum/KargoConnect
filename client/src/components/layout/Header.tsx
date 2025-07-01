@@ -2,7 +2,47 @@
 
 import { Globe, Menu, Moon, Ship, Sun, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "../ui";
+
+// This Button component is now theme-aware, using the semantic colors
+// defined in your tailwind.config.js and CSS variables.
+const Button = ({
+  variant = "default",
+  size,
+  className,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: "default" | "outline" | "secondary" | "destructive" | "ghost";
+  size?: "lg" | "default" | "sm" | "icon";
+}) => {
+  const baseStyles =
+    "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background";
+
+  const variants = {
+    default: "bg-primary text-primary-foreground hover:bg-primary/90",
+    destructive:
+      "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+    outline:
+      "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+    ghost: "hover:bg-accent hover:text-accent-foreground",
+  };
+
+  const sizes = {
+    lg: "h-11 rounded-md px-8",
+    default: "h-10 px-4 py-2",
+    sm: "h-9 rounded-md px-3",
+    icon: "h-10 w-10",
+  };
+
+  return (
+    <button
+      className={`${baseStyles} ${sizes[size || "default"]} ${
+        variants[variant]
+      } ${className}`}
+      {...props}
+    />
+  );
+};
 
 export default function Header() {
   const [theme, setTheme] = useState("light");
@@ -59,8 +99,8 @@ export default function Header() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <a href="#" className="flex items-center space-x-2">
-              <Ship className="h-7 w-7 text-slate-900 dark:text-slate-50" />
-              <span className="text-2xl font-bold text-slate-900 dark:text-slate-50">
+              <Ship className="h-7 w-7 text-primary" />
+              <span className="text-lg md:text-xl font-bold text-foreground">
                 KargoConnect
               </span>
             </a>
@@ -70,7 +110,7 @@ export default function Header() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50 transition-colors"
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.name}
                 </a>
@@ -92,23 +132,23 @@ export default function Header() {
                   <Globe className="h-5 w-5" />
                 </Button>
                 {isLangDropdownOpen && (
-                  <div className="absolute top-full ltr:right-0 rtl:left-0 mt-2 w-32 rounded-md shadow-lg bg-white dark:bg-slate-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="absolute top-full ltr:right-0 rtl:left-0 mt-2 w-32 rounded-md shadow-lg bg-popover text-popover-foreground ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       <button
                         onClick={() => handleSetLanguage("en")}
-                        className="w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-accent"
                       >
                         English
                       </button>
                       <button
                         onClick={() => handleSetLanguage("fr")}
-                        className="w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-accent"
                       >
                         Français
                       </button>
                       <button
                         onClick={() => handleSetLanguage("ar")}
-                        className="w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-accent"
                       >
                         العربية
                       </button>
@@ -146,13 +186,13 @@ export default function Header() {
           onClick={() => setIsMenuOpen(false)}
         ></div>
         <div
-          className={`absolute top-0 ltr:right-0 rtl:left-0 h-full w-4/5 max-w-sm bg-white dark:bg-slate-950 shadow-xl transition-transform duration-300 transform ${
+          className={`absolute top-0 ltr:right-0 rtl:left-0 h-full w-4/5 max-w-sm bg-background shadow-xl transition-transform duration-300 transform ${
             isMenuOpen
               ? "ltr:translate-x-0 rtl:-translate-x-0"
               : "ltr:translate-x-full rtl:-translate-x-full"
           }`}
         >
-          <div className="flex justify-between items-center p-4 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex justify-between items-center p-4 border-b">
             <span className="font-bold text-lg">Menu</span>
             <Button
               onClick={() => setIsMenuOpen(false)}
@@ -168,12 +208,12 @@ export default function Header() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-50"
+                className="text-lg font-medium text-muted-foreground hover:text-foreground"
               >
                 {link.name}
               </a>
             ))}
-            <div className="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-col space-y-3">
+            <div className="border-t pt-6 flex flex-col space-y-3">
               <Button variant="outline">Log In</Button>
               <Button>Sign Up</Button>
             </div>
