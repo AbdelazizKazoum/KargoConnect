@@ -6,6 +6,8 @@ import { getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import "./globals.css";
 import { notFound } from "next/navigation";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -74,7 +76,12 @@ export default async function RootLayout({
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body className={`${fontClass} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <div className="bg-white dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors duration-300">
+            <Header />
+
+            {children}
+            <Footer />
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>
