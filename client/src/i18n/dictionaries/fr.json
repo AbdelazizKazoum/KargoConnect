@@ -1,0 +1,18 @@
+{
+  "hero": {
+    "headline": "Expédiez plus intelligemment, conduisez plus efficacement.",
+    "description": "Connectez-vous avec des conducteurs déjà en route. Envoyez n'importe quoi, d'un petit colis à un vélo, à une fraction du coût.",
+    "findRide": "Trouvez un trajet pour votre colis",
+    "becomeTransporter": "Devenez transporteur",
+    "andMore": "Et plus encore..."
+  },
+
+  "components": {
+    "localeSwitcher": {
+      "english": "Anglais",
+      "french": "Français",
+      "arabic": "Arabe",
+      "switchLanguage": "Changer de langue"
+    }
+  }
+}

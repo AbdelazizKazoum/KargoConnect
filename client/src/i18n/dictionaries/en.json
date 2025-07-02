@@ -1,0 +1,31 @@
+{
+  "Home": {
+    "title": "NextJS i18n Tutorial",
+    "description": "Tutorial of how to manipulate i18n based on route path or domain with  Nextjs v15"
+  },
+  "hero": {
+    "headline": "Ship Smarter, Drive Fuller.",
+    "description": "Connect with drivers already heading your way. Send anything, from a small package to a bike, at a fraction of the cost.",
+    "findRide": "Find a Ride for Your Package",
+    "becomeTransporter": "Become a Transporter",
+    "andMore": "And more..."
+  },
+  "Step1": {
+    "title": "Step 1 Title",
+    "EXPLANATION_PARAGRAPH1": "lorem ipsum"
+  },
+  "Step2": {
+    "title": "Step 2 Title",
+    "EXPLANATION_PARAGRAPH1": "lorem ipsum",
+    "EXPLANATION_PARAGRAPH2": "lorem ipsum",
+    "EXPLANATION_PARAGRAPH3": "lorem ipsum"
+  },
+  "components": {
+    "localeSwitcher": {
+      "english": "English",
+      "french": "French",
+      "arabic": "Arabic",
+      "switchLanguage": "Switch language"
+    }
+  }
+}

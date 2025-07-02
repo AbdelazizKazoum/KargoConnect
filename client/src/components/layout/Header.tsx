@@ -1,8 +1,9 @@
 "use client";
 
-import { Globe, Menu, Moon, Ship, Sun, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Menu, Moon, Ship, Sun, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 // This Button component is now theme-aware, using the semantic colors
 // defined in your tailwind.config.js and CSS variables.
@@ -11,8 +12,6 @@ export default function Header() {
   const [theme, setTheme] = useState("light");
   const [language, setLanguage] = useState<"en" | "fr" | "ar">("en");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
-  const langDropdownRef = useRef<HTMLDivElement>(null);
 
   const navLinks = [
     { name: "How It Works", href: "#how-it-works" },
@@ -24,7 +23,6 @@ export default function Header() {
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);
-    root.dir = language === "ar" ? "rtl" : "ltr";
   }, [theme, language]);
 
   useEffect(() => {
@@ -35,26 +33,7 @@ export default function Header() {
     }
   }, [isMenuOpen]);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        langDropdownRef.current &&
-        !langDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsLangDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [langDropdownRef]);
-
   const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
-
-  const handleSetLanguage = (lang: "en" | "fr" | "ar") => {
-    setLanguage(lang);
-    setIsLangDropdownOpen(false);
-    setIsMenuOpen(false);
-  };
 
   return (
     <>
@@ -86,39 +65,8 @@ export default function Header() {
                 <Button>Sign Up</Button>
               </div>
 
-              <div className="relative" ref={langDropdownRef}>
-                <Button
-                  onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-                  variant="ghost"
-                  size="icon"
-                >
-                  <Globe className="h-5 w-5" />
-                </Button>
-                {isLangDropdownOpen && (
-                  <div className="absolute top-full ltr:right-0 rtl:left-0 mt-2 w-32 rounded-md shadow-lg bg-popover text-popover-foreground ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      <button
-                        onClick={() => handleSetLanguage("en")}
-                        className="w-full text-left px-4 py-2 text-sm hover:bg-accent"
-                      >
-                        English
-                      </button>
-                      <button
-                        onClick={() => handleSetLanguage("fr")}
-                        className="w-full text-left px-4 py-2 text-sm hover:bg-accent"
-                      >
-                        Français
-                      </button>
-                      <button
-                        onClick={() => handleSetLanguage("ar")}
-                        className="w-full text-left px-4 py-2 text-sm hover:bg-accent"
-                      >
-                        العربية
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <LanguageSwitcher language={language} setLanguage={setLanguage} />
+
               <Button onClick={toggleTheme} variant="ghost" size="icon">
                 <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
