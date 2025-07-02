@@ -63,7 +63,7 @@ export default function HowItWorksSection() {
           <div className="flex justify-center border border-slate-200 dark:border-slate-800 rounded-full p-1 bg-slate-100 dark:bg-slate-900">
             <button
               onClick={() => setActiveTab("sender")}
-              className={`w-1/2 py-2.5 text-sm font-semibold rounded-full transition-colors ${
+              className={` cursor-pointer w-1/2 py-2.5 text-sm font-semibold rounded-full transition-colors ${
                 activeTab === "sender"
                   ? "bg-white text-slate-900 shadow dark:bg-slate-700 dark:text-slate-50"
                   : "text-slate-600 dark:text-slate-400"
@@ -73,7 +73,7 @@ export default function HowItWorksSection() {
             </button>
             <button
               onClick={() => setActiveTab("transporter")}
-              className={`w-1/2 py-2.5 text-sm font-semibold rounded-full transition-colors ${
+              className={` cursor-pointer w-1/2 py-2.5 text-sm font-semibold rounded-full transition-colors ${
                 activeTab === "transporter"
                   ? "bg-white text-slate-900 shadow dark:bg-slate-700 dark:text-slate-50"
                   : "text-slate-600 dark:text-slate-400"
