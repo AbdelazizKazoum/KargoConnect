@@ -1,34 +1,26 @@
 import { Zap, Feather, Users, Shield } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui";
+import { useTranslations } from "next-intl";
 
-const features = [
-  {
-    icon: <Zap className="w-8 h-8 text-slate-900 dark:text-slate-50" />,
-    title: "Up to 50% Cheaper",
-    description:
-      "Senders save money by utilizing space in vehicles already on the road.",
-  },
-  {
-    icon: <Feather className="w-8 h-8 text-slate-900 dark:text-slate-50" />,
-    title: "Earn On Your Way",
-    description:
-      "Transporters can monetize their empty vehicle space, turning routine trips into profitable journeys.",
-  },
-  {
-    icon: <Users className="w-8 h-8 text-slate-900 dark:text-slate-50" />,
-    title: "Community-Driven",
-    description:
-      "Built on trust, our platform connects you with a community of verified users.",
-  },
-  {
-    icon: <Shield className="w-8 h-8 text-slate-900 dark:text-slate-50" />,
-    title: "Secure & Transparent",
-    description:
-      "With secure escrow payments and a two-way review system, every transaction is protected.",
-  },
+interface Feature {
+  title: string;
+  description: string;
+}
+
+const icons = [
+  <Zap className="w-8 h-8 text-slate-900 dark:text-slate-50" key="zap" />,
+  <Feather
+    className="w-8 h-8 text-slate-900 dark:text-slate-50"
+    key="feather"
+  />,
+  <Users className="w-8 h-8 text-slate-900 dark:text-slate-50" key="users" />,
+  <Shield className="w-8 h-8 text-slate-900 dark:text-slate-50" key="shield" />,
 ];
 
 export default function FeaturesSection() {
+  const t = useTranslations("features");
+  const features = t.raw("list");
+
   return (
     <section
       id="features"
@@ -37,19 +29,18 @@ export default function FeaturesSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-            Why Choose KargoConnect?
+            {t("sectionTitle")}
           </h2>
           <p className="mt-3 max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-300">
-            We&apos;re building a more efficient, affordable, and
-            community-driven logistics network.
+            {t("sectionDescription")}
           </p>
         </div>
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
+          {features.map((feature: Feature, index: number) => (
             <Card key={index} className="text-center">
               <CardHeader>
                 <div className="mx-auto bg-slate-100 dark:bg-slate-800/50 p-3 rounded-full">
-                  {feature.icon}
+                  {icons[index]}
                 </div>
               </CardHeader>
               <CardContent>

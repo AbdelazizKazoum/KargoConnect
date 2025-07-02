@@ -4,26 +4,24 @@ import { Menu, Moon, Ship, Sun, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui";
 import LanguageSwitcher from "./LanguageSwitcher";
-
-// This Button component is now theme-aware, using the semantic colors
-// defined in your tailwind.config.js and CSS variables.
+import { useTranslations } from "next-intl";
 
 export default function Header() {
+  const t = useTranslations("header");
   const [theme, setTheme] = useState("light");
-  const [language, setLanguage] = useState<"en" | "fr" | "ar">("en");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Features", href: "#features" },
-    { name: "Testimonials", href: "#testimonials" },
+    { name: t("howItWorks"), href: "#how-it-works" },
+    { name: t("features"), href: "#features" },
+    { name: t("testimonials"), href: "#testimonials" },
   ];
 
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);
-  }, [theme, language]);
+  }, [theme]);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -61,11 +59,11 @@ export default function Header() {
 
             <div className="flex items-center gap-2">
               <div className="hidden md:flex items-center gap-2">
-                <Button variant="ghost">Log In</Button>
-                <Button>Sign Up</Button>
+                <Button variant="ghost">{t("login")}</Button>
+                <Button>{t("signup")}</Button>
               </div>
 
-              <LanguageSwitcher language={language} setLanguage={setLanguage} />
+              <LanguageSwitcher />
 
               <Button onClick={toggleTheme} variant="ghost" size="icon">
                 <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -104,7 +102,7 @@ export default function Header() {
           }`}
         >
           <div className="flex justify-between items-center p-4 border-b">
-            <span className="font-bold text-lg">Menu</span>
+            <span className="font-bold text-lg">{t("menu")}</span>
             <Button
               onClick={() => setIsMenuOpen(false)}
               variant="ghost"
@@ -125,8 +123,8 @@ export default function Header() {
               </a>
             ))}
             <div className="border-t pt-6 flex flex-col space-y-3">
-              <Button variant="outline">Log In</Button>
-              <Button>Sign Up</Button>
+              <Button variant="outline">{t("login")}</Button>
+              <Button>{t("signup")}</Button>
             </div>
           </nav>
         </div>

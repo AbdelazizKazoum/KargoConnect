@@ -6,6 +6,104 @@
     "becomeTransporter": "Devenez transporteur",
     "andMore": "Et plus encore..."
   },
+  "header": {
+    "howItWorks": "Comment ça marche",
+    "features": "Fonctionnalités",
+    "testimonials": "Témoignages",
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "menu": "Menu"
+  },
+
+  "footer": {
+    "copyright": "Tous droits réservés.",
+    "terms": "Conditions",
+    "privacy": "Confidentialité",
+    "contact": "Contact"
+  },
+
+  "howItWorks": {
+    "title": "Une façon plus simple d'expédier",
+    "subtitle": "Que vous envoyiez un colis ou conduisiez un trajet, commencer est facile.",
+    "sender": "Je suis un expéditeur",
+    "transporter": "Je suis un transporteur",
+    "senderSteps": [
+      {
+        "title": "1. Trouver un trajet",
+        "description": "Recherchez des transporteurs se rendant à votre destination."
+      },
+      {
+        "title": "2. Réservez votre place",
+        "description": "Envoyez une demande de réservation avec les détails de votre colis et attendez l'approbation."
+      },
+      {
+        "title": "3. Suivez votre livraison",
+        "description": "Coordonnez-vous avec votre transporteur et suivez votre colis en temps réel."
+      }
+    ],
+    "transporterSteps": [
+      {
+        "title": "1. Publiez votre trajet",
+        "description": "Indiquez votre prochain voyage, destination et espace disponible."
+      },
+      {
+        "title": "2. Approuvez les réservations",
+        "description": "Examinez et approuvez les demandes de réservation des expéditeurs."
+      },
+      {
+        "title": "3. Conduisez et gagnez",
+        "description": "Effectuez votre trajet comme d'habitude et soyez payé en toute sécurité après la livraison."
+      }
+    ]
+  },
+
+  "features": {
+    "sectionTitle": "Pourquoi choisir KargoConnect ?",
+    "sectionDescription": "Nous construisons un réseau logistique plus efficace, abordable et communautaire.",
+    "list": [
+      {
+        "title": "Jusqu'à 50% moins cher",
+        "description": "Les expéditeurs économisent en utilisant l'espace dans des véhicules déjà sur la route."
+      },
+      {
+        "title": "Gagnez en chemin",
+        "description": "Les transporteurs peuvent monétiser l'espace vide de leur véhicule, transformant les trajets en profits."
+      },
+      {
+        "title": "Communautaire",
+        "description": "Notre plateforme vous connecte à une communauté d'utilisateurs vérifiés, basée sur la confiance."
+      },
+      {
+        "title": "Sécurisé & Transparent",
+        "description": "Avec des paiements séquestres sécurisés et un système d'avis bilatéral, chaque transaction est protégée."
+      }
+    ]
+  },
+
+  "testimonials": {
+    "sectionTitle": "Approuvé par notre communauté",
+    "sectionDescription": "Des histoires vraies de personnes connectées grâce à notre plateforme.",
+    "list": [
+      {
+        "name": "Amina K.",
+        "role": "Expéditrice",
+        "quote": "KargoConnect m'a sauvé la vie ! J'avais besoin d'envoyer un cadeau à ma famille dans une autre ville, et c'était tellement moins cher et plus rapide que la poste.",
+        "stars": 5
+      },
+      {
+        "name": "Youssef B.",
+        "role": "Transporteur",
+        "quote": "Je fais Casablanca-Marrakech chaque semaine pour le travail. Maintenant, je couvre mes frais d'essence et je gagne de l'argent en transportant des colis. L'application est super facile à utiliser.",
+        "stars": 5
+      }
+    ]
+  },
+
+  "cta": {
+    "title": "Prêt à rejoindre la révolution ?",
+    "description": "Inscrivez-vous dès aujourd'hui et commencez à expédier ou à gagner. C'est gratuit !",
+    "button": "Commencer maintenant"
+  },
 
   "components": {
     "localeSwitcher": {

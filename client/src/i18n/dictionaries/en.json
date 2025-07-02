@@ -1,8 +1,4 @@
 {
-  "Home": {
-    "title": "NextJS i18n Tutorial",
-    "description": "Tutorial of how to manipulate i18n based on route path or domain with  Nextjs v15"
-  },
   "hero": {
     "headline": "Ship Smarter, Drive Fuller.",
     "description": "Connect with drivers already heading your way. Send anything, from a small package to a bike, at a fraction of the cost.",
@@ -10,16 +6,105 @@
     "becomeTransporter": "Become a Transporter",
     "andMore": "And more..."
   },
-  "Step1": {
-    "title": "Step 1 Title",
-    "EXPLANATION_PARAGRAPH1": "lorem ipsum"
+  "header": {
+    "howItWorks": "How It Works",
+    "features": "Features",
+    "testimonials": "Testimonials",
+    "login": "Log In",
+    "signup": "Sign Up",
+    "menu": "Menu"
   },
-  "Step2": {
-    "title": "Step 2 Title",
-    "EXPLANATION_PARAGRAPH1": "lorem ipsum",
-    "EXPLANATION_PARAGRAPH2": "lorem ipsum",
-    "EXPLANATION_PARAGRAPH3": "lorem ipsum"
+
+  "howItWorks": {
+    "title": "A Simpler Way to Ship",
+    "subtitle": "Whether you're sending a package or driving a route, getting started is easy.",
+    "sender": "I'm a Sender",
+    "transporter": "I'm a Transporter",
+    "senderSteps": [
+      {
+        "title": "1. Find a Trip",
+        "description": "Search for transporters heading to your desired destination."
+      },
+      {
+        "title": "2. Book Your Space",
+        "description": "Send a booking request with your package details and wait for approval."
+      },
+      {
+        "title": "3. Track Your Delivery",
+        "description": "Coordinate with your transporter and track your package in real-time."
+      }
+    ],
+    "transporterSteps": [
+      {
+        "title": "1. Post Your Trip",
+        "description": "List your upcoming journey, destination, and available space."
+      },
+      {
+        "title": "2. Approve Bookings",
+        "description": "Review and approve booking requests from senders."
+      },
+      {
+        "title": "3. Drive & Earn",
+        "description": "Complete your trip as usual and get paid securely after delivery."
+      }
+    ]
   },
+
+  "footer": {
+    "copyright": "All rights reserved.",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "contact": "Contact"
+  },
+
+  "features": {
+    "sectionTitle": "Why Choose KargoConnect?",
+    "sectionDescription": "We're building a more efficient, affordable, and community-driven logistics network.",
+    "list": [
+      {
+        "title": "Up to 50% Cheaper",
+        "description": "Senders save money by utilizing space in vehicles already on the road."
+      },
+      {
+        "title": "Earn On Your Way",
+        "description": "Transporters can monetize their empty vehicle space, turning routine trips into profitable journeys."
+      },
+      {
+        "title": "Community-Driven",
+        "description": "Built on trust, our platform connects you with a community of verified users."
+      },
+      {
+        "title": "Secure & Transparent",
+        "description": "With secure escrow payments and a two-way review system, every transaction is protected."
+      }
+    ]
+  },
+
+  "testimonials": {
+    "sectionTitle": "Trusted by our Community",
+    "sectionDescription": "Real stories from the people connecting through our platform.",
+    "list": [
+      {
+        "name": "Amina K.",
+        "role": "Sender",
+        "quote": "KargoConnect was a lifesaver! I needed to send a gift to my family in another city, and it was so much cheaper and faster than the post office.",
+        "stars": 5
+      },
+      {
+        "name": "Youssef B.",
+        "role": "Transporter",
+        "quote": "I drive from Casablanca to Marrakech every week for work. Now, I cover my fuel costs and make extra money by carrying packages. The app is super easy to use.",
+        "stars": 5
+      }
+    ]
+  },
+
+  "cta": {
+    "title": "Ready to Join the Revolution?",
+    "description": "Sign up today and start shipping or earning. It's free to join!",
+    "button": "Get Started Today"
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "English",

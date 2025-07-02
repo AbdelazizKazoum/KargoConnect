@@ -1,62 +1,48 @@
 "use client";
 
 import { Car, MapPin, Package, Search, Zap } from "lucide-react";
-import { useState } from "react";
+import { JSX, useState } from "react";
+import { useTranslations } from "next-intl";
+
+type Step = {
+  title: string;
+  description: string;
+};
 
 export default function HowItWorksSection() {
+  const t = useTranslations("howItWorks");
   const [activeTab, setActiveTab] = useState("sender");
 
-  const senderSteps = [
-    {
-      icon: (
-        <Search className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400" />
-      ),
-      title: "1. Find a Trip",
-      description:
-        "Search for transporters heading to your desired destination.",
-    },
-    {
-      icon: (
-        <Package className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400" />
-      ),
-      title: "2. Book Your Space",
-      description:
-        "Send a booking request with your package details and wait for approval.",
-    },
-    {
-      icon: (
-        <MapPin className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400" />
-      ),
-      title: "3. Track Your Delivery",
-      description:
-        "Coordinate with your transporter and track your package in real-time.",
-    },
-  ];
+  const senderSteps = t.raw("senderSteps");
+  const transporterSteps = t.raw("transporterSteps");
 
-  const transporterSteps = [
-    {
-      icon: (
-        <Car className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400" />
-      ),
-      title: "1. Post Your Trip",
-      description:
-        "List your upcoming journey, destination, and available space.",
-    },
-    {
-      icon: (
-        <Package className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400" />
-      ),
-      title: "2. Approve Bookings",
-      description: "Review and approve booking requests from senders.",
-    },
-    {
-      icon: (
-        <Zap className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400" />
-      ),
-      title: "3. Drive & Earn",
-      description:
-        "Complete your trip as usual and get paid securely after delivery.",
-    },
+  const icons = [
+    <Search
+      key="search"
+      className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400"
+    />,
+    <Package
+      key="package"
+      className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400"
+    />,
+    <MapPin
+      key="mappin"
+      className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400"
+    />,
+  ];
+  const transporterIcons = [
+    <Car
+      key="car"
+      className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400"
+    />,
+    <Package
+      key="package"
+      className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400"
+    />,
+    <Zap
+      key="zap"
+      className="w-10 h-10 mx-auto text-slate-500 dark:text-slate-400"
+    />,
   ];
 
   return (
@@ -67,11 +53,10 @@ export default function HowItWorksSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-            A Simpler Way to Ship
+            {t("title")}
           </h2>
           <p className="mt-3 max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-300">
-            Whether you&apos;re sending a package or driving a route, getting
-            started is easy.
+            {t("subtitle")}
           </p>
         </div>
         <div className="mt-12 max-w-3xl mx-auto">
@@ -84,7 +69,7 @@ export default function HowItWorksSection() {
                   : "text-slate-600 dark:text-slate-400"
               }`}
             >
-              I&apos;m a Sender
+              {t("sender")}
             </button>
             <button
               onClick={() => setActiveTab("transporter")}
@@ -94,15 +79,19 @@ export default function HowItWorksSection() {
                   : "text-slate-600 dark:text-slate-400"
               }`}
             >
-              I&apos;m a Transporter
+              {t("transporter")}
             </button>
           </div>
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
             {(activeTab === "sender" ? senderSteps : transporterSteps).map(
-              (step, index) => (
+              (step: Step, index: number) => (
                 <div key={index}>
                   <div className="flex items-center justify-center h-20 w-20 mx-auto bg-slate-100 dark:bg-slate-800/50 rounded-full">
-                    {step.icon}
+                    {
+                      (activeTab === "sender" ? icons : transporterIcons)[
+                        index
+                      ] as JSX.Element
+                    }
                   </div>
                   <h3 className="mt-5 text-lg font-semibold text-slate-900 dark:text-slate-50">
                     {step.title}

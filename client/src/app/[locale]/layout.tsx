@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Cairo } from "next/font/google"; // For Arabic
-
+import { Cairo } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
@@ -20,10 +19,38 @@ const cairo = Cairo({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "KargoConnect",
-  description: "Smart transportation and delivery platform",
-};
+// Localized metadata generator
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: "en" | "fr" | "ar" };
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  const titles = {
+    en: "KargoConnect - Smart Transportation",
+    fr: "KargoConnect - Transport Intelligent",
+    ar: "كارغو كونيكت - منصة النقل الذكي",
+  };
+  const descriptions = {
+    en: "Smart transportation and delivery platform",
+    fr: "Plateforme intelligente de transport et de livraison",
+    ar: "منصة ذكية للنقل والتوصيل",
+  };
+
+  return {
+    title: titles[locale] || titles.en,
+    description: descriptions[locale] || descriptions.en,
+    alternates: {
+      canonical: `https://yourdomain.com/${locale}`,
+      languages: {
+        en: "https://yourdomain.com/en",
+        fr: "https://yourdomain.com/fr",
+        ar: "https://yourdomain.com/ar",
+      },
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
