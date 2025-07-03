@@ -8,6 +8,7 @@ import {
   Package,
   Search as SearchIcon,
   Star,
+  UserCircle,
 } from "lucide-react";
 import React, { useState } from "react";
 
@@ -196,30 +197,31 @@ export default function SearchTripsPage() {
   };
 
   return (
-    <div className="bg-background">
+    <div className="bg-background min-h-screen flex flex-col pt-16">
       {/* Page Header with Background Image */}
-      <div className="relative pt-16 h-64 md:h-80 flex items-center justify-center">
+      <div className="relative h-64 md:h-80 flex items-center justify-center">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2070&auto=format&fit=crop"
             alt="Abstract gradient background"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-primary/80 mix-blend-multiply"></div>
+          {/* This overlay is now a neutral dark slate color instead of the primary red */}
+          <div className="absolute inset-0 bg-slate-900/70"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent"></div>
         </div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
             Find a Ride for Your Package
           </h1>
-          <p className="mt-3 max-w-2xl mx-auto text-lg text-primary-foreground/90">
+          <p className="mt-3 max-w-2xl mx-auto text-lg text-slate-200">
             Enter your route and discover transporters heading your way.
           </p>
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24 flex-grow">
         {/* Search Form Card */}
         <div className="-mt-16 relative z-20">
           <div className="bg-card text-card-foreground p-4 sm:p-6 rounded-xl shadow-2xl max-w-4xl mx-auto">
