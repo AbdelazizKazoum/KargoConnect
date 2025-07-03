@@ -35,7 +35,7 @@ export default function LoginView({
           className="w-full flex items-center justify-center gap-2"
           onClick={() => alert("Google Auth not implemented")}
         >
-          <span className="flex items-center">
+          <span className="flex items-center mx-2">
             <Circle className="h-5 w-5 text-[#EA4335]" fill="#EA4335" />
             <Circle className="h-5 w-5 -ml-3 text-[#FBBC05]" fill="#FBBC05" />
             <Circle className="h-5 w-5 -ml-3 text-[#34A853]" fill="#34A853" />
