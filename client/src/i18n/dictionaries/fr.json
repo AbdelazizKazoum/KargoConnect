@@ -105,6 +105,45 @@
     "button": "Commencer maintenant"
   },
 
+  "auth": {
+    "roleTitle": "Rejoignez-nous",
+    "roleSubtitle": "D'abord, dites-nous ce que vous souhaitez faire.",
+    "senderTitle": "Je suis un expéditeur",
+    "senderDesc": "Je veux envoyer des colis à moindre coût.",
+    "transporterTitle": "Je suis un transporteur",
+    "transporterDesc": "Je veux gagner de l'argent en conduisant.",
+    "alreadyAccount": "Vous avez déjà un compte ?",
+    "login": "Se connecter",
+
+    "loginTitle": "Bon retour",
+    "loginSubtitle": "Connectez-vous pour accéder à votre tableau de bord.",
+    "continueWithGoogle": "Continuer avec Google",
+    "continueWithFacebook": "Continuer avec Facebook",
+    "or": "ou",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "signup": "S'inscrire",
+
+    "stepOf": "Étape {step} sur {total}",
+    "continue": "Continuer",
+    "vehicleType": "Type de véhicule",
+    "selectVehicle": "Sélectionnez un véhicule...",
+    "car": "Voiture (Berline, SUV)",
+    "van": "Fourgonnette",
+    "pickup": "Camionnette",
+    "motorcycle": "Moto / Scooter",
+    "availableCapacity": "Capacité disponible",
+    "capacityPlaceholder": "ex : Espace coffre pour 2 cartons",
+    "nextStep": "Étape suivante",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Entrez votre nom complet",
+    "profilePicture": "Photo de profil",
+    "profilePictureHint": "Une photo claire aide à instaurer la confiance.",
+    "completeSignup": "Terminer l'inscription"
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "Anglais",

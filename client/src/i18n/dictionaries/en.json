@@ -105,6 +105,45 @@
     "button": "Get Started Today"
   },
 
+  "auth": {
+    "roleTitle": "Join us",
+    "roleSubtitle": "First, tell us what you'd like to do.",
+    "senderTitle": "I'm a Sender",
+    "senderDesc": "I want to ship packages affordably.",
+    "transporterTitle": "I'm a Transporter",
+    "transporterDesc": "I want to earn money while driving.",
+    "alreadyAccount": "Already have an account?",
+    "login": "Log In",
+
+    "loginTitle": "Welcome Back",
+    "loginSubtitle": "Log in to access your dashboard.",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithFacebook": "Continue with Facebook",
+    "or": "or",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "signup": "Sign Up",
+
+    "stepOf": "Step {step} of {total}",
+    "continue": "Continue",
+    "vehicleType": "Vehicle Type",
+    "selectVehicle": "Select a vehicle...",
+    "car": "Car (Sedan, SUV)",
+    "van": "Van",
+    "pickup": "Pickup Truck",
+    "motorcycle": "Motorcycle / Scooter",
+    "availableCapacity": "Available Capacity",
+    "capacityPlaceholder": "e.g., Trunk space for 2 boxes",
+    "nextStep": "Next Step",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "profilePicture": "Profile Picture",
+    "profilePictureHint": "A clear photo helps build trust.",
+    "completeSignup": "Complete Signup"
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "English",

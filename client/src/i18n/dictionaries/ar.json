@@ -105,6 +105,45 @@
     "button": "ابدأ الآن"
   },
 
+  "auth": {
+    "roleTitle": "انضم إلينا",
+    "roleSubtitle": "أخبرنا أولاً بما ترغب في القيام به.",
+    "senderTitle": "أنا مرسل",
+    "senderDesc": "أرغب في إرسال الطرود بتكلفة منخفضة.",
+    "transporterTitle": "أنا ناقل",
+    "transporterDesc": "أرغب في كسب المال أثناء القيادة.",
+    "alreadyAccount": "هل لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول",
+
+    "loginTitle": "مرحبًا بعودتك",
+    "loginSubtitle": "سجّل الدخول للوصول إلى لوحة التحكم الخاصة بك.",
+    "continueWithGoogle": "المتابعة مع جوجل",
+    "continueWithFacebook": "المتابعة مع فيسبوك",
+    "or": "أو",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "noAccount": "ليس لديك حساب؟",
+    "signup": "إنشاء حساب",
+
+    "stepOf": "الخطوة {step} من {total}",
+    "continue": "متابعة",
+    "vehicleType": "نوع المركبة",
+    "selectVehicle": "اختر مركبة...",
+    "car": "سيارة (سيدان، دفع رباعي)",
+    "van": "فان",
+    "pickup": "شاحنة صغيرة",
+    "motorcycle": "دراجة نارية / سكوتر",
+    "availableCapacity": "السعة المتوفرة",
+    "capacityPlaceholder": "مثال: مساحة الصندوق تكفي لصندوقين",
+    "nextStep": "الخطوة التالية",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "أدخل اسمك الكامل",
+    "profilePicture": "صورة الملف الشخصي",
+    "profilePictureHint": "الصورة الواضحة تساعد في بناء الثقة.",
+    "completeSignup": "إكمال التسجيل"
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "الإنجليزية",
