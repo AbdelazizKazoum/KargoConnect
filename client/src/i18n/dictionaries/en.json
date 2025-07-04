@@ -144,6 +144,33 @@
     "completeSignup": "Complete Signup"
   },
 
+  "search": {
+    "findTransporter": "Find a Transporter",
+    "findPackage": "Find a Package",
+    "smartPlaceholder": "✨ Or just tell us what you need... e.g., 'Send a guitar from Rabat to Agadir this weekend'",
+    "from": "From",
+    "fromPlaceholder": "e.g., Casablanca",
+    "to": "To",
+    "toPlaceholder": "e.g., Marrakech",
+    "date": "Date",
+    "search": "Search",
+    "searching": "Searching...",
+    "findRideTitle": "Find a Ride for Your Package",
+    "findRideSubtitle": "Enter your route and discover transporters heading your way.",
+    "availableTrips": "Available Trips",
+    "findTransporterTitle": "Find your perfect transporter",
+    "findTransporterSubtitle": "Enter your details above to see available trips.",
+    "findPackageTitle": "Find a Package to Transport",
+    "findPackageSubtitle": "Discover packages that need to be delivered along your route.",
+    "availablePackages": "Available Packages",
+    "findPackageTitle2": "Find a package for your trip",
+    "findPackageSubtitle2": "Enter a route to see packages you can transport.",
+    "trips": "trips",
+    "capacity": "Capacity",
+    "viewAndBook": "View & Book ({price})",
+    "quickSummary": "Quick Summary"
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "English",

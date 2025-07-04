@@ -151,5 +151,32 @@
       "arabic": "Arabe",
       "switchLanguage": "Changer de langue"
     }
+  },
+
+  "search": {
+    "findTransporter": "Trouver un transporteur",
+    "findPackage": "Trouver un colis",
+    "smartPlaceholder": "✨ Ou dites-nous simplement ce dont vous avez besoin... ex : 'Envoyer une guitare de Rabat à Agadir ce week-end'",
+    "from": "De",
+    "fromPlaceholder": "ex : Casablanca",
+    "to": "À",
+    "toPlaceholder": "ex : Marrakech",
+    "date": "Date",
+    "search": "Rechercher",
+    "searching": "Recherche en cours...",
+    "findRideTitle": "Trouvez un trajet pour votre colis",
+    "findRideSubtitle": "Entrez votre itinéraire et découvrez les transporteurs qui vont dans votre direction.",
+    "availableTrips": "Trajets disponibles",
+    "findTransporterTitle": "Trouvez votre transporteur idéal",
+    "findTransporterSubtitle": "Entrez vos informations ci-dessus pour voir les trajets disponibles.",
+    "findPackageTitle": "Trouver un colis à transporter",
+    "findPackageSubtitle": "Découvrez les colis à livrer sur votre trajet.",
+    "availablePackages": "Colis disponibles",
+    "findPackageTitle2": "Trouvez un colis pour votre trajet",
+    "findPackageSubtitle2": "Entrez un itinéraire pour voir les colis que vous pouvez transporter.",
+    "trips": "trajets",
+    "capacity": "Capacité",
+    "viewAndBook": "Voir & Réserver ({price})",
+    "quickSummary": "Résumé rapide"
   }
 }

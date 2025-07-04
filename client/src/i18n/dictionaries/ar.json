@@ -144,6 +144,33 @@
     "completeSignup": "إكمال التسجيل"
   },
 
+  "search": {
+    "findTransporter": "ابحث عن ناقل",
+    "findPackage": "ابحث عن طرد",
+    "smartPlaceholder": "✨ أو أخبرنا فقط بما تحتاجه... مثال: 'أرسل جيتار من الرباط إلى أكادير هذا الأسبوع'",
+    "from": "من",
+    "fromPlaceholder": "مثال: الدار البيضاء",
+    "to": "إلى",
+    "toPlaceholder": "مثال: مراكش",
+    "date": "التاريخ",
+    "search": "بحث",
+    "searching": "جارٍ البحث...",
+    "findRideTitle": "ابحث عن رحلة لطردك",
+    "findRideSubtitle": "أدخل مسارك واكتشف الناقلين المتجهين إلى وجهتك.",
+    "availableTrips": "الرحلات المتاحة",
+    "findTransporterTitle": "ابحث عن الناقل المناسب لك",
+    "findTransporterSubtitle": "أدخل بياناتك أعلاه لعرض الرحلات المتاحة.",
+    "findPackageTitle": "ابحث عن طرد لنقله",
+    "findPackageSubtitle": "اكتشف الطرود التي تحتاج إلى التوصيل على مسارك.",
+    "availablePackages": "الطرود المتاحة",
+    "findPackageTitle2": "ابحث عن طرد لرحلتك",
+    "findPackageSubtitle2": "أدخل مساراً لعرض الطرود التي يمكنك نقلها.",
+    "trips": "رحلات",
+    "capacity": "السعة",
+    "viewAndBook": "عرض وحجز ({price})",
+    "quickSummary": "ملخص سريع"
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "الإنجليزية",
