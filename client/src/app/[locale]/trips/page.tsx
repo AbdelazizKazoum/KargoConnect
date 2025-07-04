@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowLeft,
   ArrowRight,
   Box,
   Calendar,
@@ -15,7 +16,7 @@ import {
   Weight,
   X,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
 // --- Reusable UI Components (Theme-aware) ---
 
@@ -128,6 +129,36 @@ const mockTrips = [
     capacity: "Full pickup bed",
     vehicle: "Pickup Truck",
   },
+  {
+    id: 4,
+    transporter: {
+      name: "Amina K.",
+      avatarUrl: "https://i.pravatar.cc/150?u=amina2",
+      rating: 4.7,
+      trips: 8,
+    },
+    origin: "Casablanca",
+    destination: "Marrakech",
+    date: "July 15, 2024",
+    price: "140 MAD",
+    capacity: "1 large suitcase",
+    vehicle: "Hatchback",
+  },
+  {
+    id: 5,
+    transporter: {
+      name: "Omar S.",
+      avatarUrl: "https://i.pravatar.cc/150?u=omar",
+      rating: 4.9,
+      trips: 31,
+    },
+    origin: "Casablanca",
+    destination: "Marrakech",
+    date: "July 15, 2024",
+    price: "160 MAD",
+    capacity: "Backseat space",
+    vehicle: "Crossover",
+  },
 ];
 
 const mockDemands = [
@@ -172,6 +203,34 @@ const mockDemands = [
     date: "July 22, 2024",
     budget: "100 MAD",
     package: { type: "Luggage", details: "1 large suitcase" },
+  },
+  {
+    id: 4,
+    sender: {
+      name: "Samir T.",
+      avatarUrl: "https://i.pravatar.cc/150?u=samir",
+      rating: 4.8,
+      shipments: 8,
+    },
+    origin: "Fes",
+    destination: "Meknes",
+    date: "Flexible",
+    budget: "60 MAD",
+    package: { type: "Documents", details: "A4 Envelope" },
+  },
+  {
+    id: 5,
+    sender: {
+      name: "Nadia F.",
+      avatarUrl: "https://i.pravatar.cc/150?u=nadia",
+      rating: 5.0,
+      shipments: 3,
+    },
+    origin: "Fes",
+    destination: "Meknes",
+    date: "Flexible",
+    budget: "90 MAD",
+    package: { type: "Laptop Bag", details: "Standard size, ~3kg" },
   },
 ];
 
@@ -336,6 +395,39 @@ const SearchForm = ({
   </div>
 );
 
+const SkeletonCard = () => (
+  <div className="border bg-card text-card-foreground rounded-lg shadow-sm flex flex-col md:flex-row animate-pulse">
+    <div className="p-4 md:w-1/3 flex flex-col items-center text-center border-b md:border-b-0 md:border-r">
+      <div className="h-20 w-20 rounded-full bg-muted mb-3"></div>
+      <div className="h-5 w-24 bg-muted rounded-md mb-2"></div>
+      <div className="h-4 w-32 bg-muted rounded-md"></div>
+    </div>
+    <div className="p-4 flex-1 flex flex-col">
+      <div className="flex-grow space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="text-center w-1/3">
+            <div className="h-4 w-12 bg-muted rounded-md mx-auto mb-1"></div>
+            <div className="h-6 w-20 bg-muted rounded-md mx-auto"></div>
+          </div>
+          <div className="h-5 w-5 bg-muted rounded-full mx-4"></div>
+          <div className="text-center w-1/3">
+            <div className="h-4 w-8 bg-muted rounded-md mx-auto mb-1"></div>
+            <div className="h-6 w-24 bg-muted rounded-md mx-auto"></div>
+          </div>
+        </div>
+        <div className="space-y-2 border-t border-b py-2">
+          <div className="h-4 w-1/2 bg-muted rounded-md mx-auto"></div>
+          <div className="h-4 w-2/3 bg-muted rounded-md mx-auto"></div>
+        </div>
+      </div>
+      <div className="mt-4 flex gap-2">
+        <div className="h-11 w-full bg-muted rounded-md"></div>
+        <div className="h-11 w-11 bg-muted rounded-md"></div>
+      </div>
+    </div>
+  </div>
+);
+
 const TripCard = ({ trip }: { trip: (typeof mockTrips)[0] }) => {
   const [summary, setSummary] = useState("");
   const [isSummaryLoading, setIsSummaryLoading] = useState(false);
@@ -375,7 +467,6 @@ const TripCard = ({ trip }: { trip: (typeof mockTrips)[0] }) => {
 
   return (
     <div className="border bg-card text-card-foreground rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col md:flex-row">
-      {/* Left Column: User Info */}
       <div className="p-4 md:w-1/3 flex flex-col items-center text-center border-b md:border-b-0 md:border-r">
         <img
           src={trip.transporter.avatarUrl}
@@ -395,7 +486,6 @@ const TripCard = ({ trip }: { trip: (typeof mockTrips)[0] }) => {
         </div>
         <p className="mt-2 text-sm text-muted-foreground">{trip.vehicle}</p>
       </div>
-      {/* Right Column: Trip Details */}
       <div className="p-4 flex-1 flex flex-col">
         <div className="flex-grow space-y-4">
           <div className="flex items-center justify-between">
@@ -488,7 +578,6 @@ const DemandCard = ({ demand }: { demand: (typeof mockDemands)[0] }) => {
 
   return (
     <div className="border bg-card text-card-foreground rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col md:flex-row">
-      {/* Left Column: User Info */}
       <div className="p-4 md:w-1/3 flex flex-col items-center text-center border-b md:border-b-0 md:border-r">
         <img
           src={demand.sender.avatarUrl}
@@ -507,7 +596,6 @@ const DemandCard = ({ demand }: { demand: (typeof mockDemands)[0] }) => {
           </span>
         </div>
       </div>
-      {/* Right Column: Demand Details */}
       <div className="p-4 flex-1 flex flex-col">
         <div className="flex-grow space-y-4">
           <div className="flex items-center justify-between">
@@ -561,34 +649,98 @@ const DemandCard = ({ demand }: { demand: (typeof mockDemands)[0] }) => {
   );
 };
 
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  disabled,
+}: {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  disabled?: boolean;
+}) => {
+  if (totalPages <= 1) return null;
+
+  return (
+    <div className="flex items-center justify-center space-x-2 mt-8">
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1 || disabled}
+      >
+        <ArrowLeft className="h-4 w-4" />
+      </Button>
+      <span className="text-sm font-medium">
+        Page {currentPage} of {totalPages}
+      </span>
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages || disabled}
+      >
+        <ArrowRight className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+};
+
 // --- Main Page Component ---
 
 export default function SearchTripsPage() {
   const [searchMode, setSearchMode] = useState<"trips" | "demands">("trips");
   const [isSearching, setIsSearching] = useState(false);
-  const [results, setResults] = useState<
+  const [isPaginating, setIsPaginating] = useState(false);
+  const [allResults, setAllResults] = useState<
     ((typeof mockTrips)[0] | (typeof mockDemands)[0])[]
   >([]);
   const [smartQuery, setSmartQuery] = useState("");
   const [isSmartSearching, setIsSmartSearching] = useState(false);
-  // State for controlled form inputs
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [date, setDate] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 3;
+
+  // Memoized pagination calculation
+  const paginatedResults = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return allResults.slice(startIndex, endIndex);
+  }, [allResults, currentPage]);
+
+  const totalPages = Math.ceil(allResults.length / ITEMS_PER_PAGE);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSearching(true);
-    setResults([]);
+    setAllResults([]);
+    setCurrentPage(1);
     setTimeout(() => {
-      setResults(searchMode === "trips" ? mockTrips : mockDemands);
+      setAllResults(searchMode === "trips" ? mockTrips : mockDemands);
       setIsSearching(false);
     }, 1000);
   };
 
   const handleSetSearchMode = (mode: "trips" | "demands") => {
     setSearchMode(mode);
-    setResults([]);
+    setAllResults([]);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+    setIsPaginating(true);
+    // For server-side pagination, you would make an API call here.
+    // e.g., fetch(`/api/trips?page=${page}&limit=${ITEMS_PER_PAGE}`)
+    // For this simulation, we just show a loader.
+    setTimeout(() => {
+      setCurrentPage(page);
+      setIsPaginating(false);
+      window.scrollTo(0, 0); // Scroll to top on page change
+    }, 500);
   };
 
   const handleSmartSearch = async () => {
@@ -627,7 +779,6 @@ export default function SearchTripsPage() {
         const parsedJson = JSON.parse(
           result.candidates[0].content.parts[0].text
         );
-        // Update state instead of directly manipulating the DOM
         setFrom(parsedJson.origin || "");
         setTo(parsedJson.destination || "");
         setDate(parsedJson.date || "");
@@ -690,38 +841,52 @@ export default function SearchTripsPage() {
         />
 
         <div className="mt-12 max-w-4xl mx-auto">
-          {results.length > 0 ? (
+          {isSearching ? (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold">Searching...</h2>
+              {[...Array(ITEMS_PER_PAGE)].map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          ) : allResults.length > 0 ? (
             <div className="space-y-6">
               <h2 className="text-2xl font-bold">
                 {currentConfig.resultsTitle}
               </h2>
-              {searchMode === "trips" &&
-                results.map((trip) => (
-                  <TripCard
-                    key={`trip-${trip.id}`}
-                    trip={trip as (typeof mockTrips)[0]}
-                  />
-                ))}
-              {searchMode === "demands" &&
-                results.map((demand) => (
-                  <DemandCard
-                    key={`demand-${demand.id}`}
-                    demand={demand as (typeof mockDemands)[0]}
-                  />
-                ))}
+              {isPaginating
+                ? [...Array(ITEMS_PER_PAGE)].map((_, i) => (
+                    <SkeletonCard key={i} />
+                  ))
+                : searchMode === "trips"
+                ? paginatedResults.map((trip) => (
+                    <TripCard
+                      key={`trip-${trip.id}`}
+                      trip={trip as (typeof mockTrips)[0]}
+                    />
+                  ))
+                : paginatedResults.map((demand) => (
+                    <DemandCard
+                      key={`demand-${demand.id}`}
+                      demand={demand as (typeof mockDemands)[0]}
+                    />
+                  ))}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+                disabled={isPaginating}
+              />
             </div>
           ) : (
-            !isSearching && (
-              <div className="text-center py-16">
-                {currentConfig.emptyStateIcon}
-                <h3 className="mt-4 text-xl font-semibold">
-                  {currentConfig.emptyStateTitle}
-                </h3>
-                <p className="mt-2 text-muted-foreground">
-                  {currentConfig.emptyStateSubtitle}
-                </p>
-              </div>
-            )
+            <div className="text-center py-16">
+              {currentConfig.emptyStateIcon}
+              <h3 className="mt-4 text-xl font-semibold">
+                {currentConfig.emptyStateTitle}
+              </h3>
+              <p className="mt-2 text-muted-foreground">
+                {currentConfig.emptyStateSubtitle}
+              </p>
+            </div>
           )}
         </div>
       </main>
