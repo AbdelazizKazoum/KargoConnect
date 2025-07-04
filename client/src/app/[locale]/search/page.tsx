@@ -3,20 +3,15 @@
 import {
   ArrowLeft,
   ArrowRight,
-  Box,
-  Calendar,
-  Car,
-  MapPin,
   Package,
   Search as SearchIcon,
   Sparkles,
   Star,
   Truck,
-  User,
-  Weight,
   X,
 } from "lucide-react";
-import React, { useState, useMemo } from "react";
+import Image from "next/image";
+import React, { useState, useMemo, useEffect } from "react";
 
 // --- Reusable UI Components (Theme-aware) ---
 
@@ -245,14 +240,18 @@ const PageHeader = ({
 }) => (
   <div className="relative h-64 md:h-80 flex items-center justify-center">
     <div className="absolute inset-0 z-0">
-      <img
+      <Image
         src="/images/search_page.jpg"
         alt="Abstract gradient background"
-        className="w-full h-full object-cover"
+        fill
+        className="object-cover"
+        priority
         onError={(e) => {
-          e.currentTarget.src =
+          const target = e.target as HTMLImageElement;
+          target.src =
             "https://placehold.co/2070x320/1e293b/ffffff?text=KargoConnect";
         }}
+        sizes="100vw"
       />
       <div className="absolute inset-0 bg-slate-900/70"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent"></div>
@@ -468,13 +467,15 @@ const TripCard = ({ trip }: { trip: (typeof mockTrips)[0] }) => {
   return (
     <div className="border bg-card text-card-foreground rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col md:flex-row">
       <div className="p-4 md:w-1/3 flex flex-col items-center text-center border-b md:border-b-0 md:border-r">
-        <img
+        <Image
           src={trip.transporter.avatarUrl}
           alt={trip.transporter.name}
-          className="h-20 w-20 rounded-full mb-3"
+          width={80}
+          height={80}
+          className="h-20 w-20 rounded-full mb-3 object-cover"
           onError={(e) => {
-            e.currentTarget.src =
-              "https://placehold.co/80x80/e2e8f0/64748b?text=User";
+            const target = e.target as HTMLImageElement;
+            target.src = "https://placehold.co/80x80/e2e8f0/64748b?text=User";
           }}
         />
         <h3 className="font-bold text-lg">{trip.transporter.name}</h3>
@@ -579,13 +580,15 @@ const DemandCard = ({ demand }: { demand: (typeof mockDemands)[0] }) => {
   return (
     <div className="border bg-card text-card-foreground rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col md:flex-row">
       <div className="p-4 md:w-1/3 flex flex-col items-center text-center border-b md:border-b-0 md:border-r">
-        <img
+        <Image
           src={demand.sender.avatarUrl}
           alt={demand.sender.name}
-          className="h-20 w-20 rounded-full mb-3"
+          width={80}
+          height={80}
+          className="h-20 w-20 rounded-full mb-3 object-cover"
           onError={(e) => {
-            e.currentTarget.src =
-              "https://placehold.co/80x80/e2e8f0/64748b?text=User";
+            const target = e.target as HTMLImageElement;
+            target.src = "https://placehold.co/80x80/e2e8f0/64748b?text=User";
           }}
         />
         <h3 className="font-bold text-lg">{demand.sender.name}</h3>
@@ -690,6 +693,7 @@ const Pagination = ({
 // --- Main Page Component ---
 
 export default function SearchTripsPage() {
+  // --- State ---
   const [searchMode, setSearchMode] = useState<"trips" | "demands">("trips");
   const [isSearching, setIsSearching] = useState(false);
   const [isPaginating, setIsPaginating] = useState(false);
@@ -703,6 +707,18 @@ export default function SearchTripsPage() {
   const [date, setDate] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 3;
+
+  // --- Handle hash on load ---
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash.replace("#", "");
+      if (hash === "sender") {
+        setSearchMode("trips");
+      } else if (hash === "transporter") {
+        setSearchMode("demands");
+      }
+    }
+  }, []);
 
   // Memoized pagination calculation
   const paginatedResults = useMemo(() => {

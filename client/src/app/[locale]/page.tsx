@@ -7,11 +7,15 @@ import CTASection from "@/components/home/CTASection";
 // =====================================================================
 // --- Server Component (Main Page) ------------------------------------
 // =====================================================================
-export default function App() {
+export default async function App({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
   return (
     <>
       <main className="pt-16">
-        <HeroSection />
+        <HeroSection locale={locale} />
         <HowItWorksSection />
         <FeaturesSection />
         <TestimonialsSection />

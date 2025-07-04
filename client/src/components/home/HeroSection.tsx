@@ -3,7 +3,11 @@ import React from "react";
 import { Button } from "../ui";
 import { useTranslations } from "next-intl";
 
-export default function HeroSection() {
+type HeroSectionProps = {
+  locale: string;
+};
+
+export default function HeroSection({ locale }: HeroSectionProps) {
   const t = useTranslations("hero");
 
   return (
@@ -35,16 +39,23 @@ export default function HeroSection() {
           {t("description")}
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Button size="lg" className="w-full sm:w-auto">
-            {t("findRide")} <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="w-full sm:w-auto bg-transparent border-white text-white hover:bg-white/10 hover:text-white"
+          <a href={`/${locale}/search#sender`} className="w-full sm:w-auto">
+            <Button size="lg" className="w-full sm:w-auto">
+              {t("findRide")} <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </a>
+          <a
+            href={`/${locale}/search#transporter`}
+            className="w-full sm:w-auto"
           >
-            {t("becomeTransporter")}
-          </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full sm:w-auto bg-transparent border-white text-white hover:bg-white/10 hover:text-white"
+            >
+              {t("becomeTransporter")}
+            </Button>
+          </a>
         </div>
         <div className="mt-8 text-slate-300 flex items-center justify-center space-x-4">
           <Package size={20} /> <Truck size={20} /> <Bike size={20} />{" "}
