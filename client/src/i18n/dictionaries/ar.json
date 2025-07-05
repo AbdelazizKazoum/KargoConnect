@@ -171,6 +171,28 @@
     "quickSummary": "ملخص سريع"
   },
 
+  "details": {
+    "transporter": {
+      "reviewTrip": "راجع تفاصيل الرحلة واحجز مكانك.",
+      "routeMapPlaceholder": "ستظهر خريطة المسار هنا",
+      "schedule": "الجدول الزمني",
+      "pickupWindow": "نافذة الاستلام",
+      "deliveryWindow": "نافذة التسليم المقدرة",
+      "confirmBooking": "تأكيد الحجز",
+      "tripPrice": "سعر الرحلة",
+      "platformFee": "رسوم المنصة",
+      "total": "المجموع",
+      "paymentNote": "يتم الاحتفاظ بدفعتك بأمان حتى تأكيد التسليم.",
+      "proceedToPayment": "المتابعة إلى الدفع",
+      "aboutTransporter": "عن الناقل الخاص بك",
+      "vehicle": "المركبة",
+      "recentReviews": "التقييمات الأخيرة",
+      "identityVerified": "الهوية موثقة",
+      "chatWithTransporter": "الدردشة مع الناقل",
+      "typeMessage": "اكتب رسالتك..."
+    }
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "الإنجليزية",

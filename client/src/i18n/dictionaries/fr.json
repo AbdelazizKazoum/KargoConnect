@@ -144,6 +144,28 @@
     "completeSignup": "Terminer l'inscription"
   },
 
+  "details": {
+    "transporter": {
+      "reviewTrip": "Vérifiez les détails du trajet et réservez votre place.",
+      "routeMapPlaceholder": "La carte de l'itinéraire s'affichera ici",
+      "schedule": "Programme",
+      "pickupWindow": "Plage de ramassage",
+      "deliveryWindow": "Plage de livraison estimée",
+      "confirmBooking": "Confirmez votre réservation",
+      "tripPrice": "Prix du trajet",
+      "platformFee": "Frais de plateforme",
+      "total": "Total",
+      "paymentNote": "Votre paiement est conservé en toute sécurité jusqu'à la confirmation de la livraison.",
+      "proceedToPayment": "Procéder au paiement",
+      "aboutTransporter": "À propos de votre transporteur",
+      "vehicle": "Véhicule",
+      "recentReviews": "Avis récents",
+      "identityVerified": "Identité vérifiée",
+      "chatWithTransporter": "Discuter avec le transporteur",
+      "typeMessage": "Tapez votre message..."
+    }
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "Anglais",

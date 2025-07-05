@@ -171,6 +171,28 @@
     "quickSummary": "Quick Summary"
   },
 
+  "details": {
+    "transporter": {
+      "reviewTrip": "Review the trip details and book your spot.",
+      "routeMapPlaceholder": "Route map would be displayed here",
+      "schedule": "Schedule",
+      "pickupWindow": "Pickup Window",
+      "deliveryWindow": "Est. Delivery Window",
+      "confirmBooking": "Confirm Your Booking",
+      "tripPrice": "Trip price",
+      "platformFee": "Platform fee",
+      "total": "Total",
+      "paymentNote": "Your payment is held securely until the delivery is confirmed.",
+      "proceedToPayment": "Proceed to Payment",
+      "aboutTransporter": "About Your Transporter",
+      "vehicle": "Vehicle",
+      "recentReviews": "Recent Reviews",
+      "identityVerified": "Identity Verified",
+      "chatWithTransporter": "Chat with Transporter",
+      "typeMessage": "Type your message..."
+    }
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "English",

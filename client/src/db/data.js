@@ -148,3 +148,66 @@ export const mockDemands = [
     package: { type: "Laptop Bag", details: "Standard size, ~3kg" },
   },
 ];
+
+export const tripDetails = {
+  id: 1,
+  transporter: {
+    name: "Youssef B.",
+    avatarUrl: "https://i.pravatar.cc/150?u=youssef",
+    rating: 4.9,
+    trips: 23,
+    verified: true,
+    vehicle: {
+      name: "Renault Clio",
+      type: "Sedan",
+      photoUrls: [
+        "/images/vehicles/clio1.jpg",
+        "/images/vehicles/clio2.jpg",
+        "/images/vehicles/clio3.jpg",
+      ],
+    },
+    reviews: [
+      {
+        id: 1,
+        author: "Amina K.",
+        rating: 5,
+        comment:
+          "Excellent communication and very punctual. My package arrived in perfect condition. Highly recommended!",
+      },
+      {
+        id: 2,
+        author: "Karim S.",
+        rating: 5,
+        comment:
+          "Youssef is a true professional. Very friendly and reliable. Will definitely use his service again.",
+      },
+    ],
+  },
+  origin: "Casablanca",
+  destination: "Marrakech",
+  date: "July 15, 2024",
+  pickupWindow: "9:00 AM - 11:00 AM",
+  deliveryWindow: "3:00 PM - 5:00 PM",
+  price: 150,
+  platformFee: 15,
+  totalPrice: 165,
+  packageDetails: {
+    type: "Small Box",
+    weight: "approx. 2kg",
+    dimensions: "30x30x30cm",
+  },
+  initialChat: [
+    {
+      id: 1,
+      author: "You",
+      message:
+        "Hi Youssef, just confirming the pickup address. Is it near the main train station?",
+    },
+    {
+      id: 2,
+      author: "Youssef B.",
+      message:
+        "Hi! Yes, exactly. I will be there around 10 AM. I will message you when I am 15 minutes away.",
+    },
+  ],
+};
