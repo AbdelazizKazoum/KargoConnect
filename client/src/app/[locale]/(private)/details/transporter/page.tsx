@@ -3,10 +3,7 @@
 import {
   ArrowRight,
   Calendar,
-  Car,
   CheckCircle,
-  ChevronDown,
-  Info,
   MapPin,
   MessageSquare,
   Send,
@@ -15,6 +12,7 @@ import {
   User,
   X,
 } from "lucide-react";
+import Image from "next/image";
 import React, { useState } from "react";
 
 // --- Reusable UI Components (Theme-aware) ---
@@ -80,13 +78,14 @@ const Avatar = ({
 }) => (
   <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center overflow-hidden">
     {src ? (
-      <img
-        src={src}
+      <Image
+        src={src || ""}
         alt={alt}
         className="h-full w-full object-cover"
-        onError={(e) => {
-          e.currentTarget.style.display = "none";
-        }}
+        fill
+        sizes="48px"
+        onError={() => {}}
+        style={{ objectFit: "cover" }}
       />
     ) : (
       fallback
@@ -169,10 +168,14 @@ const ImageModal = ({ src, onClose }: { src: string; onClose: () => void }) => (
       className="relative max-w-4xl max-h-[90vh]"
       onClick={(e) => e.stopPropagation()}
     >
-      <img
+      <Image
         src={src}
         alt="Vehicle full view"
         className="w-full h-full object-contain rounded-lg"
+        fill
+        sizes="(max-width: 1024px) 90vw, 800px"
+        style={{ objectFit: "contain" }}
+        priority
       />
       <Button
         size="icon"
@@ -236,10 +239,13 @@ const TransporterProfile = ({
                 onClick={() => setSelectedImage(url)}
                 className="border rounded-lg overflow-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background"
               >
-                <img
+                <Image
                   src={url}
                   alt={`${transporter.vehicle.name} view ${index + 1}`}
+                  width={128}
+                  height={64}
                   className="w-full h-16 object-cover"
+                  style={{ objectFit: "cover" }}
                 />
               </button>
             ))}
