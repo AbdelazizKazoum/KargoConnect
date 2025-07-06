@@ -211,3 +211,56 @@ export const tripDetails = {
     },
   ],
 };
+
+export const demandDetails = {
+  id: 2,
+  sender: {
+    name: "Karim S.",
+    avatarUrl: "https://i.pravatar.cc/150?u=karim",
+    rating: 4.9,
+    shipments: 12,
+    verified: true,
+    reviews: [
+      {
+        id: 1,
+        author: "Youssef B.",
+        rating: 5,
+        comment:
+          "Karim was very clear with his instructions and the package was ready on time. Great sender!",
+      },
+      {
+        id: 2,
+        author: "Fatima Z.",
+        rating: 5,
+        comment: "Smooth transaction. Would happily transport for Karim again.",
+      },
+    ],
+  },
+  origin: "Tangier",
+  destination: "Casablanca",
+  date: "July 20, 2024",
+  budget: 200,
+  packageDetails: {
+    type: "Artwork",
+    weight: "approx. 10kg",
+    dimensions: "100x80cm",
+    description:
+      "A framed canvas painting. It is fragile and must be handled with care. Should be kept upright.",
+    photoUrl:
+      "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=800&auto=format&fit=crop",
+  },
+  initialChat: [
+    {
+      id: 1,
+      author: "You",
+      message:
+        "Hi Karim, I can transport your artwork to Casablanca. Is the pickup time flexible?",
+    },
+    {
+      id: 2,
+      author: "Karim S.",
+      message:
+        "Hi! Yes, I am available most of the day on the 20th. Let me know what works for you.",
+    },
+  ],
+};
