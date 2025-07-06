@@ -190,6 +190,23 @@
       "identityVerified": "الهوية موثقة",
       "chatWithTransporter": "الدردشة مع الناقل",
       "typeMessage": "اكتب رسالتك..."
+    },
+    "demand": {
+      "reviewAndOffer": "راجع تفاصيل الطرد وقدم عرضك.",
+      "routePlaceholder": "سيتم عرض خريطة الطريق هنا",
+      "packageDetails": "تفاصيل الطرد",
+      "chatWithSender": "الدردشة مع المرسل",
+      "typeMessage": "اكتب رسالتك...",
+      "makeOffer": "قدم عرضك",
+      "senderBudget": "ميزانية المرسل لهذه التوصيلة هي:",
+      "yourOffer": "سعر العرض الخاص بك (درهم)",
+      "submitOffer": "إرسال العرض",
+      "offerNote": "سيتم إعلام المرسل بعرضك ويمكنه اختياره."
+    },
+    "sender": {
+      "aboutSender": "عن المرسل",
+      "identityVerified": "تم التحقق من الهوية",
+      "recentReviews": "المراجعات الأخيرة"
     }
   },
 

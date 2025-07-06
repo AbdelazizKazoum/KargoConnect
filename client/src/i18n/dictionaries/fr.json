@@ -163,6 +163,23 @@
       "identityVerified": "Identité vérifiée",
       "chatWithTransporter": "Discuter avec le transporteur",
       "typeMessage": "Tapez votre message..."
+    },
+    "demand": {
+      "reviewAndOffer": "Consultez les détails du colis et faites une offre.",
+      "routePlaceholder": "La carte de l'itinéraire sera affichée ici",
+      "packageDetails": "Détails du colis",
+      "chatWithSender": "Discuter avec l'expéditeur",
+      "typeMessage": "Tapez votre message...",
+      "makeOffer": "Faites votre offre",
+      "senderBudget": "Le budget de l'expéditeur pour cette livraison est :",
+      "yourOffer": "Votre offre (MAD)",
+      "submitOffer": "Soumettre l'offre",
+      "offerNote": "L'expéditeur sera informé de votre offre et pourra choisir de l'accepter."
+    },
+    "sender": {
+      "aboutSender": "À propos de l'expéditeur",
+      "identityVerified": "Identité vérifiée",
+      "recentReviews": "Avis récents"
     }
   },
 

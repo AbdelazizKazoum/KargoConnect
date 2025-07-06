@@ -190,6 +190,23 @@
       "identityVerified": "Identity Verified",
       "chatWithTransporter": "Chat with Transporter",
       "typeMessage": "Type your message..."
+    },
+    "demand": {
+      "reviewAndOffer": "Review the package details and make an offer.",
+      "routePlaceholder": "Route map would be displayed here",
+      "packageDetails": "Package Details",
+      "chatWithSender": "Chat with Sender",
+      "typeMessage": "Type your message...",
+      "makeOffer": "Make Your Offer",
+      "senderBudget": "The sender's budget for this delivery is:",
+      "yourOffer": "Your Offer Price (MAD)",
+      "submitOffer": "Submit Offer",
+      "offerNote": "The sender will be notified of your offer and can choose to accept it."
+    },
+    "sender": {
+      "aboutSender": "About The Sender",
+      "identityVerified": "Identity Verified",
+      "recentReviews": "Recent Reviews"
     }
   },
 
