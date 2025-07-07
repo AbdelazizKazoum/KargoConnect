@@ -189,7 +189,38 @@
       "recentReviews": "التقييمات الأخيرة",
       "identityVerified": "الهوية موثقة",
       "chatWithTransporter": "الدردشة مع الناقل",
-      "typeMessage": "اكتب رسالتك..."
+      "typeMessage": "اكتب رسالتك...",
+
+      "paymentNowNote": "سيتم خصم المبلغ الآن لتأكيد الحجز.",
+      "paymentLaterNote": "ستدفع مباشرة للسائق عند التسليم.",
+      "confirmBookingBtn": "تأكيد بدون دفع",
+
+      "cancel": "إلغاء",
+      "payNow": "ادفع الآن",
+      "confirmAndPayTitle": "تأكيد ودفع",
+      "confirmAndPaySubtitle": "يرجى التحقق من التفاصيل أدناه قبل إتمام الدفع.",
+      "bookingConfirmedTitle": "تم تأكيد الحجز",
+      "bookingConfirmedSubtitle": "تم تأكيد الحجز بنجاح. يمكنك الآن بدء المحادثة مع السائق.",
+      "viewMyBookings": "عرض حجوزاتي",
+      "goToChat": "اذهب إلى المحادثة",
+
+      "paymentDetailsTitle": "تفاصيل الدفع",
+      "creditCard": "بطاقة ائتمان",
+      "paypal": "باي بال",
+      "cardName": "الاسم على البطاقة",
+      "cardNumber": "رقم البطاقة",
+      "cardExpiry": "تاريخ الانتهاء",
+      "cardCVC": "رمز التحقق (CVC)",
+      "paySecurely": "ادفع بأمان",
+      "paypalRedirect": "سيتم تحويلك إلى باي بال لإتمام الدفع.",
+      "continueToPayPal": "المتابعة إلى PayPal",
+
+      "paymentSuccessfulTitle": "تم الدفع بنجاح!",
+      "paymentSuccessfulSubtitle": "تم تأكيد الحجز الخاص بك. يمكنك الآن التواصل مع الناقل.",
+      "done": "تم",
+
+      "processingPaymentTitle": "جاري معالجة الدفع...",
+      "processingPaymentSubtitle": "يرجى عدم إغلاق هذه النافذة أثناء تأكيد الحجز الخاص بك."
     },
     "demand": {
       "reviewAndOffer": "راجع تفاصيل الطرد وقدم عرضك.",
@@ -201,7 +232,13 @@
       "senderBudget": "ميزانية المرسل لهذه التوصيلة هي:",
       "yourOffer": "سعر العرض الخاص بك (درهم)",
       "submitOffer": "إرسال العرض",
-      "offerNote": "سيتم إعلام المرسل بعرضك ويمكنه اختياره."
+      "offerNote": "سيتم إعلام المرسل بعرضك ويمكنه اختياره.",
+
+      "submittingOfferTitle": "جارٍ إرسال العرض...",
+      "submittingOfferSubtitle": "يرجى الانتظار أثناء إرسال عرضك إلى المرسل.",
+      "offerSentTitle": "تم إرسال العرض!",
+      "offerSentSubtitle": "تم إرسال عرضك بنجاح. سيقوم المرسل بمراجعته قريبًا.",
+      "done": "تم"
     },
     "sender": {
       "aboutSender": "عن المرسل",

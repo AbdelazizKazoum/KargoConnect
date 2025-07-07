@@ -3,10 +3,15 @@ import { Button } from "../ui";
 import Image from "next/image";
 import { mockDemands } from "@/db/data";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const DemandCard = ({ demand }: { demand: (typeof mockDemands)[0] }) => {
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Hooks
+  const router = useRouter();
+  // const locale = useLocale();
 
   const handleEnhanceDescription = async () => {
     setIsLoading(true);
@@ -95,7 +100,12 @@ const DemandCard = ({ demand }: { demand: (typeof mockDemands)[0] }) => {
           )}
         </div>
         <div className="mt-4 flex gap-2">
-          <Button className="w-full">Make Offer ({demand.budget})</Button>
+          <Button
+            onClick={() => router.push(`details/sender`)}
+            className="w-full"
+          >
+            Make Offer ({demand.budget})
+          </Button>
           <Button
             variant="outline"
             size="icon"

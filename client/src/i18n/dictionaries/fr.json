@@ -162,7 +162,38 @@
       "recentReviews": "Avis récents",
       "identityVerified": "Identité vérifiée",
       "chatWithTransporter": "Discuter avec le transporteur",
-      "typeMessage": "Tapez votre message..."
+      "typeMessage": "Tapez votre message...",
+
+      "paymentNowNote": "Vous serez facturé maintenant pour confirmer la réservation.",
+      "paymentLaterNote": "Vous paierez directement le transporteur à la livraison.",
+      "confirmBookingBtn": "Confirmer sans paiement",
+
+      "cancel": "Annuler",
+      "payNow": "Payer maintenant",
+      "confirmAndPayTitle": "Confirmer et payer",
+      "confirmAndPaySubtitle": "Revérifiez les détails ci-dessous avant de finaliser votre paiement.",
+      "bookingConfirmedTitle": "Réservation confirmée",
+      "bookingConfirmedSubtitle": "Votre réservation a été confirmée avec succès. Vous pouvez maintenant discuter avec le transporteur.",
+      "viewMyBookings": "Voir mes réservations",
+      "goToChat": "Aller au chat",
+
+      "paymentDetailsTitle": "Détails du paiement",
+      "creditCard": "Carte bancaire",
+      "paypal": "PayPal",
+      "cardName": "Nom sur la carte",
+      "cardNumber": "Numéro de carte",
+      "cardExpiry": "Date d’expiration",
+      "cardCVC": "Cryptogramme (CVC)",
+      "paySecurely": "Payer en toute sécurité",
+      "paypalRedirect": "Vous serez redirigé vers PayPal pour finaliser le paiement.",
+      "continueToPayPal": "Continuer vers PayPal",
+
+      "paymentSuccessfulTitle": "Paiement réussi !",
+      "paymentSuccessfulSubtitle": "Votre réservation a été confirmée. Vous pouvez maintenant communiquer avec le transporteur.",
+      "done": "Terminé",
+
+      "processingPaymentTitle": "Traitement de votre paiement...",
+      "processingPaymentSubtitle": "Veuillez ne pas fermer cette fenêtre pendant la confirmation de votre réservation."
     },
     "demand": {
       "reviewAndOffer": "Consultez les détails du colis et faites une offre.",
@@ -174,7 +205,13 @@
       "senderBudget": "Le budget de l'expéditeur pour cette livraison est :",
       "yourOffer": "Votre offre (MAD)",
       "submitOffer": "Soumettre l'offre",
-      "offerNote": "L'expéditeur sera informé de votre offre et pourra choisir de l'accepter."
+      "offerNote": "L'expéditeur sera informé de votre offre et pourra choisir de l'accepter.",
+
+      "submittingOfferTitle": "Envoi de votre offre...",
+      "submittingOfferSubtitle": "Veuillez patienter pendant que nous transmettons votre offre à l’expéditeur.",
+      "offerSentTitle": "Offre envoyée !",
+      "offerSentSubtitle": "Votre offre a été envoyée avec succès. L’expéditeur la consultera prochainement.",
+      "done": "Terminé"
     },
     "sender": {
       "aboutSender": "À propos de l'expéditeur",

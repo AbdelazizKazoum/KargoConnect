@@ -189,7 +189,38 @@
       "recentReviews": "Recent Reviews",
       "identityVerified": "Identity Verified",
       "chatWithTransporter": "Chat with Transporter",
-      "typeMessage": "Type your message..."
+      "typeMessage": "Type your message...",
+
+      "paymentNowNote": "Vous serez facturé maintenant pour confirmer la réservation.",
+      "paymentLaterNote": "Vous paierez directement le transporteur à la livraison.",
+      "confirmBookingBtn": "Confirmer sans paiement",
+
+      "cancel": "Cancel",
+      "payNow": "Pay Now",
+      "confirmAndPayTitle": "Confirm and Pay",
+      "confirmAndPaySubtitle": "Please review the details below before completing your payment.",
+      "bookingConfirmedTitle": "Booking Confirmed",
+      "bookingConfirmedSubtitle": "Your booking has been successfully confirmed. You can now chat with the transporter.",
+      "viewMyBookings": "View My Bookings",
+      "goToChat": "Go to Chat",
+
+      "paymentDetailsTitle": "Payment Details",
+      "creditCard": "Credit Card",
+      "paypal": "PayPal",
+      "cardName": "Name on Card",
+      "cardNumber": "Card Number",
+      "cardExpiry": "Expiry Date",
+      "cardCVC": "CVC",
+      "paySecurely": "Pay securely",
+      "paypalRedirect": "You will be redirected to PayPal to complete the payment.",
+      "continueToPayPal": "Continue to PayPal",
+
+      "paymentSuccessfulTitle": "Payment Successful!",
+      "paymentSuccessfulSubtitle": "Your booking has been confirmed. You can now communicate with the transporter.",
+      "done": "Done",
+
+      "processingPaymentTitle": "Processing your payment...",
+      "processingPaymentSubtitle": "Please do not close this window while we confirm your booking."
     },
     "demand": {
       "reviewAndOffer": "Review the package details and make an offer.",
@@ -201,7 +232,13 @@
       "senderBudget": "The sender's budget for this delivery is:",
       "yourOffer": "Your Offer Price (MAD)",
       "submitOffer": "Submit Offer",
-      "offerNote": "The sender will be notified of your offer and can choose to accept it."
+      "offerNote": "The sender will be notified of your offer and can choose to accept it.",
+
+      "submittingOfferTitle": "Submitting your offer...",
+      "submittingOfferSubtitle": "Please wait while we send your offer to the sender.",
+      "offerSentTitle": "Offer submitted!",
+      "offerSentSubtitle": "Your offer has been successfully sent. The sender will review it shortly.",
+      "done": "Done"
     },
     "sender": {
       "aboutSender": "About The Sender",

@@ -3,10 +3,15 @@ import { Button } from "../ui";
 import Image from "next/image";
 import { useState } from "react";
 import { mockTrips } from "@/db/data";
+import { useRouter } from "next/navigation";
 
 const TripCard = ({ trip }: { trip: (typeof mockTrips)[0] }) => {
   const [summary, setSummary] = useState("");
   const [isSummaryLoading, setIsSummaryLoading] = useState(false);
+
+  // Hooks
+  const router = useRouter();
+  // const locale = useLocale();
 
   const handleGetSummary = async () => {
     setIsSummaryLoading(true);
@@ -98,7 +103,12 @@ const TripCard = ({ trip }: { trip: (typeof mockTrips)[0] }) => {
           )}
         </div>
         <div className="mt-4 flex gap-2">
-          <Button className="w-full">View & Book ({trip.price})</Button>
+          <Button
+            onClick={() => router.push(`details/transporter`)}
+            className="w-full"
+          >
+            View & Book ({trip.price})
+          </Button>
           <Button
             variant="outline"
             size="icon"
