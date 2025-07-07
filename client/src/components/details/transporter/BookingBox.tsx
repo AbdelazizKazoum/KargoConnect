@@ -7,73 +7,12 @@ import {
   CreditCard,
   Lock,
   Shield,
-  X,
 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
-
-// --- Reusable UI Components (Theme-aware) ---
-const Button = ({
-  variant = "default",
-  size,
-  className,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "default" | "outline" | "secondary" | "destructive" | "ghost";
-  size?: "lg" | "default" | "sm" | "icon";
-}) => {
-  const baseStyles =
-    "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background";
-  const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90",
-    destructive:
-      "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-    outline:
-      "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    ghost: "hover:bg-accent hover:text-accent-foreground",
-  };
-  const sizes = {
-    lg: "h-11 rounded-md px-8",
-    default: "h-10 px-4 py-2",
-    sm: "h-9 rounded-md px-3",
-    icon: "h-10 w-10",
-  };
-  return (
-    <button
-      className={`${baseStyles} ${sizes[size || "default"]} ${
-        variants[variant]
-      } ${className}`}
-      {...props}
-    />
-  );
-};
-
-const Input = React.forwardRef<
-  HTMLInputElement,
-  React.InputHTMLAttributes<HTMLInputElement>
->(({ className, ...props }, ref) => {
-  return (
-    <input
-      className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
-      ref={ref}
-      {...props}
-    />
-  );
-});
-Input.displayName = "Input";
-
-const Label = React.forwardRef<
-  HTMLLabelElement,
-  React.LabelHTMLAttributes<HTMLLabelElement>
->(({ className, ...props }, ref) => (
-  <label
-    ref={ref}
-    className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${className}`}
-    {...props}
-  />
-));
-Label.displayName = "Label";
+import { Button } from "@/components/ui";
+import Label from "@/components/ui/label";
+import Input from "@/components/ui/input";
 
 // --- Confirmation and Payment Modals Component ---
 
@@ -278,7 +217,7 @@ const BookingConfirmationModals = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
+      className="fixed top-0 left-0 w-screen h-screen z-50 bg-black/70 flex items-center justify-center p-4"
       onClick={handleClose}
     >
       <div

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Calendar, CheckCircle, Info, MapPin } from "lucide-react";
+import { ArrowRight, CheckCircle, Info } from "lucide-react";
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui";
@@ -20,7 +20,7 @@ const OfferConfirmationModal = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
+      className="fixed top-0 left-0 w-screen h-screen z-50 bg-black/70 flex items-center justify-center p-4"
       onClick={onClose}
     >
       <div
