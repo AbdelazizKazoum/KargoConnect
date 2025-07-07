@@ -22,7 +22,10 @@ export default function DemandDetailsPage() {
             <div className="bg-card border rounded-xl shadow-sm p-6 space-y-6">
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                 <div>
-                  <h1 className="text-3xl font-bold flex items-center flex-wrap gap-x-3 gap-y-1">
+                  <h1
+                    dir="ltr"
+                    className="text-3xl font-bold flex items-center flex-wrap gap-x-3 gap-y-1"
+                  >
                     <span>{demandDetails.origin}</span>
                     <ArrowRight className="h-6 w-6 text-primary flex-shrink-0" />
                     <span>{demandDetails.destination}</span>

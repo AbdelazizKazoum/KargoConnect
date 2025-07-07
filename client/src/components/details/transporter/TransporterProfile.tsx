@@ -3,8 +3,8 @@ import { CheckCircle, Star, User } from "lucide-react";
 import ImageModal from "./ImageModal";
 import { useState } from "react";
 import { tripDetails } from "@/db/data";
-import Avatar from "./Avatar";
 import { useTranslations } from "next-intl";
+import Avatar from "@/components/ui/Avatar";
 
 const TransporterProfile = ({
   transporter,

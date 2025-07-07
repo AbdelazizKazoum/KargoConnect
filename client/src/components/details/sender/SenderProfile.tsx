@@ -1,7 +1,7 @@
 import { CheckCircle, Star, User } from "lucide-react";
-import Avatar from "../Avatar";
 import { useTranslations } from "next-intl";
 import { demandDetails } from "@/db/data";
+import Avatar from "@/components/ui/Avatar";
 
 const SenderProfile = ({ sender }: { sender: typeof demandDetails.sender }) => {
   const t = useTranslations("details.sender");

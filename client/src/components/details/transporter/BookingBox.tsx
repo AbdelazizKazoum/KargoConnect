@@ -1,6 +1,6 @@
 "use client";
 import { ArrowRight, Shield } from "lucide-react";
-import { Button } from "../ui";
+import { Button } from "../../ui";
 import { useTranslations } from "next-intl";
 
 const BookingBox = ({

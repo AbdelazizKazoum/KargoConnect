@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { Button } from "../ui";
+import { Button } from "../../ui";
 
 const ImageModal = ({ src, onClose }: { src: string; onClose: () => void }) => (
   <div

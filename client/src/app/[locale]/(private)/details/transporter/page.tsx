@@ -4,9 +4,9 @@ import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { tripDetails } from "@/db/data";
-import ChatBox from "@/components/details/ChatBox";
-import BookingBox from "@/components/details/BookingBox";
-import TransporterProfile from "@/components/details/TransporterProfile";
+import BookingBox from "@/components/details/transporter/BookingBox";
+import TransporterProfile from "@/components/details/transporter/TransporterProfile";
+import ChatBox from "@/components/chat/ChatBox";
 
 // --- Main Page Component ---
 
@@ -73,9 +73,12 @@ export default function TripDetailsPage() {
             </div>
 
             {/* Chat Box */}
-            <ChatBox initialChat={tripDetails.initialChat} />
+            <ChatBox
+              initialChat={tripDetails.initialChat}
+              currentUser="You"
+              title={t("chatWithTransporter")}
+            />
           </div>
-
           {/* Sidebar (Right Column) */}
           <div className="lg:col-span-1 space-y-8 lg:sticky lg:top-24">
             <BookingBox
