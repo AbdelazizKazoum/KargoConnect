@@ -1,32 +1,20 @@
 "use client";
 
 import {
-  AlertTriangle,
-  ArrowRight,
   Bell,
   Box,
   Calendar,
   Camera,
-  Car,
-  Check,
   CheckCircle,
   CircleDollarSign,
   Edit,
-  FileText,
-  Handshake,
-  MapPin,
   MoreHorizontal,
   Package,
   PlusCircle,
   Search,
-  Settings,
-  Share2,
   Star,
   Trash2,
-  Truck,
-  User,
   View,
-  X,
 } from "lucide-react";
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
