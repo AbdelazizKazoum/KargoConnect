@@ -247,6 +247,180 @@
     }
   },
 
+  "profile": {
+    "transporter": {
+      "changeCover": "تغيير صورة الغلاف",
+      "role": "ناقل",
+      "verified": "الهوية موثقة",
+      "viewPublicProfile": "عرض الملف الشخصي العام",
+      "sendMessage": "إرسال رسالة",
+      "stats": {
+        "rating": "التقييم",
+        "trips": "الرحلات",
+        "earnings": "الأرباح"
+      },
+      "nav": {
+        "settings": "إعدادات الحساب",
+        "trips": "رحلاتي",
+        "offers": "عروضي",
+        "bookings": "الحجوزات"
+      },
+      "settings": {
+        "personalInfo": {
+          "title": "المعلومات الشخصية",
+          "name": "الاسم الكامل",
+          "email": "البريد الإلكتروني",
+          "picture": "صورة الملف الشخصي"
+        },
+        "vehicleInfo": {
+          "title": "معلومات المركبة",
+          "name": "اسم المركبة",
+          "plate": "لوحة الترخيص",
+          "photos": "صور المركبة"
+        },
+        "buttons": {
+          "discard": "إلغاء",
+          "update": "تحديث الإعدادات"
+        }
+      },
+      "trips": {
+        "title": "رحلاتي المنشورة",
+        "searchPlaceholder": "ابحث عن رحلات...",
+        "newTripButton": "نشر رحلة جديدة",
+        "table": {
+          "route": "المسار",
+          "date": "التاريخ",
+          "earnings": "الأرباح",
+          "status": "الحالة"
+        }
+      },
+      "offers": {
+        "title": "عروضي المرسلة",
+        "searchPlaceholder": "ابحث عن عروض...",
+        "table": {
+          "package": "الطرد",
+          "route": "المسار",
+          "yourOffer": "عرضك",
+          "status": "الحالة"
+        }
+      },
+      "bookings": {
+        "title": "الحجوزات الواردة",
+        "table": {
+          "package": "الطرد",
+          "sender": "المرسل",
+          "route": "المسار",
+          "status": "الحالة"
+        }
+      },
+      "public": {
+        "reviewsTitle": "التقييمات الأخيرة",
+        "tripsTitle": "الرحلات المكتملة",
+        "rating": {
+          "title": "اترك تقييمًا",
+          "yourRating": "تقييمك",
+          "yourComment": "تعليقك",
+          "commentPlaceholder": "شارك تجربتك...",
+          "submitButton": "إرسال التقييم"
+        }
+      },
+      "status": {
+        "Completed": "مكتملة",
+        "Upcoming": "قادمة",
+        "Pending": "قيد الانتظار",
+        "Accepted": "مقبولة",
+        "Declined": "مرفوضة",
+        "Confirmed": "مؤكدة",
+        "PendingApproval": "في انتظار الموافقة"
+      },
+      "pagination": {
+        "page": "صفحة {currentPage} من {totalPages}",
+        "previous": "السابق",
+        "next": "التالي"
+      },
+      "actions": {
+        "view": "عرض",
+        "edit": "تعديل",
+        "delete": "حذف"
+      }
+    },
+    "sender": {
+      "changeCover": "تغيير صورة الغلاف",
+      "role": "مرسل",
+      "verified": "الهوية موثقة",
+      "viewPublicProfile": "عرض الملف الشخصي العام",
+      "contactSender": "التواصل مع المرسل",
+      "stats": {
+        "rating": "التقييم",
+        "packagesSent": "الطرود المرسلة",
+        "totalSpent": "إجمالي الإنفاق"
+      },
+      "nav": {
+        "settings": "إعدادات الحساب",
+        "demands": "طلباتي",
+        "bookings": "حجوزاتي"
+      },
+      "settings": {
+        "personalInfo": {
+          "title": "المعلومات الشخصية",
+          "name": "الاسم الكامل",
+          "email": "البريد الإلكتروني",
+          "picture": "صورة الملف الشخصي"
+        },
+        "buttons": {
+          "discard": "إلغاء",
+          "update": "تحديث الإعدادات"
+        }
+      },
+      "demands": {
+        "title": "طلباتي",
+        "searchPlaceholder": "ابحث عن طلبات...",
+        "newDemandButton": "نشر طلب جديد",
+        "table": {
+          "package": "الطرد",
+          "route": "المسار",
+          "date": "التاريخ",
+          "offers": "العروض",
+          "status": "الحالة"
+        }
+      },
+      "bookings": {
+        "title": "حجوزاتي",
+        "table": {
+          "package": "الطرد",
+          "transporter": "الناقل",
+          "route": "المسار",
+          "status": "الحالة"
+        }
+      },
+      "public": {
+        "reviewsTitle": "التقييمات الأخيرة من الناقلين",
+        "rating": {
+          "title": "اترك تقييمًا",
+          "yourRating": "تقييمك",
+          "yourComment": "تعليقك",
+          "commentPlaceholder": "شارك تجربتك...",
+          "submitButton": "إرسال التقييم"
+        }
+      },
+      "status": {
+        "Completed": "مكتمل",
+        "Upcoming": "قادم",
+        "Active": "نشط"
+      },
+      "pagination": {
+        "page": "صفحة {currentPage} من {totalPages}",
+        "previous": "السابق",
+        "next": "التالي"
+      },
+      "actions": {
+        "view": "عرض",
+        "edit": "تعديل",
+        "delete": "حذف"
+      }
+    }
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "الإنجليزية",

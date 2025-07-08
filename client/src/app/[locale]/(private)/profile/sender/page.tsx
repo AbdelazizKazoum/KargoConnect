@@ -29,6 +29,7 @@ import {
   X,
 } from "lucide-react";
 import React, { useState, useMemo, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 
 // --- Reusable UI Components (Theme-aware) ---
 
@@ -207,6 +208,7 @@ const StatItem = ({
 );
 
 const StatusBadge = ({ status }: { status: string }) => {
+  const t = useTranslations("profile.sender.status");
   const baseClasses =
     "px-2 py-0.5 text-xs font-semibold rounded-full inline-flex items-center gap-1.5";
   const statusConfig: {
@@ -235,7 +237,7 @@ const StatusBadge = ({ status }: { status: string }) => {
   return (
     <div className={`${baseClasses} ${config.classes}`}>
       {config.icon}
-      {status}
+      {t(status.replace(/\s+/g, ""))}
     </div>
   );
 };
@@ -249,11 +251,12 @@ const Pagination = ({
   totalPages: number;
   onPageChange: (page: number) => void;
 }) => {
+  const t = useTranslations("profile.sender.pagination");
   if (totalPages <= 1) return null;
   return (
     <div className="flex items-center justify-end space-x-2 p-4">
       <span className="text-sm text-muted-foreground">
-        Page {currentPage} of {totalPages}
+        {t("page", { currentPage, totalPages })}
       </span>
       <Button
         variant="outline"
@@ -261,7 +264,7 @@ const Pagination = ({
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        Previous
+        {t("previous")}
       </Button>
       <Button
         variant="outline"
@@ -269,64 +272,73 @@ const Pagination = ({
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
-        Next
+        {t("next")}
       </Button>
     </div>
   );
 };
 
-const AccountSettingsView = ({ user }: { user: typeof senderData }) => (
-  <form className="space-y-8">
-    <div>
-      <h3 className="text-lg font-semibold mb-4">Personal Information</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="name">Full Name</Label>
-          <Input id="name" defaultValue={user.name} />
+const AccountSettingsView = ({ user }: { user: typeof senderData }) => {
+  const t = useTranslations("profile.sender.settings");
+  return (
+    <form className="space-y-8">
+      <div>
+        <h3 className="text-lg font-semibold mb-4">
+          {t("personalInfo.title")}
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="name">{t("personalInfo.name")}</Label>
+            <Input id="name" defaultValue={user.name} />
+          </div>
+          <div>
+            <Label htmlFor="email">{t("personalInfo.email")}</Label>
+            <Input id="email" type="email" defaultValue={user.email} />
+          </div>
         </div>
-        <div>
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" type="email" defaultValue={user.email} />
+        <div className="mt-4">
+          <Label htmlFor="avatar">{t("personalInfo.picture")}</Label>
+          <Input id="avatar" type="file" />
         </div>
       </div>
-      <div className="mt-4">
-        <Label htmlFor="avatar">Profile Picture</Label>
-        <Input id="avatar" type="file" />
+      <div className="flex justify-end gap-2 pt-4 border-t">
+        <Button variant="outline" type="button">
+          {t("buttons.discard")}
+        </Button>
+        <Button>{t("buttons.update")}</Button>
       </div>
-    </div>
-    <div className="flex justify-end gap-2 pt-4 border-t">
-      <Button variant="outline" type="button">
-        Discard
-      </Button>
-      <Button>Update Settings</Button>
-    </div>
-  </form>
-);
+    </form>
+  );
+};
 
-const ActionMenu = ({ onAction }: { onAction: (action: string) => void }) => (
-  <div className="bg-card border rounded-md shadow-lg w-32">
-    <button
-      onClick={() => onAction("view")}
-      className="flex items-center w-full px-3 py-2 text-sm text-left hover:bg-accent"
-    >
-      <View className="mr-2 h-4 w-4" /> View
-    </button>
-    <button
-      onClick={() => onAction("edit")}
-      className="flex items-center w-full px-3 py-2 text-sm text-left hover:bg-accent"
-    >
-      <Edit className="mr-2 h-4 w-4" /> Edit
-    </button>
-    <button
-      onClick={() => onAction("delete")}
-      className="flex items-center w-full px-3 py-2 text-sm text-left text-destructive hover:bg-destructive/10"
-    >
-      <Trash2 className="mr-2 h-4 w-4" /> Delete
-    </button>
-  </div>
-);
+const ActionMenu = ({ onAction }: { onAction: (action: string) => void }) => {
+  const t = useTranslations("profile.sender.actions");
+  return (
+    <div className="bg-card border rounded-md shadow-lg w-32">
+      <button
+        onClick={() => onAction("view")}
+        className="flex items-center w-full px-3 py-2 text-sm ltr:text-left rtl:text-right hover:bg-accent"
+      >
+        <View className="ltr:mr-2 rtl:ml-2 h-4 w-4" /> {t("view")}
+      </button>
+      <button
+        onClick={() => onAction("edit")}
+        className="flex items-center w-full px-3 py-2 text-sm ltr:text-left rtl:text-right hover:bg-accent"
+      >
+        <Edit className="ltr:mr-2 rtl:ml-2 h-4 w-4" /> {t("edit")}
+      </button>
+      <button
+        onClick={() => onAction("delete")}
+        className="flex items-center w-full px-3 py-2 text-sm ltr:text-left rtl:text-right text-destructive hover:bg-destructive/10"
+      >
+        <Trash2 className="ltr:mr-2 rtl:ml-2 h-4 w-4" /> {t("delete")}
+      </button>
+    </div>
+  );
+};
 
 const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
+  const t = useTranslations("profile.sender.demands");
   const [currentPage, setCurrentPage] = useState(1);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -350,14 +362,18 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
-        <h3 className="text-lg font-semibold">My Demands</h3>
+        <h3 className="text-lg font-semibold">{t("title")}</h3>
         <div className="flex items-center gap-2 w-full md:w-auto">
           <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search demands..." className="pl-9" />
+            <Search className="absolute ltr:left-3 rtl:right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder={t("searchPlaceholder")}
+              className="ltr:pl-9 rtl:pr-9"
+            />
           </div>
           <Button size="sm" className="flex-shrink-0">
-            <PlusCircle className="mr-2 h-4 w-4" /> Post New Demand
+            <PlusCircle className="ltr:mr-2 rtl:ml-2 h-4 w-4" />{" "}
+            {t("newDemandButton")}
           </Button>
         </div>
       </div>
@@ -387,7 +403,7 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
                 {openMenuId === demand.id && (
                   <div
                     ref={menuRef}
-                    className="absolute top-full right-0 z-10 mt-1"
+                    className="absolute top-full ltr:right-0 rtl:left-0 z-10 mt-1"
                   >
                     <ActionMenu
                       onAction={(action) => {
@@ -414,21 +430,21 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-secondary/50">
-              <tr className="text-left">
+              <tr className="ltr:text-left rtl:text-right">
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider w-2/5">
-                  Package
+                  {t("table.package")}
                 </th>
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider">
-                  Route
+                  {t("table.route")}
                 </th>
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider">
-                  Date
+                  {t("table.date")}
                 </th>
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider">
-                  Offers
+                  {t("table.offers")}
                 </th>
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider">
-                  Status
+                  {t("table.status")}
                 </th>
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider text-right"></th>
               </tr>
@@ -452,7 +468,7 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
                   <td className="p-3">
                     <StatusBadge status={demand.status} />
                   </td>
-                  <td className="p-3 text-right relative">
+                  <td className="p-3 ltr:text-right rtl:text-left relative">
                     <Button
                       variant="ghost"
                       size="icon"
@@ -468,7 +484,7 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
                     {openMenuId === demand.id && (
                       <div
                         ref={menuRef}
-                        className="absolute top-full right-0 z-10 mt-1"
+                        className="absolute top-full ltr:right-0 rtl:left-0 z-10 mt-1"
                       >
                         <ActionMenu
                           onAction={(action) => {
@@ -499,6 +515,7 @@ const BookingsView = ({
 }: {
   bookings: typeof senderData.bookings;
 }) => {
+  const t = useTranslations("profile.sender.bookings");
   const [currentPage, setCurrentPage] = useState(1);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -521,7 +538,7 @@ const BookingsView = ({
 
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-4">My Bookings</h3>
+      <h3 className="text-lg font-semibold mb-4">{t("title")}</h3>
       {/* Mobile Card View */}
       <div className="md:hidden space-y-4">
         {paginatedBookings.map((booking) => (
@@ -548,7 +565,7 @@ const BookingsView = ({
                 {openMenuId === booking.id && (
                   <div
                     ref={menuRef}
-                    className="absolute top-full right-0 z-10 mt-1"
+                    className="absolute top-full ltr:right-0 rtl:left-0 z-10 mt-1"
                   >
                     <ActionMenu
                       onAction={(action) => {
@@ -578,18 +595,18 @@ const BookingsView = ({
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-secondary/50">
-              <tr className="text-left">
+              <tr className="ltr:text-left rtl:text-right">
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider w-1/4">
-                  Package
+                  {t("table.package")}
                 </th>
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider">
-                  Transporter
+                  {t("table.transporter")}
                 </th>
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider w-1/4">
-                  Route
+                  {t("table.route")}
                 </th>
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider">
-                  Status
+                  {t("table.status")}
                 </th>
                 <th className="p-3 font-semibold text-xs uppercase tracking-wider text-right"></th>
               </tr>
@@ -612,7 +629,7 @@ const BookingsView = ({
                   <td className="p-3">
                     <StatusBadge status={booking.status} />
                   </td>
-                  <td className="p-3 text-right relative">
+                  <td className="p-3 ltr:text-right rtl:text-left relative">
                     <Button
                       variant="ghost"
                       size="icon"
@@ -628,7 +645,7 @@ const BookingsView = ({
                     {openMenuId === booking.id && (
                       <div
                         ref={menuRef}
-                        className="absolute top-full right-0 z-10 mt-1"
+                        className="absolute top-full ltr:right-0 rtl:left-0 z-10 mt-1"
                       >
                         <ActionMenu
                           onAction={(action) => {
@@ -655,14 +672,15 @@ const BookingsView = ({
 };
 
 const RateSenderView = () => {
+  const t = useTranslations("profile.sender.public.rating");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold mb-2">Leave a Review</h3>
+      <h3 className="text-lg font-semibold mb-2">{t("title")}</h3>
       <div>
-        <Label>Your Rating</Label>
+        <Label>{t("yourRating")}</Label>
         <div className="flex items-center gap-1 mt-1">
           {[1, 2, 3, 4, 5].map((star) => (
             <button
@@ -683,47 +701,50 @@ const RateSenderView = () => {
         </div>
       </div>
       <div>
-        <Label htmlFor="comment">Your Comment</Label>
-        <Textarea id="comment" placeholder="Share your experience..." />
+        <Label htmlFor="comment">{t("yourComment")}</Label>
+        <Textarea id="comment" placeholder={t("commentPlaceholder")} />
       </div>
-      <Button className="w-full">Submit Review</Button>
+      <Button className="w-full">{t("submitButton")}</Button>
     </div>
   );
 };
 
-const PublicProfileView = ({ user }: { user: typeof senderData }) => (
-  <div className="space-y-6">
-    <div>
-      <h3 className="text-lg font-semibold mb-4">
-        Recent Reviews from Transporters
-      </h3>
-      <div className="space-y-4">
-        {user.reviews.map((review) => (
-          <div
-            key={review.id}
-            className="text-sm border-b pb-4 last:border-b-0 last:pb-0"
-          >
-            <div className="flex items-center mb-1">
-              {[...Array(review.rating)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="h-4 w-4 text-yellow-500 fill-current"
-                />
-              ))}
+const PublicProfileView = ({ user }: { user: typeof senderData }) => {
+  const t = useTranslations("profile.sender.public");
+  return (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-semibold mb-4">{t("reviewsTitle")}</h3>
+        <div className="space-y-4">
+          {user.reviews.map((review) => (
+            <div
+              key={review.id}
+              className="text-sm border-b pb-4 last:border-b-0 last:pb-0"
+            >
+              <div className="flex items-center mb-1">
+                {[...Array(review.rating)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className="h-4 w-4 text-yellow-500 fill-current"
+                  />
+                ))}
+              </div>
+              <p className="text-muted-foreground italic">
+                &quot;{review.comment}&quot;
+              </p>
+              <p className="ltr:text-right rtl:text-left font-medium mt-1">
+                - {review.author}
+              </p>
             </div>
-            <p className="text-muted-foreground italic">
-              &quot;{review.comment}&quot;
-            </p>
-            <p className="text-right font-medium mt-1">- {review.author}</p>
-          </div>
-        ))}
+          ))}
+        </div>
+      </div>
+      <div className="border-t pt-6">
+        <RateSenderView />
       </div>
     </div>
-    <div className="border-t pt-6">
-      <RateSenderView />
-    </div>
-  </div>
-);
+  );
+};
 
 // --- Main Page Component ---
 
@@ -737,11 +758,12 @@ const SenderDashboardPage = ({
   const [activeTab, setActiveTab] = useState<DashboardTab>("settings");
   const [coverUrl, setCoverUrl] = useState(senderData.coverUrl);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const t = useTranslations("profile.sender");
 
   const navItems = [
-    { id: "settings", label: "Account Settings" },
-    { id: "demands", label: "My Demands" },
-    { id: "bookings", label: "My Bookings" },
+    { id: "settings", label: t("nav.settings") },
+    { id: "demands", label: t("nav.demands") },
+    { id: "bookings", label: t("nav.bookings") },
   ];
 
   const handleChangeCoverClick = () => {
@@ -796,8 +818,8 @@ const SenderDashboardPage = ({
               className="absolute top-4 right-4"
               onClick={handleChangeCoverClick}
             >
-              <Camera className="mr-2 h-4 w-4" />
-              Change Cover
+              <Camera className="ltr:mr-2 rtl:ml-2 h-4 w-4" />
+              {t("changeCover")}
             </Button>
           )}
         </div>
@@ -812,38 +834,38 @@ const SenderDashboardPage = ({
                   className="h-24 w-24 rounded-full mx-auto border-4 border-background"
                 />
                 <h2 className="font-bold text-xl mt-3">{senderData.name}</h2>
-                <p className="text-sm text-muted-foreground">Sender</p>
+                <p className="text-sm text-muted-foreground">{t("role")}</p>
                 {senderData.verified && (
                   <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300 px-2 py-0.5 rounded-full">
                     <CheckCircle className="h-3 w-3" />
-                    <span>Identity Verified</span>
+                    <span>{t("verified")}</span>
                   </div>
                 )}
                 <div className="mt-4 flex justify-center gap-2 text-sm">
                   <StatItem
                     icon={<Star className="h-full w-full" />}
-                    label="Rating"
+                    label={t("stats.rating")}
                     value={senderData.rating}
                   />
                   <StatItem
                     icon={<Package className="h-full w-full" />}
-                    label="Packages Sent"
+                    label={t("stats.packagesSent")}
                     value={senderData.packagesSent}
                   />
                   {isOwnerView && (
                     <StatItem
                       icon={<CircleDollarSign className="h-full w-full" />}
-                      label="Total Spent"
+                      label={t("stats.totalSpent")}
                       value={`${senderData.totalSpent}`}
                     />
                   )}
                 </div>
                 {isOwnerView ? (
                   <Button variant="outline" className="w-full mt-6">
-                    View Public Profile
+                    {t("viewPublicProfile")}
                   </Button>
                 ) : (
-                  <Button className="w-full mt-6">Contact Sender</Button>
+                  <Button className="w-full mt-6">{t("contactSender")}</Button>
                 )}
               </div>
             </aside>
@@ -879,7 +901,7 @@ const SenderDashboardPage = ({
 
 // --- App component to demonstrate both modes ---
 export default function App() {
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner, setIsOwner] = useState(false);
 
   return (
     <div className="bg-background">

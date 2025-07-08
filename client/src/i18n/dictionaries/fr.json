@@ -229,6 +229,179 @@
     }
   },
 
+  "profile": {
+    "transporter": {
+      "changeCover": "Changer la couverture",
+      "role": "Transporteur",
+      "verified": "Identité vérifiée",
+      "viewPublicProfile": "Voir le profil public",
+      "sendMessage": "Envoyer un message",
+      "stats": {
+        "rating": "Évaluation",
+        "trips": "Trajets",
+        "earnings": "Gains"
+      },
+      "nav": {
+        "settings": "Paramètres du compte",
+        "trips": "Mes trajets",
+        "offers": "Mes offres",
+        "bookings": "Réservations"
+      },
+      "settings": {
+        "personalInfo": {
+          "title": "Informations personnelles",
+          "name": "Nom complet",
+          "email": "Adresse e-mail",
+          "picture": "Photo de profil"
+        },
+        "vehicleInfo": {
+          "title": "Informations sur le véhicule",
+          "name": "Nom du véhicule",
+          "plate": "Plaque d'immatriculation",
+          "photos": "Photos du véhicule"
+        },
+        "buttons": {
+          "discard": "Annuler",
+          "update": "Mettre à jour"
+        }
+      },
+      "trips": {
+        "title": "Mes trajets publiés",
+        "searchPlaceholder": "Rechercher des trajets...",
+        "newTripButton": "Publier un nouveau trajet",
+        "table": {
+          "route": "Itinéraire",
+          "date": "Date",
+          "earnings": "Gains",
+          "status": "Statut"
+        }
+      },
+      "offers": {
+        "title": "Mes offres envoyées",
+        "searchPlaceholder": "Rechercher des offres...",
+        "table": {
+          "package": "Colis",
+          "route": "Itinéraire",
+          "yourOffer": "Votre offre",
+          "status": "Statut"
+        }
+      },
+      "bookings": {
+        "title": "Réservations entrantes",
+        "table": {
+          "package": "Colis",
+          "sender": "Expéditeur",
+          "route": "Itinéraire",
+          "status": "Statut"
+        }
+      },
+      "public": {
+        "reviewsTitle": "Avis récents",
+        "tripsTitle": "Trajets terminés",
+        "rating": {
+          "title": "Laisser un avis",
+          "yourRating": "Votre évaluation",
+          "yourComment": "Votre commentaire",
+          "commentPlaceholder": "Partagez votre expérience...",
+          "submitButton": "Envoyer l'avis"
+        }
+      },
+      "status": {
+        "Completed": "Terminé",
+        "Upcoming": "À venir",
+        "Pending": "En attente",
+        "Accepted": "Acceptée",
+        "Declined": "Refusée",
+        "Confirmed": "Confirmée",
+        "PendingApproval": "En attente d'approbation"
+      },
+      "pagination": {
+        "page": "Page {currentPage} sur {totalPages}",
+        "previous": "Précédent",
+        "next": "Suivant"
+      },
+      "actions": {
+        "view": "Voir",
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      }
+    },
+    "sender": {
+      "changeCover": "Changer la couverture",
+      "role": "Expéditeur",
+      "verified": "Identité vérifiée",
+      "viewPublicProfile": "Voir le profil public",
+      "contactSender": "Contacter l'expéditeur",
+      "stats": {
+        "rating": "Évaluation",
+        "packagesSent": "Colis envoyés",
+        "totalSpent": "Total dépensé"
+      },
+      "nav": {
+        "settings": "Paramètres du compte",
+        "demands": "Mes demandes",
+        "bookings": "Mes réservations"
+      },
+      "settings": {
+        "personalInfo": {
+          "title": "Informations personnelles",
+          "name": "Nom complet",
+          "email": "Adresse e-mail",
+          "picture": "Photo de profil"
+        },
+        "buttons": {
+          "discard": "Annuler",
+          "update": "Mettre à jour"
+        }
+      },
+      "demands": {
+        "title": "Mes demandes",
+        "searchPlaceholder": "Rechercher des demandes...",
+        "newDemandButton": "Publier une demande",
+        "table": {
+          "package": "Colis",
+          "route": "Itinéraire",
+          "date": "Date",
+          "offers": "Offres",
+          "status": "Statut"
+        }
+      },
+      "bookings": {
+        "title": "Mes réservations",
+        "table": {
+          "package": "Colis",
+          "transporter": "Transporteur",
+          "route": "Itinéraire",
+          "status": "Statut"
+        }
+      },
+      "public": {
+        "reviewsTitle": "Avis récents des transporteurs",
+        "rating": {
+          "title": "Laisser un avis",
+          "yourRating": "Votre évaluation",
+          "yourComment": "Votre commentaire",
+          "commentPlaceholder": "Partagez votre expérience...",
+          "submitButton": "Envoyer l'avis"
+        }
+      },
+      "status": {
+        "Completed": "Terminé",
+        "Upcoming": "À venir",
+        "Active": "Active"
+      },
+      "pagination": {
+        "page": "Page {currentPage} sur {totalPages}",
+        "previous": "Précédent",
+        "next": "Suivant"
+      },
+      "actions": {
+        "view": "Voir",
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      }
+    }
+  },
   "search": {
     "findTransporter": "Trouver un transporteur",
     "findPackage": "Trouver un colis",

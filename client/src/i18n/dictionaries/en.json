@@ -247,6 +247,180 @@
     }
   },
 
+  "profile": {
+    "transporter": {
+      "changeCover": "Change Cover",
+      "role": "Transporter",
+      "verified": "Identity Verified",
+      "viewPublicProfile": "View Public Profile",
+      "sendMessage": "Send a Message",
+      "stats": {
+        "rating": "Rating",
+        "trips": "Trips",
+        "earnings": "Earnings"
+      },
+      "nav": {
+        "settings": "Account Settings",
+        "trips": "My Trips",
+        "offers": "My Offers",
+        "bookings": "Bookings"
+      },
+      "settings": {
+        "personalInfo": {
+          "title": "Personal Information",
+          "name": "Full Name",
+          "email": "Email Address",
+          "picture": "Profile Picture"
+        },
+        "vehicleInfo": {
+          "title": "Vehicle Information",
+          "name": "Vehicle Name",
+          "plate": "License Plate",
+          "photos": "Vehicle Photos"
+        },
+        "buttons": {
+          "discard": "Discard",
+          "update": "Update Settings"
+        }
+      },
+      "trips": {
+        "title": "My Posted Trips",
+        "searchPlaceholder": "Search trips...",
+        "newTripButton": "Post New Trip",
+        "table": {
+          "route": "Route",
+          "date": "Date",
+          "earnings": "Earnings",
+          "status": "Status"
+        }
+      },
+      "offers": {
+        "title": "My Sent Offers",
+        "searchPlaceholder": "Search offers...",
+        "table": {
+          "package": "Package",
+          "route": "Route",
+          "yourOffer": "Your Offer",
+          "status": "Status"
+        }
+      },
+      "bookings": {
+        "title": "Incoming Bookings",
+        "table": {
+          "package": "Package",
+          "sender": "Sender",
+          "route": "Route",
+          "status": "Status"
+        }
+      },
+      "public": {
+        "reviewsTitle": "Recent Reviews",
+        "tripsTitle": "Completed Trips",
+        "rating": {
+          "title": "Leave a Review",
+          "yourRating": "Your Rating",
+          "yourComment": "Your Comment",
+          "commentPlaceholder": "Share your experience...",
+          "submitButton": "Submit Review"
+        }
+      },
+      "status": {
+        "Completed": "Completed",
+        "Upcoming": "Upcoming",
+        "Pending": "Pending",
+        "Accepted": "Accepted",
+        "Declined": "Declined",
+        "Confirmed": "Confirmed",
+        "PendingApproval": "Pending Approval"
+      },
+      "pagination": {
+        "page": "Page {currentPage} of {totalPages}",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      }
+    },
+    "sender": {
+      "changeCover": "Change Cover",
+      "role": "Sender",
+      "verified": "Identity Verified",
+      "viewPublicProfile": "View Public Profile",
+      "contactSender": "Contact Sender",
+      "stats": {
+        "rating": "Rating",
+        "packagesSent": "Packages Sent",
+        "totalSpent": "Total Spent"
+      },
+      "nav": {
+        "settings": "Account Settings",
+        "demands": "My Demands",
+        "bookings": "My Bookings"
+      },
+      "settings": {
+        "personalInfo": {
+          "title": "Personal Information",
+          "name": "Full Name",
+          "email": "Email Address",
+          "picture": "Profile Picture"
+        },
+        "buttons": {
+          "discard": "Discard",
+          "update": "Update Settings"
+        }
+      },
+      "demands": {
+        "title": "My Demands",
+        "searchPlaceholder": "Search demands...",
+        "newDemandButton": "Post New Demand",
+        "table": {
+          "package": "Package",
+          "route": "Route",
+          "date": "Date",
+          "offers": "Offers",
+          "status": "Status"
+        }
+      },
+      "bookings": {
+        "title": "My Bookings",
+        "table": {
+          "package": "Package",
+          "transporter": "Transporter",
+          "route": "Route",
+          "status": "Status"
+        }
+      },
+      "public": {
+        "reviewsTitle": "Recent Reviews from Transporters",
+        "rating": {
+          "title": "Leave a Review",
+          "yourRating": "Your Rating",
+          "yourComment": "Your Comment",
+          "commentPlaceholder": "Share your experience...",
+          "submitButton": "Submit Review"
+        }
+      },
+      "status": {
+        "Completed": "Completed",
+        "Upcoming": "Upcoming",
+        "Active": "Active"
+      },
+      "pagination": {
+        "page": "Page {currentPage} of {totalPages}",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      }
+    }
+  },
+
   "components": {
     "localeSwitcher": {
       "english": "English",
