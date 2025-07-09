@@ -1,17 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import CTASection from "@/components/home/CTASection";
+import FeaturesSection from "@/components/home/FeaturesSection";
 import HeroSection from "@/components/home/HeroSection";
 import HowItWorksSection from "@/components/home/HowItWorksSection";
-import FeaturesSection from "@/components/home/FeaturesSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
-import CTASection from "@/components/home/CTASection";
 
-// =====================================================================
-// --- Server Component (Main Page) ------------------------------------
-// =====================================================================
-export default async function App({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
+export default async function App({ params }: any) {
+  const { locale } = params;
   return (
     <>
       <main className="pt-16">
