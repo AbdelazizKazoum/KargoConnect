@@ -5,7 +5,7 @@ import SenderDashboardPage from "@/views/SenderDashboardPage";
 
 // --- App component to demonstrate both modes ---
 export default function Page() {
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner] = useState(true);
 
   return (
     <div className="bg-background">

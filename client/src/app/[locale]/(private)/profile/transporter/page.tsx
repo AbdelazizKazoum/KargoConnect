@@ -7,7 +7,7 @@ import TransporterDashboardPage from "@/views/TransporterDashboardPage";
 
 // --- App component to demonstrate both modes ---
 export default function App() {
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner] = useState(true);
 
   return (
     <div className="bg-background">
