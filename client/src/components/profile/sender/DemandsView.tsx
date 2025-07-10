@@ -139,7 +139,7 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
                   <td className="p-3">
                     <StatusBadge status={demand.status} />
                   </td>
-                  <td className="p-3 ltr:text-right rtl:text-left relative">
+                  <td className="p-3 ltr:text-right rtl:text-left">
                     <Button
                       variant="ghost"
                       size="icon"
@@ -155,7 +155,7 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
                     {openMenuId === demand.id && (
                       <div
                         ref={menuRef}
-                        className="absolute top-full ltr:right-0 rtl:left-0 z-10 mt-1"
+                        className="absolute ltr:right-0 rtl:left-0 z-10 mt-1"
                       >
                         <ActionMenu
                           onAction={(action) => {

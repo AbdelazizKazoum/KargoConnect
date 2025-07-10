@@ -126,8 +126,8 @@ const BookingsView = ({
                   <td className="p-3">
                     <StatusBadge status={booking.status} />
                   </td>
-                  <td className="p-3 ltr:text-right rtl:text-left relative">
-                    <div className="relative">
+                  <td className="p-3 ltr:text-right rtl:text-left">
+                    <div className="">
                       <Button
                         variant="ghost"
                         size="icon"
@@ -143,7 +143,7 @@ const BookingsView = ({
                       {openMenuId === booking.id && (
                         <div
                           ref={menuRef}
-                          className="absolute top-full ltr:right-0 rtl:left-0 z-50 mt-1"
+                          className="absolute ltr:right-0 rtl:left-0 z-50 mt-1"
                         >
                           <ActionMenu
                             onAction={(action) => {
