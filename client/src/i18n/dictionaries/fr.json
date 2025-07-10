@@ -12,7 +12,12 @@
     "testimonials": "Témoignages",
     "login": "Connexion",
     "signup": "S'inscrire",
-    "menu": "Menu"
+    "menu": "Menu",
+
+    "dashboard": "Tableau de bord",
+    "myAccount": "Mon compte",
+    "mesOffres": "Mes Offres",
+    "creerPoste": "Créer un poste"
   },
 
   "footer": {

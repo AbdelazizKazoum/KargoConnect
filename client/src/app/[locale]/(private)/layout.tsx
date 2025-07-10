@@ -8,7 +8,7 @@ export default async function RootLayout({
 }>) {
   return (
     <>
-      <Header state="auth" />
+      <Header state="private" />
       <div>{children}</div>
     </>
   );

@@ -1,23 +1,54 @@
 "use client";
 
-import { Menu, Moon, Ship, Sun, X } from "lucide-react";
+import { Menu, Moon, Ship, Sun, X, UserCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 
-export default function Header() {
+type LinkItem = {
+  name: string;
+  href: string;
+};
+
+type HeaderProps = {
+  state: "public" | "auth" | "private";
+  additionalLinksForRoot?: LinkItem[]; // shown on root when authenticated
+};
+
+export default function Header({
+  state,
+  additionalLinksForRoot = [],
+}: HeaderProps) {
   const t = useTranslations("header");
   const locale = useLocale();
   const [theme, setTheme] = useState("light");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navLinks = [
+  const publicLinks: LinkItem[] = [
     { name: t("howItWorks"), href: "#how-it-works" },
     { name: t("features"), href: "#features" },
     { name: t("testimonials"), href: "#testimonials" },
   ];
+
+  const privateLinks: LinkItem[] = [
+    { name: t("dashboard"), href: `/${locale}/dashboard` },
+    { name: t("myAccount"), href: `/${locale}/account` },
+  ];
+
+  const rootAuthExtraLinks = additionalLinksForRoot;
+
+  const getNavLinks = () => {
+    if (state === "private" && rootAuthExtraLinks.length > 0) {
+      return [...publicLinks, ...rootAuthExtraLinks];
+    }
+    if (state === "private") return privateLinks;
+    if (state === "public") return publicLinks;
+    return []; // auth pages: no nav links
+  };
+
+  const navLinks = getNavLinks();
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -26,11 +57,7 @@ export default function Header() {
   }, [theme]);
 
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = isMenuOpen ? "hidden" : "unset";
   }, [isMenuOpen]);
 
   const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
@@ -60,14 +87,24 @@ export default function Header() {
             </nav>
 
             <div className="flex items-center gap-2">
-              <div className="hidden md:flex items-center gap-2">
-                <Link href={`/${locale}/auth#login`}>
-                  <Button variant="ghost">{t("login")}</Button>
+              {state === "public" && (
+                <div className="hidden md:flex items-center gap-2">
+                  <Link href={`/${locale}/auth#login`}>
+                    <Button variant="ghost">{t("login")}</Button>
+                  </Link>
+                  <Link href={`/${locale}/auth`}>
+                    <Button>{t("signup")}</Button>
+                  </Link>
+                </div>
+              )}
+
+              {state === "private" && (
+                <Link href={`/${locale}/account`}>
+                  <Button variant="ghost" size="icon">
+                    <UserCircle className="h-6 w-6" />
+                  </Button>
                 </Link>
-                <Link href={`/${locale}/auth`}>
-                  <Button>{t("signup")}</Button>
-                </Link>
-              </div>
+              )}
 
               <LanguageSwitcher />
 
@@ -91,6 +128,7 @@ export default function Header() {
         </div>
       </header>
 
+      {/* Mobile menu */}
       <div
         className={`fixed inset-0 z-[60] md:hidden transition-opacity duration-300 ${
           isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -123,19 +161,22 @@ export default function Header() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMenuOpen(false)}
-                className=" text-lg font-medium text-muted-foreground hover:text-foreground"
+                className="text-lg font-medium text-muted-foreground hover:text-foreground"
               >
                 {link.name}
               </a>
             ))}
-            <div className="border-t pt-6 flex flex-col space-y-3">
-              <Link href={`/${locale}/auth/signup`}>
-                <Button variant="outline">{t("login")}</Button>
-              </Link>
-              <Link href={`/${locale}/auth/signup`}>
-                <Button>{t("signup")}</Button>
-              </Link>
-            </div>
+
+            {state === "public" && (
+              <div className="border-t pt-6 flex flex-col space-y-3">
+                <Link href={`/${locale}/auth#login`}>
+                  <Button variant="outline">{t("login")}</Button>
+                </Link>
+                <Link href={`/${locale}/auth`}>
+                  <Button>{t("signup")}</Button>
+                </Link>
+              </div>
+            )}
           </nav>
         </div>
       </div>

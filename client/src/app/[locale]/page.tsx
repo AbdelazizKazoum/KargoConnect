@@ -4,11 +4,13 @@ import FeaturesSection from "@/components/home/FeaturesSection";
 import HeroSection from "@/components/home/HeroSection";
 import HowItWorksSection from "@/components/home/HowItWorksSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
+import Header from "@/components/layout/Header";
 
 export default async function App({ params }: any) {
   const { locale } = params;
   return (
     <>
+      <Header state="public" />
       <main className="pt-16">
         <HeroSection locale={locale} />
         <HowItWorksSection />

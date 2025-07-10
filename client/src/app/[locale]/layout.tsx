@@ -77,8 +77,6 @@ export default async function RootLayout({
       <body className={`${fontClass} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <div className="bg-white dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors duration-300">
-            <Header />
-
             {children}
             <Footer />
           </div>

@@ -12,7 +12,11 @@
     "testimonials": "Testimonials",
     "login": "Log In",
     "signup": "Sign Up",
-    "menu": "Menu"
+    "menu": "Menu",
+    "dashboard": "Dashboard",
+    "myAccount": "My Account",
+    "mesOffres": "My Offers",
+    "creerPoste": "Create a Post"
   },
 
   "howItWorks": {

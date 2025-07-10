@@ -12,7 +12,12 @@
     "testimonials": "آراء العملاء",
     "login": "تسجيل الدخول",
     "signup": "إنشاء حساب",
-    "menu": "القائمة"
+    "menu": "القائمة",
+
+    "dashboard": "لوحة التحكم",
+    "myAccount": "حسابي",
+    "mesOffres": "عروضي",
+    "creerPoste": "إنشاء عرض"
   },
 
   "footer": {
