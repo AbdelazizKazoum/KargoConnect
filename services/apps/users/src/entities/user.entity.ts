@@ -26,7 +26,7 @@ export class Users extends AbstractEntity<Users> {
   password: string;
 
   @Column()
-  role: 'admin' | 'client' | 'transporter' | 'sender';
+  role: 'admin' | 'validator' | 'transporter' | 'sender';
 
   @Column({ nullable: true })
   primaryAddress: string;
