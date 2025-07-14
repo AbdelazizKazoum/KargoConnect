@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  users:
+    build:
+      context: .
+      dockerfile: ./apps/users/Dockerfile
+      target: development
+    ports:
+      - '5500:5500'
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USERNAME=kargo_user
+      - DB_PASSWORD=kargo_pass
+      - DB_DATABASE=kargo_db
+      - JWT_SECRET=your_jwt_secret
+      - JWT_EXPIRATION=3600
+      - PORT=5500
+    depends_on:
+      - db
+    command: npm run start:dev
+    networks:
+      - kargo-network
+    volumes:
+      - ./apps/users:/usr/src/app/apps/users
+      - ./libs:/usr/src/app/libs
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kargo_db
+      MYSQL_USER: kargo_user
+      MYSQL_PASSWORD: kargo_pass
+    ports:
+      - '3307:3308'
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - kargo-network
+
+networks:
+  kargo-network:
+    driver: bridge
+volumes:
+  db_data:
+    driver: local
