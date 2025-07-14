@@ -1,4 +1,6 @@
-import { Module } from '@nestjs/common';
+// src/database/database.module.ts
+
+import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '../config/config.module';
@@ -15,12 +17,19 @@ import { ConfigModule } from '../config/config.module';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         autoLoadEntities: true,
-        synchronize: true, // IMPORTANT: Set to false in production
+        synchronize: true, // Set to false in production
       }),
       inject: [ConfigService],
     }),
   ],
-
   exports: [TypeOrmModule],
 })
-export class DatabaseModule {}
+export class DatabaseModule {
+  static forFeature(entities: any[]): DynamicModule {
+    return {
+      module: DatabaseModule,
+      imports: [TypeOrmModule.forFeature(entities)],
+      exports: [TypeOrmModule],
+    };
+  }
+}
