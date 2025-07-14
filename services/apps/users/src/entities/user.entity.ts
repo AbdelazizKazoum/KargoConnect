@@ -10,7 +10,7 @@ export class Users extends AbstractEntity<Users> {
   @Column({ type: 'text', nullable: true })
   username: string;
 
-  @Column()
+  @Column({ nullable: true })
   identity: string;
 
   @Column({ nullable: true })
