@@ -9,10 +9,10 @@ COPY nest-cli.json nest-cli.json
 
 RUN npm install
 
-COPY apps/users apps/users
+COPY apps/auth apps/auth
 COPY libs libs
 
-RUN npm run build users
+RUN npm run build auth
 
 FROM node:alpine as production
 
