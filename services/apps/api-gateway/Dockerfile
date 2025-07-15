@@ -9,10 +9,10 @@ COPY nest-cli.json nest-cli.json
 
 RUN npm install
 
-COPY apps/users apps/users
+COPY apps/api-gateway apps/api-gateway
 COPY libs libs
 
-RUN npm run build users
+RUN npm run build api-gateway
 
 FROM node:alpine as production
 
@@ -28,4 +28,4 @@ RUN npm install --prod
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["node", "dist/apps/users/main"]
+CMD ["node", "dist/apps/api-gateway/main"]

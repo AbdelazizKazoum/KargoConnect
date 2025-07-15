@@ -4,27 +4,10 @@ import { UsersService } from './users.service';
 import { DatabaseModule } from '@app/common';
 import { Users } from './entities/user.entity';
 import { UsersRepository } from './users.repository';
-import { LoggerModule } from 'nestjs-pino';
+import { LoggerModule } from '@app/common/logger/logger.module';
 
 @Module({
-  imports: [
-    DatabaseModule,
-    DatabaseModule.forFeature([Users]),
-    LoggerModule.forRoot({
-      pinoHttp: {
-        level: process.env.LOG_LEVEL || 'info',
-        transport: {
-          target: 'pino-pretty',
-          options: {
-            singleLine: true,
-            colorize: true,
-            translateTime: 'SYS:standard',
-            ignore: 'pid,hostname',
-          },
-        },
-      },
-    }),
-  ],
+  imports: [DatabaseModule, DatabaseModule.forFeature([Users]), LoggerModule],
   controllers: [UsersController],
   providers: [UsersService, UsersRepository],
 })

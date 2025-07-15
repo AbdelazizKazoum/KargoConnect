@@ -1,6 +1,8 @@
 version: '3.8'
 
 services:
+  # ----------------------------------- USERS SERVICE -----------------------------------
+
   users:
     build:
       context: .
@@ -26,6 +28,57 @@ services:
     volumes:
       - ./apps/users:/usr/src/app/apps/users
       - ./libs:/usr/src/app/libs
+
+  # ----------------------------------- AUTH SERVICE -----------------------------------
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    ports:
+      - '5501:5501'
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USERNAME=kargo_user
+      - DB_PASSWORD=kargo_pass
+      - DB_DATABASE=kargo_db
+      - JWT_SECRET=your_jwt_secret
+      - JWT_EXPIRATION=3600
+      - PORT=5501
+    depends_on:
+      - db
+    command: npm run start:dev
+    networks:
+      - kargo-network
+    volumes:
+      - ./apps/auth:/usr/src/app/apps/auth
+
+  # ----------------------------------- GATEWAY API SERVICE -----------------------------------
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+      target: development
+    ports:
+      - '5502:5502'
+    environment:
+      - NODE_ENV=development
+      - USERS_SERVICE_HOST=users
+      - USERS_SERVICE_PORT=5500
+      - AUTH_SERVICE_HOST=auth
+      - AUTH_SERVICE_PORT=5501
+      - PORT=5502
+    depends_on:
+      - users
+      - auth
+    command: npm run start:dev
+    networks:
+      - kargo-network
+    volumes:
+      - ./apps/api-gateway:/usr/src/app/apps/api-gateway
+  # Uncomment the following lines if you have a reservations service
 
   db:
     image: mysql:latest
