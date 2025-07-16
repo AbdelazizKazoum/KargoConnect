@@ -1,8 +1,8 @@
-import { AbstractRepository } from '@app/common';
 import { Injectable, Logger } from '@nestjs/common';
-import { Users } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Users } from './entities/user.entity';
+import { AbstractRepository } from '@app/shared/database.index';
 
 @Injectable()
 export class UsersRepository extends AbstractRepository<Users> {

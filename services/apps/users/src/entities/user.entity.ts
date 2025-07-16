@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { AbstractEntity } from '@app/common';
+import { AbstractEntity } from '@app/shared/database/abstract.entity';
 import { Entity, Column } from 'typeorm';
 
 @Entity()
