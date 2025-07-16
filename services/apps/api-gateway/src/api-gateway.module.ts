@@ -3,6 +3,8 @@ import { ApiGatewayController } from './api-gateway.controller';
 import { ApiGatewayService } from './api-gateway.service';
 import { LoggerModule } from '@app/common/logger';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { AuthCoreModule } from '@app/shared';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,9 +26,10 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           port: parseInt(process.env.AUTH_SERVICE_PORT, 4002) || 4002,
         },
       },
-    ]), // Register your microservice clients here
+    ]),
+    AuthModule, // Register your microservice clients here
   ],
   controllers: [ApiGatewayController],
-  providers: [ApiGatewayService],
+  providers: [ApiGatewayService, AuthCoreModule],
 })
 export class ApiGatewayModule {}

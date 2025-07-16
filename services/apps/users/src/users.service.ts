@@ -4,13 +4,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
 
 import * as bcrypt from 'bcrypt';
-import { MessagePattern } from '@nestjs/microservices';
 
 @Injectable()
 export class UsersService {
   constructor(private usersRepository: UsersRepository) {}
 
-  @MessagePattern({ cmd: 'create-user' })
   async create(createUserDto: CreateUserDto) {
     const existingUser = await this.usersRepository.findOne({
       email: createUserDto.email,
@@ -30,8 +28,7 @@ export class UsersService {
     }
   }
 
-  @MessagePattern({ cmd: 'get-user-by-email' })
-  async getUserByEmail(email: string) {
+  async findByEmail(email: string) {
     return await this.usersRepository.findOne({ email });
   }
 

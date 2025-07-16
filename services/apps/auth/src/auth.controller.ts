@@ -13,4 +13,14 @@ export class AuthController {
     if (!user) throw new UnauthorizedException();
     return this.authService.login(user);
   }
+
+  @MessagePattern({ cmd: 'verify_token' })
+  async verifyToken(token: string) {
+    try {
+      return this.authService.verifyToken(token);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
+  }
 }

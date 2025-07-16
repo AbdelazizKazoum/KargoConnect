@@ -1,6 +1,6 @@
 import { User } from '@app/common';
 import { jwtConstants } from '@app/common/constants/jwt.constants';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
@@ -28,5 +28,16 @@ export class AuthService {
         expiresIn: jwtConstants.jwtRefreshExpirationTime,
       }),
     };
+  }
+
+  async verifyToken(token: string) {
+    try {
+      return this.jwtService.verify(token, {
+        secret: jwtConstants.jwtTokenSecret,
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      throw new UnauthorizedException('Invalid token');
+    }
   }
 }
