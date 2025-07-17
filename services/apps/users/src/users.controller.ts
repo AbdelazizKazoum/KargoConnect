@@ -9,6 +9,11 @@ import { MessagePattern } from '@nestjs/microservices';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get()
+  getHello(): string {
+    return 'hello woekd';
+  }
+
   @MessagePattern({ cmd: 'create-user' })
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.create(createUserDto);

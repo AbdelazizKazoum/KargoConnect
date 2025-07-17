@@ -21,6 +21,8 @@ services:
       - JWT_EXPIRATION=3600
       - PORT=4001
       - HOST=localhost
+      - AUTH_SERVICE_HOST=auth
+      - AUTH_SERVICE_PORT=4002
     depends_on:
       - db
     command: npm run start:dev users
@@ -44,6 +46,8 @@ services:
       - JWT_EXPIRATION=3600
       - PORT=4002
       - HOST=localhost
+      - USERS_SERVICE_HOST=users
+      - USERS_SERVICE_PORT=4001
 
     depends_on:
       - users

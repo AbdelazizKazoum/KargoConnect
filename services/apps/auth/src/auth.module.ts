@@ -12,7 +12,7 @@ import { AuthCoreModule } from '@app/shared';
       {
         name: 'USERS_SERVICE',
         transport: Transport.TCP,
-        options: { port: 4002 },
+        options: { port: 4001 },
       },
     ]),
   ],

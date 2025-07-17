@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { LoginDto, RegisterDto } from '@app/common';
@@ -7,6 +7,11 @@ import { LoginDto, RegisterDto } from '@app/common';
 @Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Get()
+  getHello(): string {
+    return 'hello woekd';
+  }
 
   @MessagePattern({ cmd: 'register' })
   async register(data: RegisterDto) {
