@@ -1,4 +1,5 @@
-import { User } from '@app/common';
+/* eslint-disable prettier/prettier */
+import { RegisterDto, User } from '@app/common';
 import { jwtConstants } from '@app/common/constants/jwt.constants';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -18,6 +19,13 @@ export class AuthService {
     );
     if (user && user.password === pass) return user;
     return null;
+  }
+
+  async register(user: RegisterDto) {
+    const data = await firstValueFrom(
+      this.usersCLient.send({ cmd: 'create-user' }, user),
+    );
+    return data;
   }
 
   async login(user: User) {

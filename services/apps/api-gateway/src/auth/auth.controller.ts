@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { LoginDto } from '@app/common';
+import { LoginDto, RegisterDto } from '@app/common';
 import { JwtAuthGuard } from '@app/shared';
 import {
   Body,
@@ -15,6 +15,11 @@ import { ClientProxy } from '@nestjs/microservices';
 @Controller('auth')
 export class AuthController {
   constructor(@Inject('AUTH_SERVICE') private client: ClientProxy) {}
+
+  @Post('register')
+  async register(@Body() body: RegisterDto) {
+    return await this.client.send({ cmd: 'register' }, body);
+  }
 
   @Post('login')
   async login(@Body() body: LoginDto) {

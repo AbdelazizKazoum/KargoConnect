@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
@@ -7,6 +8,7 @@ import { LoggerModule } from '@app/common/logger/logger.module';
 import * as Joi from 'joi';
 import { ConfigModule } from '@app/shared/config/config.module';
 import { DatabaseModule } from '@app/shared/database.index';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -25,6 +27,14 @@ import { DatabaseModule } from '@app/shared/database.index';
     DatabaseModule,
     DatabaseModule.forFeature([Users]),
     LoggerModule,
+
+    ClientsModule.register([
+      {
+        name: 'AUTH_SERVICE',
+        transport: Transport.TCP,
+        options: { port: 4001 },
+      },
+    ]),
   ],
   controllers: [UsersController],
   providers: [UsersService, UsersRepository],

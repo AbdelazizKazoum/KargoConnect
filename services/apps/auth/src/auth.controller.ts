@@ -1,11 +1,18 @@
+/* eslint-disable prettier/prettier */
 import { Controller, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { LoginDto } from '@app/common';
+import { LoginDto, RegisterDto } from '@app/common';
 
 @Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @MessagePattern({ cmd: 'register' })
+  async register(data: RegisterDto) {
+    const user = await this.authService.register(data);
+    return user;
+  }
 
   @MessagePattern({ cmd: 'login' })
   async login(data: LoginDto) {
