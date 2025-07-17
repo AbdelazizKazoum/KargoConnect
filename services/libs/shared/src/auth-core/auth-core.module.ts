@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { jwtConstants } from '@app/common/constants/jwt.constants';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';

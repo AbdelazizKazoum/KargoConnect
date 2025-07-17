@@ -1,14 +1,16 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { ApiGatewayController } from './api-gateway.controller';
 import { ApiGatewayService } from './api-gateway.service';
 import { LoggerModule } from '@app/common/logger';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { AuthController } from './auth/auth.controller';
 import { AuthCoreModule } from '@app/shared';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     LoggerModule,
+    AuthCoreModule,
     ClientsModule.register([
       {
         name: 'USERS_SERVICE',
@@ -27,9 +29,8 @@ import { AuthModule } from './auth/auth.module';
         },
       },
     ]),
-    AuthModule, // Register your microservice clients here
   ],
-  controllers: [ApiGatewayController],
-  providers: [ApiGatewayService, AuthCoreModule],
+  controllers: [ApiGatewayController, AuthController],
+  providers: [ApiGatewayService],
 })
 export class ApiGatewayModule {}

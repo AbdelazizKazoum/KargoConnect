@@ -1,5 +1,6 @@
-import { JwtAuthGuard } from '@app/shared/auth-core/guards/jwt-auth.guard';
+/* eslint-disable prettier/prettier */
 import { LoginDto } from '@app/common';
+import { JwtAuthGuard } from '@app/shared';
 import {
   Body,
   Controller,
