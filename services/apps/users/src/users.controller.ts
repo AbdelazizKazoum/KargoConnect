@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 import { MessagePattern } from '@nestjs/microservices';
+import { RegisterDto } from '@app/common';
 
 @Controller('users')
 export class UsersController {
@@ -15,7 +15,7 @@ export class UsersController {
   }
 
   @MessagePattern({ cmd: 'create-user' })
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: RegisterDto) {
     return await this.usersService.create(createUserDto);
   }
 

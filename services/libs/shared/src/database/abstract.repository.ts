@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { AbstractEntity } from './abstract.entity';
 import { NotFoundException } from '@nestjs/common';
@@ -12,9 +13,6 @@ export abstract class AbstractRepository<T extends AbstractEntity<T>> {
 
   async findOne(where: FindOptionsWhere<T>): Promise<T> {
     const entity = await this.entityRepository.findOne({ where });
-    if (!entity) {
-      throw new NotFoundException('Entity not found.');
-    }
     return entity;
   }
 
