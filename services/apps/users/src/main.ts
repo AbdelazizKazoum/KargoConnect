@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
 import { UsersModule } from './users.module';
 import { ValidationPipe } from '@nestjs/common';
@@ -11,8 +12,8 @@ async function bootstrap() {
     {
       transport: Transport.TCP,
       options: {
-        host: process.env.HOST || 'localhost',
-        port: parseInt(process.env.PORT, 4001) || 4001,
+        host: '0.0.0.0', // ← THIS IS IMPORTANT
+        port: parseInt(process.env.PORT, 10) || 4001,
       },
     },
   );

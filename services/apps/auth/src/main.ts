@@ -8,8 +8,8 @@ async function bootstrap() {
     options: {
       transport: 'TCP',
       options: {
-        host: process.env.HOST || 'localhost',
-        port: parseInt(process.env.PORT, 4002) || 4002,
+        host: '0.0.0.0', // ← THIS IS IMPORTANT
+        port: parseInt(process.env.PORT, 10) || 4002,
       },
     },
   });

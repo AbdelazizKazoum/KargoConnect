@@ -11,8 +11,11 @@ import { AuthCoreModule } from '@app/shared';
     ClientsModule.register([
       {
         name: 'USERS_SERVICE',
-        transport: Transport.TCP,
-        options: { port: 4001 },
+        transport: Transport.TCP, // Transport.TCP
+        options: {
+          host: process.env.USERS_SERVICE_HOST, // no fallback to 'localhost'
+          port: parseInt(process.env.USERS_SERVICE_PORT, 10),
+        },
       },
     ]),
   ],

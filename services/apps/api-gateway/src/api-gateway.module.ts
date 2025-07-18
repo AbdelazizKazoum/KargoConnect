@@ -16,16 +16,16 @@ import { AuthCoreModule } from '@app/shared';
         name: 'USERS_SERVICE',
         transport: Transport.TCP, // Transport.TCP
         options: {
-          host: process.env.USERS_SERVICE_HOST || 'localhost',
-          port: parseInt(process.env.USERS_SERVICE_PORT, 4001) || 4001,
+          host: process.env.USERS_SERVICE_HOST, // no fallback to 'localhost'
+          port: parseInt(process.env.USERS_SERVICE_PORT, 10),
         },
       },
       {
         name: 'AUTH_SERVICE',
         transport: Transport.TCP, // Transport.TCP
         options: {
-          host: process.env.AUTH_SERVICE_HOST || 'localhost',
-          port: parseInt(process.env.AUTH_SERVICE_PORT, 4002) || 4002,
+          host: process.env.AUTH_SERVICE_HOST, // no fallback to 'localhost'
+          port: parseInt(process.env.AUTH_SERVICE_PORT, 10),
         },
       },
     ]),
