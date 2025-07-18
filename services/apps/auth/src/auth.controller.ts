@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { LoginDto, RegisterDto } from '@app/common';
+import { LoginDto, RegisterDto, RpcUnauthorizedException } from '@app/common';
 
 @Controller()
 export class AuthController {
@@ -22,7 +22,7 @@ export class AuthController {
   @MessagePattern({ cmd: 'login' })
   async login(data: LoginDto) {
     const user = await this.authService.validateUser(data.email, data.password);
-    if (!user) throw new UnauthorizedException();
+    if (!user) throw new RpcUnauthorizedException();
     return this.authService.login(user);
   }
 
@@ -32,7 +32,7 @@ export class AuthController {
       return this.authService.verifyToken(token);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
-      throw new UnauthorizedException();
+      throw new RpcUnauthorizedException();
     }
   }
 }

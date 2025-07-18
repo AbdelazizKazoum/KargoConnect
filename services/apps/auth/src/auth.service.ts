@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { RegisterDto, User } from '@app/common';
+import { RegisterDto, RpcUnauthorizedException, User } from '@app/common';
 import { jwtConstants } from '@app/common/constants/jwt.constants';
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
@@ -22,10 +22,14 @@ export class AuthService {
   }
 
   async register(user: RegisterDto) {
-    const data = await firstValueFrom(
-      this.usersCLient.send({ cmd: 'create-user' }, user),
-    );
-    return data;
+    try {
+      const data = await firstValueFrom(
+        this.usersCLient.send({ cmd: 'create-user' }, user),
+      );
+      return data;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async login(user: User) {
@@ -45,7 +49,7 @@ export class AuthService {
       });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
-      throw new UnauthorizedException('Invalid token');
+      throw new RpcUnauthorizedException('Invalid token');
     }
   }
 }

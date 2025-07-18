@@ -4,3 +4,7 @@ export * from './dto/register.dto';
 
 export * from './interfaces/user.interface';
 export * from './interfaces/jwt-payload.interface';
+
+// libs/common/src/index.ts
+
+export * from './exceptions/rpc-custom.exception';

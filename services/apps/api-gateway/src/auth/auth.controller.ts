@@ -11,6 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
 @Controller('auth')
 export class AuthController {
@@ -18,7 +19,7 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() body: RegisterDto) {
-    return await this.client.send({ cmd: 'register' }, body);
+    return await firstValueFrom(this.client.send({ cmd: 'register' }, body));
   }
 
   @Post('login')

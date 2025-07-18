@@ -5,6 +5,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
 
 import * as bcrypt from 'bcrypt';
+import {
+  RpcConflictException,
+  RpcInternalServerErrorException,
+} from '@app/common';
 
 @Injectable()
 export class UsersService {
@@ -15,7 +19,7 @@ export class UsersService {
       email: createUserDto.email,
     });
     if (existingUser) {
-      throw new Error('User with this email already exists');
+      throw new RpcConflictException('User with this email already exists');
     }
 
     try {
@@ -25,7 +29,7 @@ export class UsersService {
 
       return await this.usersRepository.create(createUserDto);
     } catch (error) {
-      throw new Error('Error creating user: ' + error.message);
+      throw new RpcInternalServerErrorException(error.message);
     }
   }
 

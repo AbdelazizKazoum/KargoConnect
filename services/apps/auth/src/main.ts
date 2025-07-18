@@ -2,7 +2,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AuthModule } from './auth.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   // The first argument should be the Module itself.
@@ -17,6 +16,7 @@ async function bootstrap() {
       },
     },
   );
+
   await app.listen();
   console.log('Auth microservice is listening'); // Added for debugging
 }
