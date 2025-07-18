@@ -6,6 +6,8 @@ import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
+import * as bcrypt from 'bcrypt'; // <-- Import bcrypt
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -17,8 +19,13 @@ export class AuthService {
     const user = await firstValueFrom(
       this.usersCLient.send({ cmd: 'get_user_by_email' }, email),
     );
-    if (user && user.password === pass) return user;
-    return null;
+
+    if (!user) return null;
+
+    const isPasswordMatch = await bcrypt.compare(pass, user.password);
+    if (!isPasswordMatch) return null;
+
+    return user;
   }
 
   async register(user: RegisterDto) {
@@ -33,10 +40,14 @@ export class AuthService {
   }
 
   async login(user: User) {
-    const payload = { sub: user.id, email: user.email };
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      username: user.username,
+    };
     return {
       access_token: this.jwtService.sign(payload),
-      access_refresh_token: this.jwtService.sign(payload, {
+      refresh_token: this.jwtService.sign(payload, {
         expiresIn: jwtConstants.jwtRefreshExpirationTime,
       }),
     };
