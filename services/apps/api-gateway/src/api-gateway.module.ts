@@ -6,6 +6,7 @@ import { LoggerModule } from '@app/common/logger';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth/auth.controller';
 import { AuthCoreModule } from '@app/shared';
+import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
@@ -14,23 +15,23 @@ import { AuthCoreModule } from '@app/shared';
     ClientsModule.register([
       {
         name: 'USERS_SERVICE',
-        transport: Transport.TCP, // Transport.TCP
+        transport: Transport.TCP,
         options: {
-          host: process.env.USERS_SERVICE_HOST, // no fallback to 'localhost'
+          host: process.env.USERS_SERVICE_HOST,
           port: parseInt(process.env.USERS_SERVICE_PORT, 10),
         },
       },
       {
         name: 'AUTH_SERVICE',
-        transport: Transport.TCP, // Transport.TCP
+        transport: Transport.TCP,
         options: {
-          host: process.env.AUTH_SERVICE_HOST, // no fallback to 'localhost'
+          host: process.env.AUTH_SERVICE_HOST,
           port: parseInt(process.env.AUTH_SERVICE_PORT, 10),
         },
       },
     ]),
   ],
-  controllers: [ApiGatewayController, AuthController],
+  controllers: [ApiGatewayController, AuthController, UsersController],
   providers: [ApiGatewayService],
 })
 export class ApiGatewayModule {}

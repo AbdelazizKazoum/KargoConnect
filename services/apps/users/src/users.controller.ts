@@ -24,9 +24,9 @@ export class UsersController {
     return this.usersService.findByEmail(email);
   }
 
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @MessagePattern({ cmd: 'getUsers' })
+  async findAll() {
+    return await this.usersService.findAll();
   }
 
   @Get(':id')

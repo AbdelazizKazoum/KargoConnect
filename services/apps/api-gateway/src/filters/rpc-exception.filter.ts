@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // apps/api-gateway/src/rpc-exception.filter.ts
 
 import {

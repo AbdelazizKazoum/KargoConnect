@@ -37,8 +37,13 @@ export class UsersService {
     return await this.usersRepository.findOne({ email });
   }
 
-  findAll() {
-    return this.usersRepository.findAll();
+  async findAll() {
+    try {
+      return await this.usersRepository.findAll();
+    } catch (error) {
+      console.log(error.message);
+      throw new RpcInternalServerErrorException('Failed to fetch users ');
+    }
   }
 
   findOne(id: number) {
