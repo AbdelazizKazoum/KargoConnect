@@ -1,0 +1,16 @@
+// lib/env.ts
+
+import { z } from "zod";
+
+// Define the schema for your environment variables
+const envSchema = z.object({
+  GOOGLE_CLIENT_ID: z.string().min(1),
+  GOOGLE_CLIENT_SECRET: z.string().min(1),
+  FACEBOOK_CLIENT_ID: z.string().min(1),
+  FACEBOOK_CLIENT_SECRET: z.string().min(1),
+  AUTH_SECRET: z.string().min(1),
+  EXTERNAL_API_URL: z.string().url(), // Example of more specific validation
+});
+
+// Parse and export the validated environment variables
+export const env = envSchema.parse(process.env);
