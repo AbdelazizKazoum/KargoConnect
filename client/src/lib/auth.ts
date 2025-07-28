@@ -40,7 +40,6 @@ const authOptions: NextAuthOptions = {
           if (!res.ok) return null;
 
           const data = await res.json();
-          console.log("🚀 ~ data:", data);
 
           if (data && data.access_token) {
             // Fake a user object (or fetch user info separately if needed)
@@ -60,9 +59,11 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   secret: env.NEXTAUTH_SECRET,
+  // Custom sign-in page
   pages: {
     signIn: "/login",
   },
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
