@@ -111,6 +111,7 @@
   },
 
   "auth": {
+    "invalidCredentials": "Adresse e-mail ou mot de passe invalide. Veuillez réessayer.",
     "roleTitle": "Rejoignez-nous",
     "roleSubtitle": "D'abord, dites-nous ce que vous souhaitez faire.",
     "senderTitle": "Je suis un expéditeur",

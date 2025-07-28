@@ -110,6 +110,7 @@
   },
 
   "auth": {
+    "invalidCredentials": "Invalid email or password. Please try again.",
     "roleTitle": "Join us",
     "roleSubtitle": "First, tell us what you'd like to do.",
     "senderTitle": "I'm a Sender",

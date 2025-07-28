@@ -1,19 +1,19 @@
 // types/next-auth.d.ts
 
 import "next-auth";
-// import { JWT } from "next-auth/jwt";
+import { DefaultSession } from "next-auth";
 
 // Extend the built-in User type
 declare module "next-auth" {
   interface User {
     id: string;
-    apiToken?: string; // Add the apiToken property from the authorize callback
+    apiToken?: string; // Token returned from the credentials provider
   }
 
   interface Session {
-    accessToken: string; // Add your custom property to the session
+    accessToken?: string; // Custom token from JWT
     user: {
-      id: string;
+      id?: string;
     } & DefaultSession["user"];
   }
 }
@@ -21,6 +21,7 @@ declare module "next-auth" {
 // Extend the built-in JWT type
 declare module "next-auth/jwt" {
   interface JWT {
-    apiToken?: string; // Add the apiToken property to the JWT
+    id?: string; // Add user ID to the token
+    apiToken?: string; // Add apiToken to the token
   }
 }
