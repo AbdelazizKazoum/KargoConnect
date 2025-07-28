@@ -43,7 +43,7 @@ export default function LoginView({
 
     if (result?.ok) {
       // On success, redirect to the dashboard or home page
-      router.push("/dashboard");
+      router.push(`/${locale}/`);
     } else {
       // On failure, set the error message
       setError(
