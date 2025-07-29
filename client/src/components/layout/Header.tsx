@@ -60,7 +60,7 @@ export default function Header({
 
   const handleSignOut = () => {
     // This will trigger the NextAuth sign-out process
-    signOut({ callbackUrl: `/${locale}` });
+    signOut({ callbackUrl: `/${locale}/auth` });
   };
 
   // Close dropdown when clicking outside
@@ -134,29 +134,61 @@ export default function Header({
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     variant="ghost"
                     size="icon"
+                    className="rounded-full"
                   >
-                    <UserCircle className="h-6 w-6" />
+                    {user?.image ? (
+                      <img
+                        src={user.image}
+                        alt={user.name || "User profile picture"}
+                        className="h-8 w-8 rounded-full"
+                      />
+                    ) : (
+                      <UserCircle className="h-6 w-6" />
+                    )}
                   </Button>
 
                   {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <div className="py-1">
-                        <div className="px-4 py-2 text-sm text-muted-foreground border-b">
-                          <p className="font-medium text-foreground">
-                            {user?.name || "User"}
-                          </p>
-                          <p className="truncate">{user?.email}</p>
+                        <div className="flex items-center px-4 py-3 border-b border-border">
+                          {user?.image && (
+                            <div className="flex-shrink-0">
+                              <img
+                                src={user.image}
+                                alt={user.name || "User profile picture"}
+                                className="h-10 w-10 rounded-full"
+                              />
+                            </div>
+                          )}
+                          <div className={user?.image ? "ml-3" : ""}>
+                            <p className="text-sm font-semibold text-foreground truncate">
+                              {user?.name || "User"}
+                            </p>
+                            <p className="text-sm text-muted-foreground truncate">
+                              {user?.email}
+                            </p>
+                          </div>
                         </div>
-                        {privateLinks.map((link) => (
+                        <div className="py-1">
                           <Link
-                            key={link.name}
-                            href={link.href}
+                            href={`/${locale}/profile`}
                             onClick={() => setIsDropdownOpen(false)}
                             className="flex items-center w-full text-left px-4 py-2 text-sm text-foreground hover:bg-muted"
                           >
-                            {link.name}
+                            <span>{t("profile")}</span>
                           </Link>
-                        ))}
+                          {privateLinks.map((link) => (
+                            <Link
+                              key={link.name}
+                              href={link.href}
+                              onClick={() => setIsDropdownOpen(false)}
+                              className="flex items-center w-full text-left px-4 py-2 text-sm text-foreground hover:bg-muted"
+                            >
+                              {/* You can add icons for other links too if you want */}
+                              {link.name}
+                            </Link>
+                          ))}
+                        </div>
                         <div className="border-t border-border">
                           <button
                             onClick={handleSignOut}

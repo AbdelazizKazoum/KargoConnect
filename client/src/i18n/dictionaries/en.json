@@ -17,7 +17,9 @@
     "dashboard": "Dashboard",
     "myAccount": "My Account",
     "mesOffres": "My Offers",
-    "creerPoste": "Create a Post"
+    "creerPoste": "Create a Post",
+    "profile": "Profile",
+    "language": "Language"
   },
 
   "howItWorks": {
