@@ -12,10 +12,12 @@
     "testimonials": "Témoignages",
     "login": "Connexion",
     "signup": "S'inscrire",
+    "signOut": "Se déconnecter",
     "menu": "Menu",
 
     "dashboard": "Tableau de bord",
     "myAccount": "Mon compte",
+
     "mesOffres": "Mes Offres",
     "creerPoste": "Créer un poste"
   },

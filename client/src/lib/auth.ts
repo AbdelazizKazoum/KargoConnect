@@ -46,7 +46,10 @@ const authOptions: NextAuthOptions = {
             return {
               id: credentials.email, // or fetch the actual user ID
               email: credentials.email,
-              apiToken: data.access_token,
+              username: data.user.username || credentials.email.split("@")[0], // Fallback to email prefix
+              role: data.user.role || "user", // Default role
+              accessToken: data.access_token, // Include access token in user object
+              refreshToken: data.refresh_token, // Include refresh token if available
             };
           }
 
@@ -67,14 +70,24 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.apiToken = user.apiToken;
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
         token.id = user.id;
+        token.username = user.username;
+        token.role = user.role;
+        token.email = user.email;
       }
       return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.apiToken;
+      console.log("🚀 ~ session ~ token:", token);
+
+      session.accessToken = token.accessToken;
       session.user.id = token.id;
+      session.user.username = token.username;
+      session.user.role = token.role;
+      session.user.email = token.email;
+
       return session;
     },
   },

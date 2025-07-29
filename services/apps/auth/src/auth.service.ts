@@ -46,6 +46,12 @@ export class AuthService {
       username: user.username,
     };
     return {
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+      },
       access_token: this.jwtService.sign(payload),
       refresh_token: this.jwtService.sign(payload, {
         expiresIn: jwtConstants.jwtRefreshExpirationTime,

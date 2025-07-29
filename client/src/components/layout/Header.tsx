@@ -1,11 +1,13 @@
 "use client";
 
-import { Menu, Moon, Ship, Sun, X, UserCircle } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Menu, Moon, Ship, Sun, X, UserCircle, LogOut } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "../ui";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react"; // Import signOut
 
 type LinkItem = {
   name: string;
@@ -15,16 +17,22 @@ type LinkItem = {
 type HeaderProps = {
   state: "public" | "auth" | "private";
   additionalLinksForRoot?: LinkItem[]; // shown on root when authenticated
+  user: Session["user"] | null; // user session for public state
 };
 
 export default function Header({
   state,
   additionalLinksForRoot = [],
+  user,
 }: HeaderProps) {
+  const effectiveState = user ? "private" : state;
+
   const t = useTranslations("header");
   const locale = useLocale();
   const [theme, setTheme] = useState("light");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const publicLinks: LinkItem[] = [
     { name: t("howItWorks"), href: "#how-it-works" },
@@ -40,15 +48,36 @@ export default function Header({
   const rootAuthExtraLinks = additionalLinksForRoot;
 
   const getNavLinks = () => {
-    if (state === "private" && rootAuthExtraLinks.length > 0) {
+    if (effectiveState === "private" && rootAuthExtraLinks.length > 0) {
       return [...publicLinks, ...rootAuthExtraLinks];
     }
-    if (state === "private") return privateLinks;
-    if (state === "public") return publicLinks;
-    return []; // auth pages: no nav links
+    if (effectiveState === "private") return privateLinks;
+    if (effectiveState === "public") return publicLinks;
+    return [];
   };
 
   const navLinks = getNavLinks();
+
+  const handleSignOut = () => {
+    // This will trigger the NextAuth sign-out process
+    signOut({ callbackUrl: `/${locale}` });
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -87,7 +116,7 @@ export default function Header({
             </nav>
 
             <div className="flex items-center gap-2">
-              {state === "public" && (
+              {effectiveState === "public" && (
                 <div className="hidden md:flex items-center gap-2">
                   <Link href={`/${locale}/auth#login`}>
                     <Button variant="ghost">{t("login")}</Button>
@@ -98,12 +127,49 @@ export default function Header({
                 </div>
               )}
 
-              {state === "private" && (
-                <Link href={`/${locale}/account`}>
-                  <Button variant="ghost" size="icon">
+              {/* User Dropdown */}
+              {effectiveState === "private" && (
+                <div className="relative" ref={dropdownRef}>
+                  <Button
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    variant="ghost"
+                    size="icon"
+                  >
                     <UserCircle className="h-6 w-6" />
                   </Button>
-                </Link>
+
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div className="py-1">
+                        <div className="px-4 py-2 text-sm text-muted-foreground border-b">
+                          <p className="font-medium text-foreground">
+                            {user?.name || "User"}
+                          </p>
+                          <p className="truncate">{user?.email}</p>
+                        </div>
+                        {privateLinks.map((link) => (
+                          <Link
+                            key={link.name}
+                            href={link.href}
+                            onClick={() => setIsDropdownOpen(false)}
+                            className="flex items-center w-full text-left px-4 py-2 text-sm text-foreground hover:bg-muted"
+                          >
+                            {link.name}
+                          </Link>
+                        ))}
+                        <div className="border-t border-border">
+                          <button
+                            onClick={handleSignOut}
+                            className="flex items-center w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-muted"
+                          >
+                            <LogOut className="mr-2 h-4 w-4" />
+                            <span>{t("signOut")}</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
 
               <LanguageSwitcher />
@@ -167,7 +233,7 @@ export default function Header({
               </a>
             ))}
 
-            {state === "public" && (
+            {effectiveState === "public" && (
               <div className="border-t pt-6 flex flex-col space-y-3">
                 <Link href={`/${locale}/auth#login`}>
                   <Button variant="outline">{t("login")}</Button>

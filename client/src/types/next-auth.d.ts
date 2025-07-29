@@ -7,13 +7,21 @@ import { DefaultSession } from "next-auth";
 declare module "next-auth" {
   interface User {
     id: string;
-    apiToken?: string; // Token returned from the credentials provider
+    accessToken?: string; // Token returned from the credentials provider
+    username?: string; // Optional username field
+    role?: string; // Optional role field
+    email?: string; // Optional email field
+    refreshToken?: string; // Optional refresh token field
   }
 
   interface Session {
     accessToken?: string; // Custom token from JWT
     user: {
       id?: string;
+      accessToken?: string; // Include access token in session
+      username?: string; // Optional username field
+      role?: string; // Optional role field
+      email?: string; // Optional email field
     } & DefaultSession["user"];
   }
 }
@@ -22,6 +30,9 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     id?: string; // Add user ID to the token
-    apiToken?: string; // Add apiToken to the token
+    accessToken?: string; // Add apiToken to the token
+    username?: string; // Optional username field
+    role?: string; // Optional role field
+    email?: string; // Optional email field
   }
 }
