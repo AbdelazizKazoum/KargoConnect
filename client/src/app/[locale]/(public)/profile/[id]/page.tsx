@@ -15,7 +15,7 @@ type User = {
 // ✅ API call using Axios
 async function fetchUserById(id: string): Promise<User | null> {
   try {
-    const res = await axiosServer.get(`/users/${id}`);
+    const res = await axiosServer.get(`/users/${id}/public-profile`);
     return res.data;
   } catch (error) {
     console.error("Failed to fetch user by ID:", error);
@@ -26,6 +26,7 @@ async function fetchUserById(id: string): Promise<User | null> {
 // ✅ SEO metadata generation
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const user = await fetchUserById(params.id);
+  console.log("🚀 ~ generateMetadata ~ user:", user);
 
   if (!user) {
     return {
@@ -57,11 +58,11 @@ export default async function PublicProfilePage({
   }
 
   if (user.role === "sender") {
-    return <SenderDashboardPage isOwnerView={true} />;
+    return <SenderDashboardPage isOwnerView={false} />;
   }
 
   if (user.role === "transporter") {
-    return <TransporterDashboardPage isOwnerView={true} />;
+    return <TransporterDashboardPage isOwnerView={false} />;
   }
 
   return <div>Unknown user role</div>;

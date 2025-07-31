@@ -29,10 +29,15 @@ export class UsersController {
     return await this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @MessagePattern({ cmd: 'getPublicProfile' })
+  async getUserPublicProfile(id: number) {
+    return await this.usersService.getUserPublicProfile(id);
   }
+
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.usersService.findOne(+id);
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

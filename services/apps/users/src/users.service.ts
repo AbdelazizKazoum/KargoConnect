@@ -46,8 +46,22 @@ export class UsersService {
     }
   }
 
-  findOne(id: number) {
-    return this.usersRepository.findOne({ id: +id });
+  async getUserPublicProfile(id: number) {
+    // Use the abstract repo's findOneOrDefault to get the user by id
+    const user = await this.usersRepository.findOneOrDefault({ id });
+    if (!user) return null;
+
+    // Return only public fields
+    return {
+      id: user.id,
+      username: user.username,
+      nom: user.nom,
+      prenom: user.prenom,
+      role: user.role,
+      status: user.status,
+      date_inscription: user.date_inscription,
+      // Optionally add more public fields if needed
+    };
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

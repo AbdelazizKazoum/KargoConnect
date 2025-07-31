@@ -6,7 +6,6 @@ import SenderDashboardPage from "@/views/SenderDashboardPage";
 
 export default async function App() {
   const session = await getServerSession(authOptions);
-  console.log("🚀 ~ App ~ session:", session);
 
   if (!session) {
     return <div>Unauthorized</div>; // Or redirect, or show a login button
