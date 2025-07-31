@@ -1,3 +1,4 @@
+"use client";
 import AccountSettingsView from "@/components/profile/transporter/AccountSettingsView";
 import BookingsView from "@/components/profile/transporter/BookingsView";
 import OffersView from "@/components/profile/transporter/OffersView";

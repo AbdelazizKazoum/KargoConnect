@@ -1,12 +1,9 @@
 "use client";
 
-import axios from "axios";
 import { getSession } from "next-auth/react";
+import api from "./api";
 
-const axiosClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  withCredentials: true,
-});
+const axiosClient = api;
 
 axiosClient.interceptors.request.use(async (config) => {
   const session = await getSession();

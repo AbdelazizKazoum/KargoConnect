@@ -1,20 +1,24 @@
-import axios from "axios";
-import { getToken } from "next-auth/jwt";
-import { cookies } from "next/headers";
+import { AxiosRequestHeaders } from "axios";
+import { getServerSession } from "next-auth";
+import authOptions from "./auth";
+import api from "./api";
 
-const axiosServer = axios.create({
-  baseURL: process.env.API_URL,
-});
+const serverApi = api;
+serverApi.interceptors.request.use(
+  async (config) => {
+    const session = await getServerSession(authOptions);
 
-axiosServer.interceptors.request.use(async (config) => {
-  const token = await getToken({
-    req: { cookies: cookies() },
-    secret: process.env.NEXTAUTH_SECRET,
-  });
-  if (token?.accessToken) {
-    config.headers.Authorization = `Bearer ${token.accessToken}`;
-  }
-  return config;
-});
+    const token = session?.user.accessToken || "";
 
-export default axiosServer;
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+    } as AxiosRequestHeaders;
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+export default serverApi;

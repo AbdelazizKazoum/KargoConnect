@@ -80,8 +80,6 @@ const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      console.log("🚀 ~ session ~ token:", token);
-
       session.accessToken = token.accessToken;
       session.user.id = token.id;
       session.user.username = token.username;

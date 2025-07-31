@@ -1,3 +1,4 @@
+"use client";
 import AccountSettingsView from "@/components/profile/sender/AccountSettingsView";
 import BookingsView from "@/components/profile/sender/BookingsView";
 import DemandsView from "@/components/profile/sender/DemandsView";
