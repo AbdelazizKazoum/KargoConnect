@@ -36,7 +36,7 @@ export class RegisterDto {
 
   @IsOptional()
   @IsString()
-  phone?: string;
+  identity_number?: string;
 
   @IsNotEmpty()
   @IsString()

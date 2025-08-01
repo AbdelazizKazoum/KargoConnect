@@ -1,16 +1,16 @@
 import { Star } from "lucide-react";
 import RateSenderView from "./RateSenderView";
 import { useTranslations } from "next-intl";
-import { senderData } from "@/db/data";
+import { PublicProfile } from "@/types/user";
 
-const PublicProfileView = ({ user }: { user: typeof senderData }) => {
+const PublicProfileView = ({ user }: { user: PublicProfile }) => {
   const t = useTranslations("profile.sender.public");
   return (
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-semibold mb-4">{t("reviewsTitle")}</h3>
         <div className="space-y-4">
-          {senderData.reviews.map((review) => (
+          {user.reviews.map((review) => (
             <div
               key={review.id}
               className="text-sm border-b pb-4 last:border-b-0 last:pb-0"

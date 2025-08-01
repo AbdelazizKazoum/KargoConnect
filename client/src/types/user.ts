@@ -21,11 +21,20 @@ export interface BaseUser {
   rating?: number; // Optional rating field
 }
 
+export interface review {
+  id: number;
+  author: string;
+  rating: number;
+  comment: string;
+}
+
 export interface PublicProfile extends BaseUser {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   demands?: Array<any>; // Optional demands array
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   bookings?: Array<any>; // Optional bookings array
+
+  reviews: review[]; // Array of reviews
 }
 
 export interface PrivateProfile extends BaseUser {

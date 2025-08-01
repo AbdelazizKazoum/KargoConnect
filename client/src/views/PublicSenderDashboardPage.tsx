@@ -10,7 +10,7 @@ type SenderDashboardPageProps = {
   user: PublicProfile;
 };
 
-const SenderDashboardPage = ({ user }: SenderDashboardPageProps) => {
+const PublicSenderDashboardPage = ({ user }: SenderDashboardPageProps) => {
   return (
     <div className="bg-secondary/50 min-h-screen pt-16">
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -86,4 +86,4 @@ const SenderDashboardPage = ({ user }: SenderDashboardPageProps) => {
   );
 };
 
-export default SenderDashboardPage;
+export default PublicSenderDashboardPage;

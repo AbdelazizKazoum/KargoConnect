@@ -1,10 +1,11 @@
 // app/public/profile/[id]/page.tsx
 
 import { notFound } from "next/navigation";
-import SenderDashboardPage from "@/views/SenderDashboardPage";
 import TransporterDashboardPage from "@/views/TransporterDashboardPage";
 import axiosServer from "@/lib/axiosServer";
 import { User } from "next-auth";
+import PublicSenderDashboardPage from "@/views/PublicSenderDashboardPage";
+import { PublicProfile } from "@/types/user";
 
 // ✅ API call using Axios
 async function fetchUserById(id: string): Promise<User | null> {
@@ -45,14 +46,14 @@ export default async function PublicProfilePage({
 }: {
   params: { id: string };
 }) {
-  const user = await fetchUserById(params.id);
+  const user = (await fetchUserById(params.id)) as PublicProfile;
 
   if (!user) {
     return notFound();
   }
 
   if (user.role === "sender") {
-    return <SenderDashboardPage isOwnerView={false} />;
+    return <PublicSenderDashboardPage user={user} />;
   }
 
   if (user.role === "transporter") {

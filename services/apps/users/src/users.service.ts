@@ -67,9 +67,74 @@ export class UsersService {
       country: user.country,
       city: user.city,
       address: user.address,
-      // Add any other public fields you want to expose
-      // e.g., demands, bookings, etc. can be fetched separately if needed
-      // Optionally add more public fields if needed
+
+      // Mock data for public profile
+      reviews: [
+        {
+          id: 1,
+          author: 'Youssef B.',
+          rating: 5,
+          comment:
+            'Amina is a great sender! Package was ready on time and communication was excellent.',
+        },
+        {
+          id: 2,
+          author: 'Fatima Z.',
+          rating: 5,
+          comment: 'Very reliable and friendly. A pleasure to work with.',
+        },
+      ],
+      demands: [
+        {
+          id: 1,
+          packageType: 'Small Box',
+          origin: 'Fes',
+          destination: 'Meknes',
+          date: '2025-07-25',
+          status: 'Active',
+          offers: 3,
+        },
+        {
+          id: 2,
+          packageType: 'Documents',
+          origin: 'Rabat',
+          destination: 'Kenitra',
+          date: '2025-07-28',
+          status: 'Active',
+          offers: 1,
+        },
+        {
+          id: 3,
+          packageType: 'Laptop',
+          origin: 'Casablanca',
+          destination: 'Rabat',
+          date: '2025-07-18',
+          status: 'Completed',
+          offers: 1,
+        },
+      ],
+      bookings: [
+        {
+          id: 1,
+          transporter: 'Youssef B.',
+          packageType: 'Laptop',
+          origin: 'Casablanca',
+          destination: 'Rabat',
+          date: '2025-07-18',
+          status: 'Completed',
+          price: 80,
+        },
+        {
+          id: 2,
+          transporter: 'Mehdi A.',
+          packageType: 'Gift Basket',
+          origin: 'Marrakech',
+          destination: 'Agadir',
+          date: '2025-08-02',
+          status: 'Upcoming',
+          price: 120,
+        },
+      ],
     };
   }
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui";
 import Label from "@/components/ui/label";
 import Textarea from "@/components/ui/Textarea";
