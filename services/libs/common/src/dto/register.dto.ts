@@ -35,9 +35,8 @@ export class RegisterDto {
   lastName?: string;
 
   @IsOptional()
-  @Type(() => Number)
-  @IsNumber()
-  tel?: number;
+  @IsString()
+  phone?: string;
 
   @IsNotEmpty()
   @IsString()

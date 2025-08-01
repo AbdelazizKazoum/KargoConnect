@@ -10,7 +10,7 @@ const PublicProfileView = ({ user }: { user: typeof senderData }) => {
       <div>
         <h3 className="text-lg font-semibold mb-4">{t("reviewsTitle")}</h3>
         <div className="space-y-4">
-          {user.reviews.map((review) => (
+          {senderData.reviews.map((review) => (
             <div
               key={review.id}
               className="text-sm border-b pb-4 last:border-b-0 last:pb-0"

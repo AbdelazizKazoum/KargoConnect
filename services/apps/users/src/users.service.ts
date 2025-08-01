@@ -63,7 +63,7 @@ export class UsersService {
       image: user.image,
       coverUrl: user.coverUrl,
       bio: user.bio,
-      phoneNumber: user.phoneNumber,
+      phone: user.phone,
       country: user.country,
       city: user.city,
       address: user.address,

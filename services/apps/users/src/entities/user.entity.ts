@@ -23,7 +23,7 @@ export class Users extends AbstractEntity<Users> {
   bio?: string;
 
   @Column({ nullable: true })
-  phoneNumber?: string;
+  phone?: string;
 
   @Column({
     type: 'enum',
@@ -57,9 +57,6 @@ export class Users extends AbstractEntity<Users> {
   // PrivateProfile fields
   @Column({ default: true })
   isActive?: boolean;
-
-  @Column({ nullable: true })
-  phone?: string;
 
   @Column({ default: false })
   isEmailVerified?: boolean;
