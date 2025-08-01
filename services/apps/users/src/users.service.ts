@@ -59,7 +59,16 @@ export class UsersService {
       firstName: user.firstName,
       role: user.role,
       verified: user.verified,
-      createdAt: user.createdAt,
+      rating: user.rating,
+      image: user.image,
+      coverUrl: user.coverUrl,
+      bio: user.bio,
+      phoneNumber: user.phoneNumber,
+      country: user.country,
+      city: user.city,
+      address: user.address,
+      // Add any other public fields you want to expose
+      // e.g., demands, bookings, etc. can be fetched separately if needed
       // Optionally add more public fields if needed
     };
   }

@@ -26,30 +26,30 @@ export class RegisterDto {
   @IsNotEmpty()
   role: 'admin' | 'validator' | 'transporter' | 'sender';
 
-  @IsOptional()
   @IsString()
-  identity?: string;
+  @IsNotEmpty()
+  firstName?: string;
 
-  @IsOptional()
   @IsString()
-  nom?: string;
-
-  @IsOptional()
-  @IsString()
-  prenom?: string;
+  @IsNotEmpty()
+  lastName?: string;
 
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
   tel?: number;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  primaryAddress?: string;
+  country?: string;
 
   @IsOptional()
   @IsString()
-  status?: string;
+  address?: string;
+
+  @IsOptional()
+  @IsString()
+  city?: string;
 
   @IsOptional()
   @Type(() => Date)
