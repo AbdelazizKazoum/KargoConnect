@@ -76,5 +76,8 @@ export class Users extends AbstractEntity<Users> {
   @Column({ type: 'timestamp', nullable: true })
   updatedAt?: Date;
 
+  @Column({ nullable: false })
+  password: string;
+
   // Add any additional sensitive/private fields as needed
 }
