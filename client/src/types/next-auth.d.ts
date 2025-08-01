@@ -1,5 +1,3 @@
-// types/next-auth.d.ts
-
 import "next-auth";
 import { DefaultSession } from "next-auth";
 
@@ -7,10 +5,12 @@ import { DefaultSession } from "next-auth";
 declare module "next-auth" {
   interface User {
     id: string;
-    accessToken?: string; // Token returned from the credentials provider
     username?: string; // Optional username field
     role?: string; // Optional role field
     email?: string; // Optional email field
+    image?: string; // Optional image field
+
+    accessToken?: string; // Token returned from the credentials provider
     refreshToken?: string; // Optional refresh token field
   }
 

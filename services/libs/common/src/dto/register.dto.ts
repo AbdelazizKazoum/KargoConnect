@@ -1,37 +1,57 @@
 /* eslint-disable prettier/prettier */
 import { Type } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsEnum,
+} from 'class-validator';
 
 export class RegisterDto {
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @IsString()
+  @IsNotEmpty()
   username: string;
 
   @IsString()
   @IsNotEmpty()
-  identity: string;
-
-  @IsString()
-  nom: string;
-
-  prenom: string;
-
-  @Type(() => Number)
-  @IsNumber()
-  tel: number;
-
-  @IsString()
   password: string;
 
-  @IsString()
+  @IsEnum(['admin', 'validator', 'transporter', 'sender'])
+  @IsNotEmpty()
   role: 'admin' | 'validator' | 'transporter' | 'sender';
 
-  primaryAddress: string;
+  @IsOptional()
+  @IsString()
+  identity?: string;
 
-  status: string;
+  @IsOptional()
+  @IsString()
+  nom?: string;
 
+  @IsOptional()
+  @IsString()
+  prenom?: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  tel?: number;
+
+  @IsOptional()
+  @IsString()
+  primaryAddress?: string;
+
+  @IsOptional()
+  @IsString()
+  status?: string;
+
+  @IsOptional()
   @Type(() => Date)
-  date_inscription: Date;
+  date_inscription?: Date;
 }

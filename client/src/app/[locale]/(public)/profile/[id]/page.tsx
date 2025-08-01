@@ -4,13 +4,7 @@ import { notFound } from "next/navigation";
 import SenderDashboardPage from "@/views/SenderDashboardPage";
 import TransporterDashboardPage from "@/views/TransporterDashboardPage";
 import axiosServer from "@/lib/axiosServer";
-
-type User = {
-  id: string;
-  name: string;
-  role: "sender" | "transporter";
-  description?: string;
-};
+import { User } from "next-auth";
 
 // ✅ API call using Axios
 async function fetchUserById(id: string): Promise<User | null> {

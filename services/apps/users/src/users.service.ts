@@ -55,11 +55,11 @@ export class UsersService {
     return {
       id: user.id,
       username: user.username,
-      nom: user.nom,
-      prenom: user.prenom,
+      lastName: user.lastName,
+      firstName: user.firstName,
       role: user.role,
-      status: user.status,
-      date_inscription: user.date_inscription,
+      verified: user.verified,
+      createdAt: user.createdAt,
       // Optionally add more public fields if needed
     };
   }

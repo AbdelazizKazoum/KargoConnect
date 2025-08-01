@@ -4,36 +4,80 @@ import { Entity, Column } from 'typeorm';
 
 @Entity()
 export class Users extends AbstractEntity<Users> {
-  @Column()
-  email: string;
-
-  @Column({ type: 'text', nullable: true })
-  username: string;
+  @Column({ nullable: true })
+  username?: string;
 
   @Column({ nullable: true })
-  identity: string;
+  firstName?: string;
 
   @Column({ nullable: true })
-  nom: string;
+  lastName?: string;
 
   @Column({ nullable: true })
-  prenom: string;
+  identity_number?: string;
 
   @Column({ nullable: true })
-  tel: number;
+  email?: string;
 
-  @Column()
-  password: string;
+  @Column({ nullable: true, type: 'text' })
+  bio?: string;
 
-  @Column()
+  @Column({ nullable: true })
+  phoneNumber?: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['admin', 'validator', 'transporter', 'sender'],
+  })
   role: 'admin' | 'validator' | 'transporter' | 'sender';
 
-  @Column({ nullable: true })
-  primaryAddress: string;
-
-  @Column({ default: 'Active' })
-  status: string;
+  @Column({ default: false })
+  verified?: boolean;
 
   @Column({ nullable: true })
-  date_inscription: Date;
+  country?: string;
+
+  @Column({ nullable: true })
+  city?: string;
+
+  @Column({ nullable: true })
+  address?: string;
+
+  @Column({ nullable: true })
+  image?: string;
+
+  @Column({ nullable: true })
+  coverUrl?: string;
+
+  @Column({ type: 'float', nullable: true })
+  rating?: number;
+
+  // PublicProfile extras (demands, bookings) are not stored here, but can be joined/related
+
+  // PrivateProfile fields
+  @Column({ default: true })
+  isActive?: boolean;
+
+  @Column({ nullable: true })
+  phone?: string;
+
+  @Column({ default: false })
+  isEmailVerified?: boolean;
+
+  @Column({ default: false })
+  isPhoneVerified?: boolean;
+
+  @Column({ default: false })
+  isProfileComplete?: boolean;
+
+  @Column({ default: false })
+  isTwoFactorEnabled?: boolean;
+
+  @Column({ type: 'timestamp', nullable: true })
+  createdAt?: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  updatedAt?: Date;
+
+  // Add any additional sensitive/private fields as needed
 }
