@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BaseUser {
   id: string;
   username?: string; // Optional username field
@@ -29,11 +30,9 @@ export interface review {
 }
 
 export interface PublicProfile extends BaseUser {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   demands?: Array<any>; // Optional demands array
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   bookings?: Array<any>; // Optional bookings array
-
+  trips?: Array<any>; // Optional trips array
   reviews: review[]; // Array of reviews
 }
 

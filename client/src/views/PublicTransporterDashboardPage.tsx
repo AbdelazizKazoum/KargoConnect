@@ -1,28 +1,30 @@
-// views/SenderDashboardPage.tsx
+// views/TransporterDashboardPage.tsx
 
-import PublicProfileView from "@/components/profile/sender/PublicProfileView";
+import PublicProfileView from "@/components/profile/transporter/PublicProfileView";
 import StatItem from "@/components/ui/StatItem";
-import { CheckCircle, Package, Star } from "lucide-react";
 import { Button } from "@/components/ui";
+import { CheckCircle, Star, Truck } from "lucide-react";
 import { PublicProfile } from "@/types/user";
 import Image from "next/image";
 
-type SenderDashboardPageProps = {
+type TransporterDashboardPageProps = {
   user: PublicProfile;
 };
 
-const PublicSenderDashboardPage = ({ user }: SenderDashboardPageProps) => {
+const PublicTransporterDashboardPage = ({
+  user,
+}: TransporterDashboardPageProps) => {
   return (
     <div className="bg-secondary/50 min-h-screen pt-16">
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="h-48 md:h-64 rounded-xl bg-card border relative">
           {user.coverUrl ? (
             <Image
-              src={user.coverUrl || "/default-cover.jpg"}
+              src={user.coverUrl}
               alt="Cover"
               fill
               className="object-cover rounded-xl"
-              style={{ objectFit: "cover", borderRadius: "inherit" }}
+              style={{ borderRadius: "inherit" }}
               sizes="(max-width: 1024px) 100vw, 1024px"
               priority
             />
@@ -53,7 +55,7 @@ const PublicSenderDashboardPage = ({ user }: SenderDashboardPageProps) => {
                 )}
 
                 <h2 className="font-bold text-xl mt-3">{user.username}</h2>
-                <p className="text-sm text-muted-foreground">{user.role}</p>
+                <p className="text-sm text-muted-foreground">Transporteur</p>
 
                 {user.verified && (
                   <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300 px-2 py-0.5 rounded-full">
@@ -69,14 +71,14 @@ const PublicSenderDashboardPage = ({ user }: SenderDashboardPageProps) => {
                     value={user.rating ?? "N/A"}
                   />
                   <StatItem
-                    icon={<Package className="h-full w-full" />}
-                    label="Colis envoyés"
+                    icon={<Truck className="h-full w-full" />}
+                    label="Trajets"
                     value={"N/A"}
                   />
                 </div>
 
                 <Button className="w-full mt-6">
-                  Contacter l&apos;expéditeur
+                  Contacter le transporteur
                 </Button>
               </div>
             </aside>
@@ -93,4 +95,4 @@ const PublicSenderDashboardPage = ({ user }: SenderDashboardPageProps) => {
   );
 };
 
-export default PublicSenderDashboardPage;
+export default PublicTransporterDashboardPage;

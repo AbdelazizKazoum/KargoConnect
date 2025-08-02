@@ -1,11 +1,11 @@
 // app/public/profile/[id]/page.tsx
 
 import { notFound } from "next/navigation";
-import TransporterDashboardPage from "@/views/TransporterDashboardPage";
 import axiosServer from "@/lib/axiosServer";
 import { User } from "next-auth";
 import PublicSenderDashboardPage from "@/views/PublicSenderDashboardPage";
 import { PublicProfile } from "@/types/user";
+import PublicTransporterDashboardPage from "@/views/PublicTransporterDashboardPage";
 
 // ✅ API call using Axios
 async function fetchUserById(id: string): Promise<User | null> {
@@ -57,7 +57,7 @@ export default async function PublicProfilePage({
   }
 
   if (user.role === "transporter") {
-    return <TransporterDashboardPage isOwnerView={false} />;
+    return <PublicTransporterDashboardPage user={user} />;
   }
 
   return <div>Unknown user role</div>;

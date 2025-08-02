@@ -135,6 +135,50 @@ export class UsersService {
           price: 120,
         },
       ],
+
+      // Mock data for transporter profile
+      trips: [
+        {
+          id: 1,
+          origin: 'Casablanca',
+          destination: 'Marrakech',
+          date: '2025-07-15',
+          status: 'Completed',
+          earnings: 150,
+        },
+        {
+          id: 2,
+          origin: 'Rabat',
+          destination: 'Tangier',
+          date: '2025-07-20',
+          status: 'Upcoming',
+          earnings: 120,
+        },
+        {
+          id: 3,
+          origin: 'Fes',
+          destination: 'Ifrane',
+          date: '2025-08-01',
+          status: 'Upcoming',
+          earnings: 90,
+        },
+        {
+          id: 4,
+          origin: 'Agadir',
+          destination: 'Marrakech',
+          date: '2025-06-30',
+          status: 'Completed',
+          earnings: 200,
+        },
+        {
+          id: 5,
+          origin: 'Casablanca',
+          destination: 'Fes',
+          date: '2025-08-05',
+          status: 'Upcoming',
+          earnings: 130,
+        },
+      ],
     };
   }
 
