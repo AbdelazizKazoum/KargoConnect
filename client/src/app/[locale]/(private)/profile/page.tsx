@@ -17,7 +17,7 @@ export default async function App() {
     // If user is a sender, render TransporterDashboardPage in a sender view
     return (
       <div className="bg-background">
-        <SenderDashboardPage isOwnerView={true} />
+        <SenderDashboardPage />
       </div>
     );
   }
