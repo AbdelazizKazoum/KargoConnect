@@ -16,14 +16,15 @@ import { Button } from "@/components/ui";
 type UserRole = "sender" | "transporter" | null;
 type AuthView = "role_select" | "signup" | "login";
 
-export default function SignupView({
-  role,
-  setView,
-}: {
+type SignupViewProps = {
   role: UserRole;
   setView: (view: AuthView) => void;
-  // Step-related props are now managed internally
-}) {
+  step: number;
+  handleNextStep: () => void;
+  handlePrevStep: () => void;
+};
+
+export default function SignupView({ role, setView }: SignupViewProps) {
   const t = useTranslations("auth");
   const locale = useLocale();
   const isRTL = locale === "ar";
