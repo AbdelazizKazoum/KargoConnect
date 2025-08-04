@@ -20,7 +20,7 @@ async function fetchUserById(id: string): Promise<User | null> {
 
 // ✅ SEO metadata generation
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const user = await fetchUserById(params.id);
+  const user = (await fetchUserById(params.id)) as PublicProfile;
   console.log("🚀 ~ generateMetadata ~ user:", user);
 
   if (!user) {
@@ -35,8 +35,8 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   }
 
   return {
-    title: `${user.name}'s Profile`,
-    description: `Public profile of ${user.name}, a ${user.role}`,
+    title: `${user.firstName} ${user.lastName}'s Profile`,
+    description: `Public profile of ${user.firstName} ${user.lastName}, a ${user.role}`,
   };
 }
 

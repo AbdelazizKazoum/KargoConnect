@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { AbstractEntity } from '@app/shared/database/abstract.entity';
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
+import { Vehicle } from './vehicle.entity';
 
 @Entity()
 export class Users extends AbstractEntity<Users> {
@@ -79,5 +80,6 @@ export class Users extends AbstractEntity<Users> {
   @Column({ nullable: false })
   password: string;
 
-  // Add any additional sensitive/private fields as needed
+  @OneToMany(() => Vehicle, (vehicle) => vehicle.user)
+  vehicles: Vehicle[];
 }

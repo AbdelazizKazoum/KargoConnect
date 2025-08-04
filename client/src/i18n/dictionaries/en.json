@@ -122,7 +122,11 @@
     "transporterDesc": "I want to earn money while driving.",
     "alreadyAccount": "Already have an account?",
     "login": "Log In",
-
+    "errors": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address",
+      "passwordLength": "Password must be at least 8 characters"
+    },
     "loginTitle": "Welcome Back",
     "loginSubtitle": "Log in to access your dashboard.",
     "continueWithGoogle": "Continue with Google",
@@ -133,23 +137,41 @@
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
     "signup": "Sign Up",
-
     "stepOf": "Step {step} of {total}",
     "continue": "Continue",
-    "vehicleType": "Vehicle Type",
-    "selectVehicle": "Select a vehicle...",
-    "car": "Car (Sedan, SUV)",
-    "van": "Van",
-    "pickup": "Pickup Truck",
-    "motorcycle": "Motorcycle / Scooter",
-    "availableCapacity": "Available Capacity",
-    "capacityPlaceholder": "e.g., Trunk space for 2 boxes",
     "nextStep": "Next Step",
-    "fullName": "Full Name",
-    "fullNamePlaceholder": "Enter your full name",
-    "profilePicture": "Profile Picture",
-    "profilePictureHint": "A clear photo helps build trust.",
-    "completeSignup": "Complete Signup"
+    "completeSignup": "Complete Signup",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
+    "vehicleInfo": {
+      "type": "Vehicle Type",
+      "options": {
+        "select": "Select a vehicle...",
+        "car": "Car (Sedan, SUV)",
+        "van": "Van",
+        "pickup": "Pickup Truck",
+        "motorcycle": "Motorcycle / Scooter"
+      },
+      "capacity": "Capacity (kg)",
+      "plate": "Plate Number",
+      "description": "Description",
+      "descriptionPlaceholder": "e.g., Vehicle condition, features...",
+      "photos": "Vehicle Photos",
+      "uploadFile": "Upload a file",
+      "dragAndDrop": "or drag and drop",
+      "fileTypes": "PNG, JPG, GIF up to 10MB"
+    },
+    "personalInfo": {
+      "country": "Country",
+      "countryPlaceholder": "e.g., Morocco",
+      "city": "City",
+      "cityPlaceholder": "e.g., Rabat",
+      "phone": "Phone Number",
+      "profilePicture": "Profile Picture",
+      "profilePictureHint": "A clear photo helps build trust."
+    }
   },
 
   "search": {

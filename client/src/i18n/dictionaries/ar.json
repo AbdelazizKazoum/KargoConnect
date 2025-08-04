@@ -112,7 +112,6 @@
     "description": "سجل اليوم وابدأ الشحن أو الربح. التسجيل مجاني!",
     "button": "ابدأ الآن"
   },
-
   "auth": {
     "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة. حاول مرة أخرى.",
     "roleTitle": "انضم إلينا",
@@ -123,7 +122,11 @@
     "transporterDesc": "أرغب في كسب المال أثناء القيادة.",
     "alreadyAccount": "هل لديك حساب بالفعل؟",
     "login": "تسجيل الدخول",
-
+    "errors": {
+      "required": "هذا الحقل مطلوب",
+      "invalidEmail": "الرجاء إدخال بريد إلكتروني صحيح",
+      "passwordLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل"
+    },
     "loginTitle": "مرحبًا بعودتك",
     "loginSubtitle": "سجّل الدخول للوصول إلى لوحة التحكم الخاصة بك.",
     "continueWithGoogle": "المتابعة مع جوجل",
@@ -134,23 +137,41 @@
     "forgotPassword": "هل نسيت كلمة المرور؟",
     "noAccount": "ليس لديك حساب؟",
     "signup": "إنشاء حساب",
-
     "stepOf": "الخطوة {step} من {total}",
     "continue": "متابعة",
-    "vehicleType": "نوع المركبة",
-    "selectVehicle": "اختر مركبة...",
-    "car": "سيارة (سيدان، دفع رباعي)",
-    "van": "فان",
-    "pickup": "شاحنة صغيرة",
-    "motorcycle": "دراجة نارية / سكوتر",
-    "availableCapacity": "السعة المتوفرة",
-    "capacityPlaceholder": "مثال: مساحة الصندوق تكفي لصندوقين",
     "nextStep": "الخطوة التالية",
-    "fullName": "الاسم الكامل",
-    "fullNamePlaceholder": "أدخل اسمك الكامل",
-    "profilePicture": "صورة الملف الشخصي",
-    "profilePictureHint": "الصورة الواضحة تساعد في بناء الثقة.",
-    "completeSignup": "إكمال التسجيل"
+    "completeSignup": "إكمال التسجيل",
+    "firstName": "الاسم الأول",
+    "firstNamePlaceholder": "أدخل اسمك الأول",
+    "lastName": "اسم العائلة",
+    "lastNamePlaceholder": "أدخل اسم عائلتك",
+    "vehicleInfo": {
+      "type": "نوع المركبة",
+      "options": {
+        "select": "اختر مركبة...",
+        "car": "سيارة (سيدان، دفع رباعي)",
+        "van": "شاحنة صغيرة (فان)",
+        "pickup": "شاحنة بيك أب",
+        "motorcycle": "دراجة نارية / سكوتر"
+      },
+      "capacity": "السعة (كجم)",
+      "plate": "رقم لوحة الترخيص",
+      "description": "الوصف",
+      "descriptionPlaceholder": "مثال: حالة المركبة، الميزات...",
+      "photos": "صور المركبة",
+      "uploadFile": "تحميل ملف",
+      "dragAndDrop": "أو اسحب وأفلت",
+      "fileTypes": "PNG, JPG, GIF حتى 10 ميجابايت"
+    },
+    "personalInfo": {
+      "country": "البلد",
+      "countryPlaceholder": "مثال: المغرب",
+      "city": "المدينة",
+      "cityPlaceholder": "مثال: الرباط",
+      "phone": "رقم الهاتف",
+      "profilePicture": "صورة الملف الشخصي",
+      "profilePictureHint": "صورة واضحة تساعد في بناء الثقة."
+    }
   },
 
   "search": {
