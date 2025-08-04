@@ -80,6 +80,6 @@ export class Users extends AbstractEntity<Users> {
   @Column({ nullable: false })
   password: string;
 
-  @OneToMany(() => Vehicle, (vehicle) => vehicle.user)
-  vehicles: Vehicle[];
+  @OneToMany(() => Vehicle, (vehicle) => vehicle.user, { nullable: true })
+  vehicles?: Vehicle[];
 }

@@ -31,6 +31,20 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
         index: false,
         follow: false,
       },
+      openGraph: {
+        title: "User not found",
+        description: "This profile is not available.",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: "User not found",
+        description: "This profile is not available.",
+      },
+      alternates: {
+        canonical: `/profile/${params.id}`,
+      },
+      metadataBase: new URL("https://kargoconnect.com"),  
+        
     };
   }
 

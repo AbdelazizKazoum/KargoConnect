@@ -1,17 +1,15 @@
-// SignupView.tsx (Main Component)
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { ArrowLeft } from "lucide-react";
 
-// Import the new step components
 import { AccountStepForm } from "@/components/auth/AccountStepForm";
 import { VehicleStepForm } from "@/components/auth/VehicleStepForm";
 import { ProfileStepForm } from "@/components/auth/ProfileStepForm";
 import { Button } from "@/components/ui";
-
-// --- (Keep your other UI components like Input, Label, Textarea, ImageUploader, etc. here or in a separate file) ---
+import { register } from "@/services/auth/authService";
 
 type UserRole = "sender" | "transporter" | null;
 type AuthView = "role_select" | "signup" | "login";
@@ -32,6 +30,8 @@ export default function SignupView({ role, setView }: SignupViewProps) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const totalSteps = role === "transporter" ? 3 : 2;
 
@@ -42,7 +42,6 @@ export default function SignupView({ role, setView }: SignupViewProps) {
   };
 
   const handlePrevStep = () => {
-    // Navigate back to role selection from step 1
     if (step === 1) {
       setView("role_select");
     } else {
@@ -50,20 +49,28 @@ export default function SignupView({ role, setView }: SignupViewProps) {
     }
   };
 
-  // This function is only called on the FINAL step
   const handleFinalSubmit = async (finalStepData: object) => {
     setIsSubmitting(true);
+    setError(null);
     const completeFormData = { ...formData, ...finalStepData };
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    console.log("✅ Form Data Submitted:", completeFormData);
-    alert("Signup Complete! Check the console for the submitted data.");
-    setIsSubmitting(false);
+    try {
+      const res = await register(completeFormData as any);
+      console.log("✅ Signup Success:", res.data);
+      setSuccess(true);
+    } catch (error: any) {
+      console.error("❌ Signup Failed:", error);
+      const errorMsg =
+        error?.response?.data?.message || "Une erreur est survenue.";
+      setError(errorMsg);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderStep = () => {
+    if (success) return null;
+
     switch (step) {
       case 1:
         return (
@@ -78,7 +85,6 @@ export default function SignupView({ role, setView }: SignupViewProps) {
             />
           );
         }
-        // For 'sender', step 2 is the final profile step
         return (
           <ProfileStepForm
             onSuccess={handleFinalSubmit}
@@ -86,7 +92,7 @@ export default function SignupView({ role, setView }: SignupViewProps) {
             isSubmitting={isSubmitting}
           />
         );
-      case 3: // This case is only for 'transporter'
+      case 3:
         return (
           <ProfileStepForm
             onSuccess={handleFinalSubmit}
@@ -125,8 +131,20 @@ export default function SignupView({ role, setView }: SignupViewProps) {
         </div>
       </div>
 
-      {/* Render the current step component */}
+      {/* Step Form */}
       {renderStep()}
+
+      {/* Error Message */}
+      {error && (
+        <p className="text-sm text-red-500 mt-4 text-center">{error}</p>
+      )}
+
+      {/* Success Message */}
+      {success && (
+        <div className="mt-6 p-4 rounded-lg bg-green-100 text-green-800 text-center text-sm font-medium">
+          ✅ Inscription réussie ! Vous pouvez maintenant vous connecter.
+        </div>
+      )}
 
       <p className="mt-6 text-center text-sm">
         {t("alreadyAccount")}{" "}

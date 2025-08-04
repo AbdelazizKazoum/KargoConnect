@@ -8,6 +8,7 @@ import { LoggerModule } from '@app/common/logger/logger.module';
 import * as Joi from 'joi';
 import { ConfigModule } from '@app/shared/config/config.module';
 import { DatabaseModule } from '@app/shared/database.index';
+import { Vehicle } from './entities/vehicle.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { DatabaseModule } from '@app/shared/database.index';
     ),
 
     DatabaseModule,
-    DatabaseModule.forFeature([Users]),
+    DatabaseModule.forFeature([Users, Vehicle]),
     LoggerModule,
 
     // ClientsModule.register([
