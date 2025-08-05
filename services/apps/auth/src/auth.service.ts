@@ -4,7 +4,7 @@ import { jwtConstants } from '@app/common/constants/jwt.constants';
 import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, last } from 'rxjs';
 
 import * as bcrypt from 'bcrypt'; // <-- Import bcrypt
 
@@ -43,7 +43,8 @@ export class AuthService {
     const payload = {
       sub: user.id,
       email: user.email,
-      username: user.username,
+      lastName: user.lastName,
+      firstName: user.firstName,
     };
     return {
       user: {
