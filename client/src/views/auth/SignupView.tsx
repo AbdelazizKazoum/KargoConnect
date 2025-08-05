@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X, CheckCircle2 } from "lucide-react";
 
 import { AccountStepForm } from "@/components/auth/AccountStepForm";
 import { VehicleStepForm } from "@/components/auth/VehicleStepForm";
@@ -17,9 +17,48 @@ type AuthView = "role_select" | "signup" | "login";
 type SignupViewProps = {
   role: UserRole;
   setView: (view: AuthView) => void;
-  step: number;
-  handleNextStep: () => void;
-  handlePrevStep: () => void;
+};
+
+// Success Modal Component
+const SuccessModal = ({
+  isOpen,
+  onClose,
+  onLoginClick,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onLoginClick: () => void;
+}) => {
+  const t = useTranslations("auth.successModal");
+
+  if (!isOpen) return null;
+
+  return (
+    // Backdrop
+    <div className="fixed inset-0 bg-black/60  z-50 flex justify-center items-center">
+      {/* Modal Content */}
+      <div className="bg-white rounded-xl shadow-2xl p-8 m-4 max-w-sm w-full text-center relative transform transition-all duration-300 ease-in-out scale-100">
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+          aria-label="Close"
+        >
+          <X size={24} />
+        </button>
+        <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+          <CheckCircle2 className="h-10 w-10 text-green-600" />
+        </div>
+        <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("title")}</h3>
+        <p className="text-gray-600 mb-6">{t("message")}</p>
+        <Button
+          onClick={onLoginClick}
+          className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg"
+        >
+          {t("loginButton")}
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default function SignupView({ role, setView }: SignupViewProps) {
@@ -31,12 +70,16 @@ export default function SignupView({ role, setView }: SignupViewProps) {
   const [formData, setFormData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // State for overall success of the registration process
   const [success, setSuccess] = useState(false);
+  // New state to control the visibility of the success modal
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const totalSteps = role === "transporter" ? 3 : 2;
 
   const handleNextStep = (stepData: object) => {
-    const updatedData = { ...formData, ...stepData };
+    const updatedData = { ...formData, role, ...stepData };
     setFormData(updatedData);
     setStep((prev) => prev + 1);
   };
@@ -52,16 +95,18 @@ export default function SignupView({ role, setView }: SignupViewProps) {
   const handleFinalSubmit = async (finalStepData: object) => {
     setIsSubmitting(true);
     setError(null);
-    const completeFormData = { ...formData, ...finalStepData };
+    const completeFormData = { ...formData, ...finalStepData, role };
+    console.log("🚀 ~ handleFinalSubmit ~ completeFormData:", completeFormData);
 
     try {
       const res = await register(completeFormData as any);
       console.log("✅ Signup Success:", res.data);
+      // Set both success flags to true to trigger the modal
       setSuccess(true);
+      setShowSuccessModal(true);
     } catch (error: any) {
       console.error("❌ Signup Failed:", error);
-      const errorMsg =
-        error?.response?.data?.message || "Une erreur est survenue.";
+      const errorMsg = error?.response?.data?.message || "An error occurred.";
       setError(errorMsg);
     } finally {
       setIsSubmitting(false);
@@ -69,6 +114,7 @@ export default function SignupView({ role, setView }: SignupViewProps) {
   };
 
   const renderStep = () => {
+    // Hide form steps if registration was successful
     if (success) return null;
 
     switch (step) {
@@ -107,29 +153,39 @@ export default function SignupView({ role, setView }: SignupViewProps) {
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"}>
-      <div className="flex items-center mb-6">
-        <Button
-          type="button"
-          onClick={handlePrevStep}
-          variant="ghost"
-          size="icon"
-          className="mr-2 h-8 w-8"
-        >
-          <ArrowLeft className="h-4 w-4" />
-        </Button>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight capitalize">
-            {role === "sender"
-              ? t("senderTitle")
-              : role === "transporter"
-              ? t("transporterTitle")
-              : t("signup")}
-          </h1>
-          <p className="text-muted-foreground">
-            {t("stepOf", { step, total: totalSteps })}
-          </p>
+      {/* Render the success modal */}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onLoginClick={() => setView("login")}
+      />
+
+      {/* Hide header when success card is shown to avoid clutter */}
+      {!(success && !showSuccessModal) && (
+        <div className="flex items-center mb-6">
+          <Button
+            type="button"
+            onClick={handlePrevStep}
+            variant="ghost"
+            size="icon"
+            className="mr-2 h-8 w-8"
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight capitalize">
+              {role === "sender"
+                ? t("senderTitle")
+                : role === "transporter"
+                ? t("transporterTitle")
+                : t("signup")}
+            </h1>
+            <p className="text-muted-foreground">
+              {t("stepOf", { step, total: totalSteps })}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Step Form */}
       {renderStep()}
@@ -139,10 +195,16 @@ export default function SignupView({ role, setView }: SignupViewProps) {
         <p className="text-sm text-red-500 mt-4 text-center">{error}</p>
       )}
 
-      {/* Success Message */}
-      {success && (
-        <div className="mt-6 p-4 rounded-lg bg-green-100 text-green-800 text-center text-sm font-medium">
-          ✅ Inscription réussie ! Vous pouvez maintenant vous connecter.
+      {/* Success Message Card (shows after modal is closed) */}
+      {success && !showSuccessModal && (
+        <div className="mt-6 p-6 rounded-lg bg-green-50 border border-green-200 text-center">
+          <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
+          <h3 className="text-xl font-semibold text-green-800">
+            Account Created!
+          </h3>
+          <p className="text-green-700 mt-1">
+            You can now log in using your credentials.
+          </p>
         </div>
       )}
 

@@ -171,6 +171,11 @@
       "phone": "Phone Number",
       "profilePicture": "Profile Picture",
       "profilePictureHint": "A clear photo helps build trust."
+    },
+    "successModal": {
+      "title": "Account Created!",
+      "message": "Your registration was successful. You can now log in to your new account.",
+      "loginButton": "Go to Login"
     }
   },
 

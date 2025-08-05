@@ -1,5 +1,3 @@
-// services/auth.service.ts
-
 import axiosClient from "@/lib/axiosClient";
 import { BaseUser } from "@/types/user";
 
