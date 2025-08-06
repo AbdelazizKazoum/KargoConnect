@@ -35,7 +35,7 @@ const SuccessModal = ({
 
   return (
     // Backdrop
-    <div className="fixed inset-0 bg-black/60  z-50 flex justify-center items-center">
+    <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center">
       {/* Modal Content */}
       <div className="bg-white rounded-xl shadow-2xl p-8 m-4 max-w-sm w-full text-center relative transform transition-all duration-300 ease-in-out scale-100">
         <button
@@ -71,9 +71,7 @@ export default function SignupView({ role, setView }: SignupViewProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // State for overall success of the registration process
   const [success, setSuccess] = useState(false);
-  // New state to control the visibility of the success modal
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const totalSteps = role === "transporter" ? 3 : 2;
@@ -101,7 +99,6 @@ export default function SignupView({ role, setView }: SignupViewProps) {
     try {
       const res = await register(completeFormData as any);
       console.log("✅ Signup Success:", res.data);
-      // Set both success flags to true to trigger the modal
       setSuccess(true);
       setShowSuccessModal(true);
     } catch (error: any) {
@@ -114,7 +111,7 @@ export default function SignupView({ role, setView }: SignupViewProps) {
   };
 
   const renderStep = () => {
-    // Hide form steps if registration was successful
+    // This logic is already correct: it hides the form steps on success.
     if (success) return null;
 
     switch (step) {
@@ -153,15 +150,15 @@ export default function SignupView({ role, setView }: SignupViewProps) {
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"}>
-      {/* Render the success modal */}
+      {/* The modal remains unchanged and will appear on top */}
       <SuccessModal
         isOpen={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}
         onLoginClick={() => setView("login")}
       />
 
-      {/* Hide header when success card is shown to avoid clutter */}
-      {!(success && !showSuccessModal) && (
+      {/* CHANGE 1: Simplified condition. Show header only if NOT successful. */}
+      {!success && (
         <div className="flex items-center mb-6">
           <Button
             type="button"
@@ -187,16 +184,16 @@ export default function SignupView({ role, setView }: SignupViewProps) {
         </div>
       )}
 
-      {/* Step Form */}
+      {/* This will render the form steps, which are correctly hidden on success */}
       {renderStep()}
 
       {/* Error Message */}
-      {error && (
+      {error && !success && (
         <p className="text-sm text-red-500 mt-4 text-center">{error}</p>
       )}
 
-      {/* Success Message Card (shows after modal is closed) */}
-      {success && !showSuccessModal && (
+      {/* CHANGE 2: Simplified condition. Show success card AS SOON as success is true. */}
+      {success && (
         <div className="mt-6 p-6 rounded-lg bg-green-50 border border-green-200 text-center">
           <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
           <h3 className="text-xl font-semibold text-green-800">
@@ -208,16 +205,19 @@ export default function SignupView({ role, setView }: SignupViewProps) {
         </div>
       )}
 
-      <p className="mt-6 text-center text-sm">
-        {t("alreadyAccount")}{" "}
-        <button
-          type="button"
-          onClick={() => setView("login")}
-          className="font-semibold text-primary hover:underline"
-        >
-          {t("login")}
-        </button>
-      </p>
+      {/* CHANGE 3: Simplified condition. Hide the "already have account" link on success. */}
+      {!success && (
+        <p className="mt-6 text-center text-sm">
+          {t("alreadyAccount")}{" "}
+          <button
+            type="button"
+            onClick={() => setView("login")}
+            className="font-semibold text-primary hover:underline"
+          >
+            {t("login")}
+          </button>
+        </p>
+      )}
     </div>
   );
 }
