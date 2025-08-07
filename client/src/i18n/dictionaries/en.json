@@ -474,5 +474,17 @@
       "arabic": "Arabic",
       "switchLanguage": "Switch language"
     }
+  },
+  "errors": {
+    "required": "This field is required",
+    "not_found": "The requested resource was not found.",
+    "server_error": "An unexpected error occurred. Please try again later.",
+    "network_error": "Network error. Please check your internet connection.",
+    "validation_failed": "Validation failed. Please check the input fields.",
+    "too_many_requests": "Too many requests. Please try again later.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "forbidden": "Access forbidden.",
+    "bad_request": "Bad request. Please check your input.",
+    "conflict": "Conflict occurred. Please try again."
   }
 }

@@ -19,7 +19,7 @@ export class UsersService {
       email: createUserDto.email,
     });
     if (existingUser) {
-      throw new RpcConflictException('User with this email already exists');
+      throw new RpcConflictException('errors.user_already_exists');
     }
 
     try {

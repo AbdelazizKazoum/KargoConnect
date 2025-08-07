@@ -476,5 +476,17 @@
     "capacity": "Capacité",
     "viewAndBook": "Voir & Réserver ({price})",
     "quickSummary": "Résumé rapide"
+  },
+  "errors": {
+    "required": "Ce champ est requis",
+    "not_found": "La ressource demandée est introuvable.",
+    "server_error": "Une erreur inattendue est survenue. Veuillez réessayer plus tard.",
+    "network_error": "Erreur réseau. Veuillez vérifier votre connexion internet.",
+    "validation_failed": "Échec de la validation. Veuillez vérifier les champs saisis.",
+    "too_many_requests": "Trop de requêtes. Veuillez réessayer plus tard.",
+    "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
+    "forbidden": "Accès interdit.",
+    "bad_request": "Requête incorrecte. Veuillez vérifier vos données.",
+    "conflict": "Un conflit est survenu. Veuillez réessayer."
   }
 }
