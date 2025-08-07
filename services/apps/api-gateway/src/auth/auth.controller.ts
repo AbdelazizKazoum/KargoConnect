@@ -1,16 +1,19 @@
 /* eslint-disable prettier/prettier */
 import { LoginDto, RegisterDto } from '@app/common';
+import { mapRpcErrorToHttp } from '@app/common/exceptions/map-rpc-error';
 import { JwtAuthGuard } from '@app/shared';
 import {
   Body,
   Controller,
   Get,
+  HttpException,
   Inject,
+  InternalServerErrorException,
   Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
 @Controller('auth')

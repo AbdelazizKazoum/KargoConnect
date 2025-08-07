@@ -1,6 +1,10 @@
 export const PUBLIC_PATHS = ["/", "/auth"];
 
-export const PROTECTED_PATHS = ["/dashboard", "/profile", "/details"];
+export const PROTECTED_PATHS = [
+  "/dashboard",
+  "/[locale]/(private)/profile",
+  "/details",
+];
 export const LOADING_COMPONENTS = [
   "/dashboard/loading",
   "/auth/loading",

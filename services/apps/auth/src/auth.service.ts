@@ -3,7 +3,7 @@ import { RegisterDto, RpcUnauthorizedException, User } from '@app/common';
 import { jwtConstants } from '@app/common/constants/jwt.constants';
 import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom, last } from 'rxjs';
 
 import * as bcrypt from 'bcrypt'; // <-- Import bcrypt
@@ -35,7 +35,7 @@ export class AuthService {
       );
       return data;
     } catch (error) {
-      throw error;
+      throw new RpcException(error); // preserves shape
     }
   }
 

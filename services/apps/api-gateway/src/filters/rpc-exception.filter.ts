@@ -1,13 +1,12 @@
-/* eslint-disable prettier/prettier */
 // apps/api-gateway/src/rpc-exception.filter.ts
 
 import {
   Catch,
-  RpcExceptionFilter as BaseRpcExceptionFilter,
   ArgumentsHost,
+  RpcExceptionFilter as BaseRpcExceptionFilter,
   HttpException,
+  HttpStatus,
 } from '@nestjs/common';
-import { throwError } from 'rxjs';
 import { RpcException } from '@nestjs/microservices';
 
 @Catch(RpcException)
@@ -17,18 +16,28 @@ export class RpcExceptionFilter
   catch(exception: RpcException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
-    const rpcError = exception.getError();
 
+    const error = exception.getError();
+
+    // Handle structured error object
     if (
-      typeof rpcError === 'object' &&
-      'statusCode' in rpcError &&
-      'message' in rpcError
+      typeof error === 'object' &&
+      'statusCode' in error &&
+      'message' in error
     ) {
-      const statusCode = rpcError.statusCode as number;
-      return response.status(statusCode).json(rpcError);
+      const { statusCode, message } = error;
+      return response.status(statusCode).json({
+        statusCode,
+        message,
+        error: (error as any)?.error ?? 'Error',
+      });
     }
 
-    // Fallback for unexpected RpcException format
-    return throwError(() => new HttpException('Internal server error', 500));
+    // Fallback
+    return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+      statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+      message: error?.toString?.() ?? 'Internal server error',
+      error: 'Internal Server Error',
+    });
   }
 }

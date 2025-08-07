@@ -4,9 +4,11 @@ import { RpcException } from '@nestjs/microservices';
 export class RpcCustomException extends RpcException {
   // The payload will now be { message, statusCode, source }
   constructor(
-    message: string,
+    message: string | string[],
+
     readonly statusCode: number,
     readonly source?: string,
+    // readonly error?: any,
   ) {
     super({ message, statusCode, source });
   }
