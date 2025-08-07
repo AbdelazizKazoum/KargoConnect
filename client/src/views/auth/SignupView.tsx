@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -10,6 +9,8 @@ import { VehicleStepForm } from "@/components/auth/VehicleStepForm";
 import { ProfileStepForm } from "@/components/auth/ProfileStepForm";
 import { Button } from "@/components/ui";
 import { register } from "@/services/auth/authService";
+import axios, { AxiosError } from "axios";
+import { BaseUser } from "@/types/user";
 
 type UserRole = "sender" | "transporter" | null;
 type AuthView = "role_select" | "signup" | "login";
@@ -93,25 +94,33 @@ export default function SignupView({ role, setView }: SignupViewProps) {
   const handleFinalSubmit = async (finalStepData: object) => {
     setIsSubmitting(true);
     setError(null);
-    const completeFormData = { ...formData, ...finalStepData, role };
+    const completeFormData = {
+      ...formData,
+      ...finalStepData,
+      role,
+    } as BaseUser;
     console.log("🚀 ~ handleFinalSubmit ~ completeFormData:", completeFormData);
 
     try {
-      const res = await register(completeFormData as any);
+      const res = await register(completeFormData);
       console.log("✅ Signup Success:", res.data);
       setSuccess(true);
       setShowSuccessModal(true);
-    } catch (error: any) {
-      console.error("❌ Signup Failed:", error);
-      const errorMsg = error?.response?.data?.message || "An error occurred.";
-      setError(errorMsg);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{ message?: string }>;
+        const errorMsg =
+          axiosError?.response?.data?.message || "An error occurred.";
+        setError(errorMsg);
+      } else {
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const renderStep = () => {
-    // This logic is already correct: it hides the form steps on success.
     if (success) return null;
 
     switch (step) {
@@ -150,7 +159,6 @@ export default function SignupView({ role, setView }: SignupViewProps) {
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"}>
-      {/* The modal remains unchanged and will appear on top */}
       <SuccessModal
         isOpen={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}
@@ -189,7 +197,10 @@ export default function SignupView({ role, setView }: SignupViewProps) {
 
       {/* Error Message */}
       {error && !success && (
-        <p className="text-sm text-red-500 mt-4 text-center">{error}</p>
+        <div className="mt-6 rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-700 flex items-start gap-2 max-w-md mx-auto">
+          <X className="w-5 h-5 mt-0.5 text-red-500" />
+          <span>{error}</span>
+        </div>
       )}
 
       {/* CHANGE 2: Simplified condition. Show success card AS SOON as success is true. */}

@@ -16,7 +16,6 @@ export default function AuthFlow() {
   const t = useTranslations("auth");
   const [view, setView] = useState<AuthView>("role_select");
   const [role, setRole] = useState<UserRole>(null);
-  const [step, setStep] = useState(1);
 
   // Handle hash changes for login/signup
   useEffect(() => {
@@ -51,20 +50,6 @@ export default function AuthFlow() {
   const handleRoleSelect = (selectedRole: UserRole) => {
     setRole(selectedRole);
     switchView("signup");
-    setStep(1);
-  };
-
-  const handleNextStep = () => {
-    setStep(step + 1);
-  };
-
-  const handlePrevStep = () => {
-    if (step > 1) {
-      setStep(step - 1);
-    } else {
-      setView("role_select");
-      setRole(null);
-    }
   };
 
   const getImageForState = () => {
@@ -80,15 +65,7 @@ export default function AuthFlow() {
       return <LoginView setView={switchView} />;
     }
     if (view === "signup") {
-      return (
-        <SignupView
-          role={role}
-          step={step}
-          handleNextStep={handleNextStep}
-          handlePrevStep={handlePrevStep}
-          setView={switchView}
-        />
-      );
+      return <SignupView role={role} setView={switchView} />;
     }
     return (
       <RoleSelectionView
