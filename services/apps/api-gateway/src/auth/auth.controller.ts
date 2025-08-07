@@ -22,6 +22,8 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() body: RegisterDto) {
+    console.log('🚀 ~ AuthController ~ register ~ body:', body);
+
     return await firstValueFrom(this.client.send({ cmd: 'register' }, body));
   }
 

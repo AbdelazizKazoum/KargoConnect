@@ -1,5 +1,4 @@
-// components/auth/VehicleStepForm.tsx
-"use-client";
+"use client";
 
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -11,19 +10,21 @@ import Input from "../ui/input";
 import Textarea from "../ui/Textarea";
 import { Button } from "../ui";
 
-// Define the shape of the form data for this step
+// Form data type
 type VehicleFormData = {
-  vehicleType: string;
-  capacity_kg: number;
-  plate_number: string;
-  description?: string;
-  vehicleImages?: File[];
+  vehicle: {
+    type: string;
+    capacity_kg: number;
+    plate_number: string;
+    description?: string;
+    images?: File[];
+  };
 };
 
-// Define the component's props
+// Props
 interface VehicleStepFormProps {
   onSuccess: (data: VehicleFormData) => void;
-  initialData: Partial<VehicleFormData>;
+  initialData: Partial<VehicleFormData["vehicle"]>;
 }
 
 export const VehicleStepForm = ({
@@ -31,7 +32,7 @@ export const VehicleStepForm = ({
   initialData,
 }: VehicleStepFormProps) => {
   const t = useTranslations("auth.vehicleInfo");
-  const tAuth = useTranslations("auth"); // <-- Add this for errors
+  const tAuth = useTranslations("auth");
 
   const {
     register,
@@ -39,28 +40,36 @@ export const VehicleStepForm = ({
     setValue,
     formState: { errors },
   } = useForm<VehicleFormData>({
-    defaultValues: initialData,
+    defaultValues: {
+      vehicle: {
+        type: initialData.type || "",
+        capacity_kg: initialData.capacity_kg || 0,
+        plate_number: initialData.plate_number || "",
+        description: initialData.description || "",
+        images: initialData.images || [],
+      },
+    },
     mode: "onTouched",
   });
 
-  // This function is called only when this step's form is valid
   const onSubmit = (data: VehicleFormData) => {
     onSuccess(data);
   };
 
-  // Register the vehicleImages field manually for validation if needed
   React.useEffect(() => {
-    register("vehicleImages");
+    register("vehicle.images");
   }, [register]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <Label htmlFor="vehicleType">{t("type")}</Label>
+        <Label htmlFor="type">{t("type")}</Label>
         <select
-          id="vehicleType"
+          id="type"
           className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          {...register("vehicleType", { required: tAuth("errors.required") })}
+          {...register("vehicle.type", {
+            required: tAuth("errors.required"),
+          })}
         >
           <option value="">{t("options.select")}</option>
           <option value="car">{t("options.car")}</option>
@@ -68,8 +77,9 @@ export const VehicleStepForm = ({
           <option value="pickup">{t("options.pickup")}</option>
           <option value="motorcycle">{t("options.motorcycle")}</option>
         </select>
-        <FormError message={errors.vehicleType?.message} />
+        <FormError message={errors.vehicle?.type?.message} />
       </div>
+
       <div className="grid grid-cols-2 gap-4">
         <div>
           <Label htmlFor="capacity_kg">{t("capacity")}</Label>
@@ -77,39 +87,41 @@ export const VehicleStepForm = ({
             id="capacity_kg"
             type="number"
             placeholder="e.g., 500"
-            {...register("capacity_kg", {
+            {...register("vehicle.capacity_kg", {
               required: tAuth("errors.required"),
               valueAsNumber: true,
             })}
           />
-          <FormError message={errors.capacity_kg?.message} />
+          <FormError message={errors.vehicle?.capacity_kg?.message} />
         </div>
         <div>
           <Label htmlFor="plate_number">{t("plate")}</Label>
           <Input
             id="plate_number"
             placeholder="e.g., 123-A-45"
-            {...register("plate_number", {
+            {...register("vehicle.plate_number", {
               required: tAuth("errors.required"),
             })}
           />
-          <FormError message={errors.plate_number?.message} />
+          <FormError message={errors.vehicle?.plate_number?.message} />
         </div>
       </div>
+
       <div>
         <Label htmlFor="description">{t("description")}</Label>
         <Textarea
           id="description"
           placeholder={t("descriptionPlaceholder")}
-          {...register("description")}
+          {...register("vehicle.description")}
         />
       </div>
+
       <ImageUploader
-        onFilesChange={(files) => setValue("vehicleImages", files)}
+        onFilesChange={(files) => setValue("vehicle.images", files)}
       />
 
       <Button type="submit" className="w-full">
-        {useTranslations("auth")("continue")}
+        {tAuth("continue")}
       </Button>
     </form>
   );

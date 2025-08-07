@@ -15,6 +15,8 @@ export class UsersService {
   constructor(private usersRepository: UsersRepository) {}
 
   async create(createUserDto: CreateUserDto) {
+    console.log('🚀 ~ UsersService ~ create ~ createUserDto:', createUserDto);
+
     const existingUser = await this.usersRepository.findOne({
       email: createUserDto.email,
     });
@@ -27,7 +29,8 @@ export class UsersService {
       const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
       createUserDto.password = hashedPassword;
 
-      return await this.usersRepository.create(createUserDto);
+      // return await this.usersRepository.create(createUserDto);
+      return null;
     } catch (error) {
       throw new RpcInternalServerErrorException(error.message);
     }

@@ -109,11 +109,14 @@ export default function SignupView({ role, setView }: SignupViewProps) {
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{ message?: string }>;
-        const errorMsg =
-          axiosError?.response?.data?.message || "An error occurred.";
-        setError(errorMsg);
+        const backendMessage = axiosError?.response?.data?.message;
+
+        const translated =
+          t.raw(`${backendMessage}`) || t("errors.server_error");
+
+        setError(translated);
       } else {
-        setError("An unexpected error occurred.");
+        setError(t("errors.server_error"));
       }
     } finally {
       setIsSubmitting(false);

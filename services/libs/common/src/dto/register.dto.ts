@@ -8,6 +8,7 @@ import {
   IsString,
   IsEnum,
 } from 'class-validator';
+import { IVehicle } from '../interfaces/vehicle.interface';
 
 export class RegisterDto {
   @IsEmail()
@@ -51,6 +52,15 @@ export class RegisterDto {
   city?: string;
 
   @IsOptional()
+  phone?: string;
+
+  @IsOptional()
   @Type(() => Date)
   date_inscription?: Date;
+
+  @IsOptional()
+  profilePicture: string;
+
+  @IsOptional()
+  vehicle: IVehicle;
 }
