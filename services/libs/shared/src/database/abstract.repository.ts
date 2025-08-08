@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { FindOptionsWhere, Repository } from 'typeorm';
+import { FindOptionsWhere, Repository, FindManyOptions } from 'typeorm';
 import { AbstractEntity } from './abstract.entity';
 import { NotFoundException } from '@nestjs/common';
 
@@ -20,8 +20,8 @@ export abstract class AbstractRepository<T extends AbstractEntity<T>> {
     return this.entityRepository.findOne({ where });
   }
 
-  async findAll(): Promise<T[]> {
-    return this.entityRepository.find();
+  async findAll(options?: FindManyOptions<T>): Promise<T[]> {
+    return this.entityRepository.find(options);
   }
 
   async findOneAndUpdate(

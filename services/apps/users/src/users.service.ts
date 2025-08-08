@@ -79,10 +79,12 @@ export class UsersService {
 
   async findAll() {
     try {
-      return await this.usersRepository.findAll();
+      return await this.usersRepository.findAll({
+        relations: ['vehicles'],
+      });
     } catch (error) {
-      console.log(error.message);
-      throw new RpcInternalServerErrorException('Failed to fetch users ');
+      console.error(error.message);
+      throw new RpcInternalServerErrorException('Failed to fetch users');
     }
   }
 
