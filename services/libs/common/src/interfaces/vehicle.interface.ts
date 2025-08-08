@@ -1,5 +1,5 @@
 export interface IVehicle {
-  capacity_kg: string;
+  capacity_kg: number;
 
   description: string;
 

@@ -10,6 +10,7 @@ import {
   IsEnum,
   IsNumber,
 } from 'class-validator';
+import { IVehicle } from '@app/common/interfaces/vehicle.interface';
 
 export class CreateUserDto {
   @IsOptional()
@@ -110,4 +111,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   password: string;
+
+  @IsOptional()
+  vehicle?: IVehicle;
 }

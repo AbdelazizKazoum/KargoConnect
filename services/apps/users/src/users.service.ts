@@ -4,18 +4,23 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
 
+import { DataSource } from 'typeorm'; // import this at the top
+
 import * as bcrypt from 'bcrypt';
 import {
   RpcConflictException,
   RpcInternalServerErrorException,
 } from '@app/common';
 import { VehicleRepository } from './vehicle.repository';
+import { Users } from './entities/user.entity';
+import { Vehicle } from './entities/vehicle.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     private usersRepository: UsersRepository,
     private vehicleRepository: VehicleRepository,
+    private readonly dataSource: DataSource, // inject DataSource
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -24,19 +29,47 @@ export class UsersService {
     const existingUser = await this.usersRepository.findOne({
       email: createUserDto.email,
     });
+
     if (existingUser) {
       throw new RpcConflictException('errors.user_already_exists');
     }
+
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
 
     try {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
       createUserDto.password = hashedPassword;
 
-      // return await this.usersRepository.create(createUserDto);
-      return null;
+      const vehicleData = createUserDto.vehicle;
+      delete createUserDto.vehicle;
+
+      // Use EntityManager directly
+      const userRepository = queryRunner.manager.getRepository(Users);
+      const vehicleRepository = queryRunner.manager.getRepository(Vehicle);
+
+      const user = userRepository.create(createUserDto);
+      await userRepository.save(user);
+
+      if (user.role === 'transporter' && vehicleData) {
+        const vehicle = vehicleRepository.create({
+          ...vehicleData,
+          user,
+          user_id: user.id,
+        });
+        await vehicleRepository.save(vehicle);
+      }
+
+      await queryRunner.commitTransaction();
+      return user;
     } catch (error) {
+      await queryRunner.rollbackTransaction();
+      console.error('❌ Transaction failed:', error);
       throw new RpcInternalServerErrorException(error.message);
+    } finally {
+      await queryRunner.release();
     }
   }
 
