@@ -9,10 +9,14 @@ import {
   RpcConflictException,
   RpcInternalServerErrorException,
 } from '@app/common';
+import { VehicleRepository } from './vehicle.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private vehicleRepository: VehicleRepository,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     console.log('🚀 ~ UsersService ~ create ~ createUserDto:', createUserDto);

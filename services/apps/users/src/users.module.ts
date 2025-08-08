@@ -9,6 +9,7 @@ import * as Joi from 'joi';
 import { ConfigModule } from '@app/shared/config/config.module';
 import { DatabaseModule } from '@app/shared/database.index';
 import { Vehicle } from './entities/vehicle.entity';
+import { VehicleRepository } from './vehicle.repository';
 
 @Module({
   imports: [
@@ -40,6 +41,6 @@ import { Vehicle } from './entities/vehicle.entity';
     // ]),
   ],
   controllers: [UsersController],
-  providers: [UsersService, UsersRepository],
+  providers: [UsersService, UsersRepository, VehicleRepository],
 })
 export class UsersModule {}
