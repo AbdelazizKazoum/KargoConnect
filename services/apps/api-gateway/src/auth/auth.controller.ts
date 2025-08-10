@@ -32,20 +32,25 @@ export class AuthController {
     ]),
   )
   async register(
-    @Body() body: RegisterDto,
+    @Body('data') data: string,
     @UploadedFiles()
     files: {
       profilePicture?: MulterFile[];
       vehicleImages?: MulterFile[];
     },
   ) {
+    const body = JSON.parse(data) as RegisterDto;
+
+    console.log('🚀 ~ AuthController ~ register ~ files:', files);
+    console.log('🚀 ~ AuthController ~ register ~ body:', body);
+
     // Upload profile picture if present
     if (files.profilePicture?.[0]) {
       const uploadedProfile = await this.minioService.uploadFile(
         files.profilePicture[0],
         'profile-pictures',
       );
-      body.profilePicture = uploadedProfile.url;
+      body.image = uploadedProfile.url;
     }
 
     // Upload vehicle images if present

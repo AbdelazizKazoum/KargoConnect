@@ -10,7 +10,6 @@ import { ProfileStepForm } from "@/components/auth/ProfileStepForm";
 import { Button } from "@/components/ui";
 import { register } from "@/services/auth/authService";
 import axios, { AxiosError } from "axios";
-import { BaseUser } from "@/types/user";
 
 type UserRole = "sender" | "transporter" | null;
 type AuthView = "role_select" | "signup" | "login";
@@ -94,26 +93,86 @@ export default function SignupView({ role, setView }: SignupViewProps) {
   const handleFinalSubmit = async (finalStepData: object) => {
     setIsSubmitting(true);
     setError(null);
-    const completeFormData = {
-      ...formData,
-      ...finalStepData,
-      role,
-    } as BaseUser;
-    console.log("🚀 ~ handleFinalSubmit ~ completeFormData:", completeFormData);
 
     try {
-      const res = await register(completeFormData);
+      // Merge all form data with role
+      const completeFormData = {
+        ...formData,
+        ...finalStepData,
+        role,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any;
+
+      const formDataToSend = new FormData();
+
+      // Extract vehicle images files and profile picture files (assumed as File objects)
+      const vehicleImages: File[] = [];
+      let profilePictureFile: File | null = null;
+
+      if (completeFormData.vehicle) {
+        if (Array.isArray(completeFormData.vehicle.images)) {
+          completeFormData.vehicle.images.forEach((file: File) => {
+            if (file instanceof File) {
+              vehicleImages.push(file);
+            }
+          });
+        }
+      }
+
+      if (
+        completeFormData.profilePicture &&
+        completeFormData.profilePicture[0] instanceof File
+      ) {
+        profilePictureFile = completeFormData.profilePicture[0];
+      }
+
+      // Create a copy of completeFormData excluding files (vehicle.images and profilePicture)
+      const dataToSerialize = {
+        ...completeFormData,
+        vehicle: {
+          ...completeFormData.vehicle,
+          images: undefined, // remove images array, files sent separately
+        },
+        profilePicture: undefined, // remove profilePicture file, sent separately
+      };
+
+      // Serialize the entire data object as JSON string under 'data'
+      formDataToSend.append("data", JSON.stringify(dataToSerialize));
+
+      // Append profile picture file if exists
+      if (profilePictureFile) {
+        formDataToSend.append("profilePicture", profilePictureFile);
+      }
+
+      // Append each vehicle image file separately
+      vehicleImages.forEach((file) => {
+        formDataToSend.append("vehicleImages", file);
+      });
+
+      console.log("🚀 ~ handleFinalSubmit ~ formDataToSend:", formDataToSend);
+      console.log(
+        "🚀 ~ handleFinalSubmit ~ completeFormData:",
+        completeFormData
+      );
+
+      // Send with axios or your method
+      // const res = await axios.post('/auth/register', formDataToSend, {
+      //   headers: { 'Content-Type': 'multipart/form-data' }
+      // });
+
+      //Now send request with axios
+      const res = await register(formDataToSend);
+
       console.log("✅ Signup Success:", res.data);
+
       setSuccess(true);
       setShowSuccessModal(true);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{ message?: string }>;
         const backendMessage = axiosError?.response?.data?.message;
-
         const translated =
           t.raw(`${backendMessage}`) || t("errors.server_error");
-
         setError(translated);
       } else {
         setError(t("errors.server_error"));

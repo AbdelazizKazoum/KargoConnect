@@ -59,7 +59,7 @@ export class RegisterDto {
   date_inscription?: Date;
 
   @IsOptional()
-  profilePicture: string;
+  image: string;
 
   @IsOptional()
   vehicle: IVehicle;
