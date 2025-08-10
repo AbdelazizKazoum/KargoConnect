@@ -1,7 +1,11 @@
-// libs/shared/src/minio/minio.service.ts
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { randomUUID } from 'crypto';
 import { extname } from 'path';
 import { File as MulterFile } from 'multer';
@@ -10,10 +14,12 @@ import { File as MulterFile } from 'multer';
 export class MinioService {
   private s3: S3Client;
   private bucket: string;
+  private endpoint: string;
 
   constructor(private configService: ConfigService) {
+    this.endpoint = this.configService.get<string>('MINIO_ENDPOINT');
     this.s3 = new S3Client({
-      endpoint: `http://${this.configService.get<string>('MINIO_ENDPOINT')}:${this.configService.get<string>('MINIO_PORT')}`,
+      endpoint: `http://${this.endpoint}:${this.configService.get<string>('MINIO_PORT')}`,
       region: this.configService.get<string>('MINIO_REGION'),
       credentials: {
         accessKeyId: this.configService.get<string>('MINIO_ACCESS_KEY'),
@@ -26,7 +32,7 @@ export class MinioService {
   }
 
   private generateFileKey(category: string, originalName: string) {
-    const ext = extname(originalName); // keep original extension
+    const ext = extname(originalName);
     return `${category}/${randomUUID()}${ext}`;
   }
 
@@ -43,10 +49,8 @@ export class MinioService {
         }),
       );
 
-      return {
-        key: fileKey,
-        url: `http://${this.configService.get<string>('MINIO_ENDPOINT')}:${this.configService.get<string>('MINIO_PORT')}/${this.bucket}/${fileKey}`,
-      };
+      // Return only the key (no MinIO internal URL)
+      return { key: fileKey };
     } catch (error) {
       console.error(error);
       throw new InternalServerErrorException('Error uploading file to MinIO');
@@ -55,5 +59,14 @@ export class MinioService {
 
   async uploadMultipleFiles(files: MulterFile[], category: string) {
     return Promise.all(files.map((file) => this.uploadFile(file, category)));
+  }
+
+  // Generate a temporary signed URL (expiresIn is in seconds)
+  async getSignedUrl(fileKey: string, expiresIn = 300): Promise<string> {
+    const command = new GetObjectCommand({
+      Bucket: this.bucket,
+      Key: fileKey,
+    });
+    return await getSignedUrl(this.s3, command, { expiresIn });
   }
 }

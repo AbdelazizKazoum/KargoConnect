@@ -50,7 +50,7 @@ export class AuthController {
         files.profilePicture[0],
         'profile-pictures',
       );
-      body.image = uploadedProfile.url;
+      body.image = uploadedProfile.key;
     }
 
     // Upload vehicle images if present
@@ -61,7 +61,7 @@ export class AuthController {
       );
       body.vehicle = {
         ...body.vehicle,
-        images: uploadedVehicles.map((f) => f.url),
+        images: uploadedVehicles.map((f) => f.key),
       };
     }
 
