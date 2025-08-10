@@ -5,13 +5,15 @@ import { ApiGatewayService } from './api-gateway.service';
 import { LoggerModule } from '@app/common/logger';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth/auth.controller';
-import { AuthCoreModule } from '@app/shared';
+import { AuthCoreModule, MinioModule } from '@app/shared';
 import { UsersController } from './users/users.controller';
+import { UploadController } from './upload/upload.controller';
 
 @Module({
   imports: [
     LoggerModule,
     AuthCoreModule,
+    MinioModule,
     ClientsModule.register([
       {
         name: 'USERS_SERVICE',
@@ -31,7 +33,12 @@ import { UsersController } from './users/users.controller';
       },
     ]),
   ],
-  controllers: [ApiGatewayController, AuthController, UsersController],
+  controllers: [
+    ApiGatewayController,
+    AuthController,
+    UsersController,
+    UploadController,
+  ],
   providers: [ApiGatewayService],
 })
 export class ApiGatewayModule {}

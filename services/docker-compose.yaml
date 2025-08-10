@@ -73,6 +73,14 @@ services:
       - AUTH_SERVICE_PORT=4002
       - PORT=4000
       - HOST=localhost
+
+      - MINIO_ENDPOINT=minio
+      - MINIO_BUCKET=kargo-files
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=admin
+      - MINIO_SECRET_KEY=password123
+      - MINIO_REGION=us-east-1
+
     depends_on:
       - users
       - auth
@@ -94,6 +102,21 @@ services:
       - '3307:3308'
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - kargo-network
+
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio
+    command: server /data --console-address ":9001"
+    ports:
+      - '9000:9000' # S3 API
+      - '9001:9001' # Web console
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: password123
+    volumes:
+      - ./minio-data:/data # store data in ./minio-data relative to compose file
     networks:
       - kargo-network
 
