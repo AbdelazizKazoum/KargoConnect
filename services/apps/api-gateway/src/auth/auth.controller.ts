@@ -1,22 +1,19 @@
 /* eslint-disable prettier/prettier */
 import { LoginDto, RegisterDto } from '@app/common';
-import { mapRpcErrorToHttp } from '@app/common/exceptions/map-rpc-error';
 import { JwtAuthGuard, MinioService } from '@app/shared';
 import {
   Body,
   Controller,
   Get,
-  HttpException,
   Inject,
-  InternalServerErrorException,
   Post,
   Req,
-  UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { ClientProxy } from '@nestjs/microservices';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { firstValueFrom } from 'rxjs';
 import { File as MulterFile } from 'multer';
 
@@ -28,11 +25,39 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  @UseInterceptors(FileInterceptor('profilePicture')) // "avatar" is the form-data field name
-  async register(@Body() body: RegisterDto, @UploadedFile() file?: MulterFile) {
-    if (file) {
-      const uploaded = await this.minioService.uploadFile(file);
-      body.profilePicture = uploaded.url; // attach file URL to the user DTO
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'profilePicture', maxCount: 1 },
+      { name: 'vehicleImages', maxCount: 5 },
+    ]),
+  )
+  async register(
+    @Body() body: RegisterDto,
+    @UploadedFiles()
+    files: {
+      profilePicture?: MulterFile[];
+      vehicleImages?: MulterFile[];
+    },
+  ) {
+    // Upload profile picture if present
+    if (files.profilePicture?.[0]) {
+      const uploadedProfile = await this.minioService.uploadFile(
+        files.profilePicture[0],
+        'profile-pictures',
+      );
+      body.profilePicture = uploadedProfile.url;
+    }
+
+    // Upload vehicle images if present
+    if (files.vehicleImages?.length) {
+      const uploadedVehicles = await this.minioService.uploadMultipleFiles(
+        files.vehicleImages,
+        'vehicles',
+      );
+      body.vehicle = {
+        ...body.vehicle,
+        images: uploadedVehicles.map((f) => f.url),
+      };
     }
 
     return await firstValueFrom(this.client.send({ cmd: 'register' }, body));

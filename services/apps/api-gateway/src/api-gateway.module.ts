@@ -7,7 +7,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth/auth.controller';
 import { AuthCoreModule, MinioModule } from '@app/shared';
 import { UsersController } from './users/users.controller';
-import { UploadController } from './upload/upload.controller';
 
 @Module({
   imports: [
@@ -33,12 +32,7 @@ import { UploadController } from './upload/upload.controller';
       },
     ]),
   ],
-  controllers: [
-    ApiGatewayController,
-    AuthController,
-    UsersController,
-    UploadController,
-  ],
+  controllers: [ApiGatewayController, AuthController, UsersController],
   providers: [ApiGatewayService],
 })
 export class ApiGatewayModule {}
