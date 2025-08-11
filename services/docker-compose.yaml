@@ -74,7 +74,8 @@ services:
       - PORT=4000
       - HOST=localhost
 
-      - MINIO_ENDPOINT=minio
+      # - MINIO_ENDPOINT=minio
+      - MINIO_ENDPOINT=localhost
       - MINIO_BUCKET=kargo-files
       - MINIO_PORT=9000
       - MINIO_ACCESS_KEY=admin
