@@ -1,20 +1,45 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
+import { useSession } from "next-auth/react";
 import TransporterDashboardPage from "@/views/TransporterDashboardPage";
-import { getServerSession } from "next-auth";
-import authOptions from "@/lib/auth";
 import SenderDashboardPage from "@/views/SenderDashboardPage";
+import { useUserStore } from "@/stores/userStore";
+import { UserService } from "@/services/user/user.service";
 
-export default async function App() {
-  const session = await getServerSession(authOptions);
+export default function App() {
+  const { data: session, status } = useSession();
 
-  if (!session) {
-    return <div>Unauthorized</div>; // Or redirect, or show a login button
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const fetchedUser = await UserService.fetchUserProfile();
+        console.log("🚀 ~ loadUser ~ fetchedUser:", fetchedUser);
+
+        setUser(fetchedUser);
+      } catch (error) {
+        console.error("Failed to load user", error);
+      }
+    }
+    loadUser();
+  }, [setUser]);
+
+  // Show loading state while fetching session
+  if (status === "loading" && !user) {
+    return <div>Loading...</div>;
   }
 
-  const userRole = session.user?.role;
+  // No session -> Unauthorized
+  if (!session) {
+    return <div>Unauthorized</div>;
+  }
+
+  const userRole = session.user?.role; // role should be on session.user
 
   if (userRole === "sender") {
-    // If user is a sender, render TransporterDashboardPage in a sender view
     return (
       <div className="bg-background">
         <SenderDashboardPage />
@@ -23,7 +48,6 @@ export default async function App() {
   }
 
   if (userRole === "transporter") {
-    // If user is a transporter, render TransporterDashboardPage in owner view
     return (
       <div className="bg-background">
         <TransporterDashboardPage />
@@ -31,6 +55,5 @@ export default async function App() {
     );
   }
 
-  // Optional: Handle other roles
   return <div>Unauthorized role</div>;
 }
