@@ -80,19 +80,6 @@ export class MinioService {
     return Promise.all(files.map((file) => this.uploadFile(file, category)));
   }
 
-  // async getSignedUrl(fileKey: string, expiresIn = 300): Promise<string> {
-  //   const command = new GetObjectCommand({
-  //     Bucket: this.bucket,
-  //     Key: fileKey,
-  //   });
-
-  //   const signed = await getSignedUrl(this.s3, command, { expiresIn });
-
-  //   const internalHost = `http://${this.internalEndpoint}:${this.configService.get<string>('MINIO_PORT')}`;
-
-  //   return signed.replace(internalHost, this.publicUrl);
-  // }
-
   async getSignedUrl(fileKey: string, expiresIn = 300): Promise<string> {
     const command = new GetObjectCommand({
       Bucket: this.bucket,

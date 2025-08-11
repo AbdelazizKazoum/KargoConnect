@@ -26,7 +26,7 @@ export default async function App() {
     // If user is a transporter, render TransporterDashboardPage in owner view
     return (
       <div className="bg-background">
-        <TransporterDashboardPage isOwnerView={true} />
+        <TransporterDashboardPage />
       </div>
     );
   }
