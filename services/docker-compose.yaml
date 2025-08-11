@@ -74,9 +74,9 @@ services:
       - PORT=4000
       - HOST=localhost
 
-      # - MINIO_ENDPOINT=minio
-      - MINIO_ENDPOINT=localhost
-      - MINIO_BUCKET=kargo-files
+      - MINIO_ENDPOINT=minio
+      - MINIO_PUBLIC_URL=http://localhost:9000 # What the browser should use in dev
+      - MINIO_BUCKET=kargo
       - MINIO_PORT=9000
       - MINIO_ACCESS_KEY=admin
       - MINIO_SECRET_KEY=password123

@@ -9,17 +9,34 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { randomUUID } from 'crypto';
 import { extname } from 'path';
 import { File as MulterFile } from 'multer';
+import { Readable } from 'stream';
 
 @Injectable()
 export class MinioService {
   private s3: S3Client;
   private bucket: string;
-  private endpoint: string;
+  private internalEndpoint: string;
+  private publicUrl: string;
+
+  private internalS3: S3Client;
+  private publicS3: S3Client;
 
   constructor(private configService: ConfigService) {
-    this.endpoint = this.configService.get<string>('MINIO_ENDPOINT');
-    this.s3 = new S3Client({
-      endpoint: `http://${this.endpoint}:${this.configService.get<string>('MINIO_PORT')}`,
+    this.internalEndpoint = this.configService.get<string>('MINIO_ENDPOINT');
+    this.publicUrl = this.configService.get<string>('MINIO_PUBLIC_URL');
+
+    this.internalS3 = new S3Client({
+      endpoint: `http://${this.configService.get('MINIO_ENDPOINT')}:${this.configService.get('MINIO_PORT')}`,
+      region: this.configService.get<string>('MINIO_REGION'),
+      credentials: {
+        accessKeyId: this.configService.get<string>('MINIO_ACCESS_KEY'),
+        secretAccessKey: this.configService.get<string>('MINIO_SECRET_KEY'),
+      },
+      forcePathStyle: true,
+    });
+
+    this.publicS3 = new S3Client({
+      endpoint: this.configService.get<string>('MINIO_PUBLIC_URL'), // e.g. http://localhost:9000
       region: this.configService.get<string>('MINIO_REGION'),
       credentials: {
         accessKeyId: this.configService.get<string>('MINIO_ACCESS_KEY'),
@@ -40,7 +57,7 @@ export class MinioService {
     const fileKey = this.generateFileKey(category, file.originalname);
 
     try {
-      await this.s3.send(
+      await this.internalS3.send(
         new PutObjectCommand({
           Bucket: this.bucket,
           Key: fileKey,
@@ -49,7 +66,6 @@ export class MinioService {
         }),
       );
 
-      // Return only the key (no MinIO internal URL)
       return { key: fileKey };
     } catch (error) {
       console.error(error);
@@ -61,12 +77,45 @@ export class MinioService {
     return Promise.all(files.map((file) => this.uploadFile(file, category)));
   }
 
-  // Generate a temporary signed URL (expiresIn is in seconds)
+  // async getSignedUrl(fileKey: string, expiresIn = 300): Promise<string> {
+  //   const command = new GetObjectCommand({
+  //     Bucket: this.bucket,
+  //     Key: fileKey,
+  //   });
+
+  //   const signed = await getSignedUrl(this.s3, command, { expiresIn });
+
+  //   const internalHost = `http://${this.internalEndpoint}:${this.configService.get<string>('MINIO_PORT')}`;
+
+  //   return signed.replace(internalHost, this.publicUrl);
+  // }
+
   async getSignedUrl(fileKey: string, expiresIn = 300): Promise<string> {
     const command = new GetObjectCommand({
       Bucket: this.bucket,
       Key: fileKey,
     });
-    return await getSignedUrl(this.s3, command, { expiresIn });
+
+    return await getSignedUrl(this.publicS3, command, { expiresIn });
+  }
+
+  /** Stream file directly from MinIO (for backend proxy) */
+  async getFileStream(fileKey: string): Promise<Readable> {
+    try {
+      const command = new GetObjectCommand({
+        Bucket: this.bucket,
+        Key: fileKey,
+      });
+      const { Body } = await this.s3.send(command);
+
+      if (Body instanceof Readable) {
+        return Body;
+      }
+
+      throw new InternalServerErrorException('File stream is not readable');
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException('Error fetching file from MinIO');
+    }
   }
 }
