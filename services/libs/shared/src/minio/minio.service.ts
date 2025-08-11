@@ -15,9 +15,12 @@ import { Readable } from 'stream';
 export class MinioService {
   private s3: S3Client;
   private bucket: string;
+
+  // Use these for internal and public access
   private internalEndpoint: string;
   private publicUrl: string;
 
+  // Separate S3 clients for internal and public access
   private internalS3: S3Client;
   private publicS3: S3Client;
 
@@ -26,7 +29,7 @@ export class MinioService {
     this.publicUrl = this.configService.get<string>('MINIO_PUBLIC_URL');
 
     this.internalS3 = new S3Client({
-      endpoint: `http://${this.configService.get('MINIO_ENDPOINT')}:${this.configService.get('MINIO_PORT')}`,
+      endpoint: `http://${this.internalEndpoint}:${this.configService.get('MINIO_PORT')}`,
       region: this.configService.get<string>('MINIO_REGION'),
       credentials: {
         accessKeyId: this.configService.get<string>('MINIO_ACCESS_KEY'),
@@ -36,7 +39,7 @@ export class MinioService {
     });
 
     this.publicS3 = new S3Client({
-      endpoint: this.configService.get<string>('MINIO_PUBLIC_URL'), // e.g. http://localhost:9000
+      endpoint: this.publicUrl, // e.g. http://localhost:9000
       region: this.configService.get<string>('MINIO_REGION'),
       credentials: {
         accessKeyId: this.configService.get<string>('MINIO_ACCESS_KEY'),
