@@ -377,7 +377,8 @@
         "Accepted": "Accepted",
         "Declined": "Declined",
         "Confirmed": "Confirmed",
-        "PendingApproval": "Pending Approval"
+        "PendingApproval": "Pending Approval",
+        "Active": "Active"
       },
       "pagination": {
         "page": "Page {currentPage} of {totalPages}",

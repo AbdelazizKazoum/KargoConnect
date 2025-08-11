@@ -24,7 +24,7 @@ type DashboardTab = "settings" | "trips" | "offers" | "bookings";
 
 const TransporterDashboardPage = ({ user }: { user: PrivateProfile }) => {
   const [activeTab, setActiveTab] = useState<DashboardTab>("settings");
-  const [coverUrl, setCoverUrl] = useState(transporterData.coverUrl);
+  const [coverUrl, setCoverUrl] = useState(user.coverUrl);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const t = useTranslations("profile.transporter");
 
@@ -67,7 +67,7 @@ const TransporterDashboardPage = ({ user }: { user: PrivateProfile }) => {
         {/* Cover */}
         <div className="h-48 md:h-64 rounded-xl bg-card border relative">
           <Image
-            src={coverUrl}
+            src={coverUrl || "/default-cover.jpg"}
             alt="Cover"
             fill
             className="w-full h-full object-cover rounded-xl"
@@ -100,8 +100,8 @@ const TransporterDashboardPage = ({ user }: { user: PrivateProfile }) => {
             <aside className="lg:col-span-4 xl:col-span-3">
               <div className="bg-card p-6 rounded-xl border shadow-sm text-center sticky top-24">
                 <Image
-                  src={transporterData.avatarUrl}
-                  alt={transporterData.name}
+                  src={user.image || "/default-avatar.jpg"}
+                  alt={user.firstName || "مستخدم"}
                   width={96}
                   height={96}
                   className="h-24 w-24 rounded-full mx-auto border-4 border-background"

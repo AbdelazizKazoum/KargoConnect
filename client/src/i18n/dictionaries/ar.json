@@ -377,7 +377,8 @@
         "Accepted": "مقبولة",
         "Declined": "مرفوضة",
         "Confirmed": "مؤكدة",
-        "PendingApproval": "في انتظار الموافقة"
+        "PendingApproval": "في انتظار الموافقة",
+        "Active": "نشطة"
       },
       "pagination": {
         "page": "صفحة {currentPage} من {totalPages}",
@@ -466,7 +467,6 @@
       }
     }
   },
-
   "components": {
     "localeSwitcher": {
       "english": "الإنجليزية",
