@@ -32,23 +32,18 @@ export class UsersController {
   }
 
   async enrichUsersWithSignedUrls(users: any[]) {
-    // Map users and enrich image URLs
     return Promise.all(
       users.map(async (user) => {
-        // Signed URL for user.image
         const imageUrl = user.image
           ? await this.minioService.getSignedUrl(user.image)
           : null;
 
-        // Signed URLs for each vehicle image
+        // Use the utility for vehicle images
         const vehicles = await Promise.all(
           (user.vehicles || []).map(async (vehicle) => {
-            const signedImages = await Promise.all(
-              (vehicle.images || []).map((key) =>
-                this.minioService.getSignedUrl(key),
-              ),
+            const signedImages = await this.minioService.getSignedUrls(
+              vehicle.images || [],
             );
-
             return {
               ...vehicle,
               images: signedImages,

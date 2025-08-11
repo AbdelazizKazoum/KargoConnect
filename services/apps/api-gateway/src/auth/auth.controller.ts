@@ -21,6 +21,8 @@ import { File as MulterFile } from 'multer';
 export class AuthController {
   constructor(
     @Inject('AUTH_SERVICE') private client: ClientProxy,
+    @Inject('USERS_SERVICE') private userClient: ClientProxy,
+
     private readonly minioService: MinioService,
   ) {}
 
@@ -75,7 +77,35 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Req() req) {
-    return req.user;
+  async getProfile(@Req() req) {
+    const profile = await firstValueFrom(
+      this.userClient.send({ cmd: 'getPrivateProfile' }, req.user.id),
+    );
+
+    if (!profile) {
+      return null;
+    }
+
+    // Replace profile.image with signed URL
+    profile.image = profile.image
+      ? await this.minioService.getSignedUrl(profile.image)
+      : null;
+
+    // Replace each vehicle's images with signed URLs
+    if (profile.vehicles?.length) {
+      profile.vehicles = await Promise.all(
+        profile.vehicles.map(async (vehicle) => {
+          const signedImages = await this.minioService.getSignedUrls(
+            vehicle.images || [],
+          );
+          return {
+            ...vehicle,
+            images: signedImages,
+          };
+        }),
+      );
+    }
+
+    return profile;
   }
 }

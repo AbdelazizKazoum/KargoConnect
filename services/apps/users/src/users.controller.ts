@@ -34,6 +34,11 @@ export class UsersController {
     return await this.usersService.getUserPublicProfile(id);
   }
 
+  @MessagePattern({ cmd: 'getPrivateProfile' })
+  async getUserPrivateProfile(id: number) {
+    return await this.usersService.getUserPrivateProfile(id);
+  }
+
   // @Get(':id')
   // findOne(@Param('id') id: string) {
   //   return this.usersService.findOne(+id);

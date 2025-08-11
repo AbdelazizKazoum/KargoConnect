@@ -89,6 +89,28 @@ export class MinioService {
     return await getSignedUrl(this.publicS3, command, { expiresIn });
   }
 
+  async getSignedUrls(
+    fileKeys: string[],
+    expiresIn = 300,
+  ): Promise<(string | null)[]> {
+    if (!fileKeys || fileKeys.length === 0) {
+      return [];
+    }
+
+    // Use Promise.all to get all signed URLs in parallel
+    return Promise.all(
+      fileKeys.map(async (key) => {
+        if (!key) return null; // handle empty keys gracefully
+        try {
+          return await this.getSignedUrl(key, expiresIn);
+        } catch (err) {
+          console.error(`Failed to get signed URL for ${key}`, err);
+          return null; // or throw if you want to fail fast
+        }
+      }),
+    );
+  }
+
   /** Stream file directly from MinIO (for backend proxy) */
   async getFileStream(fileKey: string): Promise<Readable> {
     try {

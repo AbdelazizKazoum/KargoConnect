@@ -47,5 +47,11 @@ export interface PrivateProfile extends BaseUser {
 
   createdAt?: string;
   updatedAt?: string;
+
+  demands?: Array<any>; // Optional demands array
+  bookings?: Array<any>; // Optional bookings array
+  trips?: Array<any>; // Optional trips array
+  reviews: review[]; // Array of reviews
+
   // and more sensitive info
 }

@@ -11,13 +11,22 @@ export abstract class AbstractRepository<T extends AbstractEntity<T>> {
     return this.entityRepository.save(newEntity);
   }
 
-  async findOne(where: FindOptionsWhere<T>): Promise<T> {
-    const entity = await this.entityRepository.findOne({ where });
+  async findOne(
+    where: FindOptionsWhere<T>,
+    options?: Omit<FindManyOptions<T>, 'where'>,
+  ): Promise<T> {
+    const entity = await this.entityRepository.findOne({ where, ...options });
+    if (!entity) {
+      throw new NotFoundException('Entity not found');
+    }
     return entity;
   }
 
-  async findOneOrDefault(where: FindOptionsWhere<T>): Promise<T | null> {
-    return this.entityRepository.findOne({ where });
+  async findOneOrDefault(
+    where: FindOptionsWhere<T>,
+    options?: Omit<FindManyOptions<T>, 'where'>,
+  ): Promise<T | null> {
+    return this.entityRepository.findOne({ where, ...options });
   }
 
   async findAll(options?: FindManyOptions<T>): Promise<T[]> {
