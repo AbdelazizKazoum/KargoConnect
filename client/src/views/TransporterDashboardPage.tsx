@@ -18,10 +18,11 @@ import StatItem from "@/components/ui/StatItem";
 import { Button } from "@/components/ui";
 import { transporterData } from "@/db/data";
 import Image from "next/image";
+import { PrivateProfile } from "@/types/user";
 
 type DashboardTab = "settings" | "trips" | "offers" | "bookings";
 
-const TransporterDashboardPage = () => {
+const TransporterDashboardPage = ({ user }: { user: PrivateProfile }) => {
   const [activeTab, setActiveTab] = useState<DashboardTab>("settings");
   const [coverUrl, setCoverUrl] = useState(transporterData.coverUrl);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -48,13 +49,13 @@ const TransporterDashboardPage = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "settings":
-        return <AccountSettingsView user={transporterData} />;
+        return <AccountSettingsView user={user} />;
       case "trips":
-        return <TripsView trips={transporterData.trips} />;
+        return <TripsView trips={user.trips} />;
       case "offers":
-        return <OffersView offers={transporterData.offers} />;
+        return <OffersView offers={user.demands} />;
       case "bookings":
-        return <BookingsView bookings={transporterData.bookings} />;
+        return <BookingsView bookings={user.bookings} />;
       default:
         return null;
     }

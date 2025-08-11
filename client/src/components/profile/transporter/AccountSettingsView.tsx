@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui";
 import Input from "@/components/ui/input";
 import Label from "@/components/ui/label";
-import { transporterData } from "@/db/data";
+import { PrivateProfile } from "@/types/user";
 import { useTranslations } from "next-intl";
 
-const AccountSettingsView = ({ user }: { user: typeof transporterData }) => {
+const AccountSettingsView = ({ user }: { user: PrivateProfile }) => {
   const t = useTranslations("profile.transporter.settings");
   return (
     <form className="space-y-8">
@@ -15,7 +15,7 @@ const AccountSettingsView = ({ user }: { user: typeof transporterData }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="name">{t("personalInfo.name")}</Label>
-            <Input id="name" defaultValue={user.name} />
+            <Input id="name" defaultValue={user.firstName} />
           </div>
           <div>
             <Label htmlFor="email">{t("personalInfo.email")}</Label>
@@ -32,11 +32,14 @@ const AccountSettingsView = ({ user }: { user: typeof transporterData }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="vehicleName">{t("vehicleInfo.name")}</Label>
-            <Input id="vehicleName" defaultValue={user.vehicle.name} />
+            <Input id="vehicleName" defaultValue={user?.vehicles?.[0]?.type} />
           </div>
           <div>
             <Label htmlFor="licensePlate">{t("vehicleInfo.plate")}</Label>
-            <Input id="licensePlate" defaultValue={user.vehicle.licensePlate} />
+            <Input
+              id="licensePlate"
+              defaultValue={user.vehicles?.[0]?.plate_number}
+            />
           </div>
         </div>
         <div className="mt-4">

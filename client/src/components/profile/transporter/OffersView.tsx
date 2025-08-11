@@ -6,9 +6,9 @@ import StatusBadge from "./StatusBadge";
 import Input from "@/components/ui/input";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { transporterData } from "@/db/data";
+import { PrivateProfile } from "@/types/user";
 
-const OffersView = ({ offers }: { offers: typeof transporterData.offers }) => {
+const OffersView = ({ offers }: { offers: PrivateProfile["demands"] }) => {
   const t = useTranslations("profile.transporter.offers");
   const [currentPage, setCurrentPage] = useState(1);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
@@ -16,9 +16,9 @@ const OffersView = ({ offers }: { offers: typeof transporterData.offers }) => {
   const ITEMS_PER_PAGE = 5;
   const paginatedOffers = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return offers.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    return (offers ?? []).slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [offers, currentPage]);
-  const totalPages = Math.ceil(offers.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil((offers?.length ?? 0) / ITEMS_PER_PAGE);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

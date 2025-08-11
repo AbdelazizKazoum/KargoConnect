@@ -20,6 +20,13 @@ export interface BaseUser {
   coverUrl?: string; // Optional cover URL
 
   rating?: number; // Optional rating field
+
+  vehicles?: Array<{
+    id: string;
+    type: string;
+    plate_number: string;
+    images?: string[];
+  }>;
 }
 
 export interface review {

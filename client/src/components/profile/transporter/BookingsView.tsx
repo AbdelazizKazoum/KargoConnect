@@ -5,12 +5,12 @@ import { Button } from "@/components/ui";
 import StatusBadge from "./StatusBadge";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { transporterData } from "@/db/data";
+import { PrivateProfile } from "@/types/user";
 
 const BookingsView = ({
   bookings,
 }: {
-  bookings: typeof transporterData.bookings;
+  bookings?: PrivateProfile["bookings"];
 }) => {
   const t = useTranslations("profile.transporter.bookings");
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,9 +19,11 @@ const BookingsView = ({
   const ITEMS_PER_PAGE = 5;
   const paginatedBookings = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return bookings.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    return bookings
+      ? bookings.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+      : [];
   }, [bookings, currentPage]);
-  const totalPages = Math.ceil(bookings.length / ITEMS_PER_PAGE);
+  const totalPages = bookings ? Math.ceil(bookings.length / ITEMS_PER_PAGE) : 0;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

@@ -12,9 +12,9 @@ import StatusBadge from "./StatusBadge";
 import Input from "@/components/ui/input";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { transporterData } from "@/db/data";
+import { PrivateProfile } from "@/types/user";
 
-const TripsView = ({ trips }: { trips: typeof transporterData.trips }) => {
+const TripsView = ({ trips }: { trips?: PrivateProfile["trips"] }) => {
   const t = useTranslations("profile.transporter.trips");
   const [currentPage, setCurrentPage] = useState(1);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
@@ -22,9 +22,9 @@ const TripsView = ({ trips }: { trips: typeof transporterData.trips }) => {
   const ITEMS_PER_PAGE = 5;
   const paginatedTrips = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return trips.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    return (trips ?? []).slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [trips, currentPage]);
-  const totalPages = Math.ceil(trips.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil((trips?.length ?? 0) / ITEMS_PER_PAGE);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
