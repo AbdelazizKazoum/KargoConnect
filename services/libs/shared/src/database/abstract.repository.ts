@@ -16,9 +16,6 @@ export abstract class AbstractRepository<T extends AbstractEntity<T>> {
     options?: Omit<FindManyOptions<T>, 'where'>,
   ): Promise<T> {
     const entity = await this.entityRepository.findOne({ where, ...options });
-    if (!entity) {
-      throw new NotFoundException('Entity not found');
-    }
     return entity;
   }
 
