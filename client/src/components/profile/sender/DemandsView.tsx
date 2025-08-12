@@ -6,18 +6,25 @@ import StatusBadge from "./StatusBadge";
 import Input from "@/components/ui/input";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { senderData } from "@/db/data";
+import { PublicProfile } from "@/types/user";
 
-const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
+const DemandsView = ({
+  demands = [],
+}: {
+  demands?: PublicProfile["demands"];
+}) => {
   const t = useTranslations("profile.sender.demands");
   const [currentPage, setCurrentPage] = useState(1);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+
   const ITEMS_PER_PAGE = 5;
+
   const paginatedDemands = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     return demands.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [demands, currentPage]);
+
   const totalPages = Math.ceil(demands.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
@@ -28,7 +35,7 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [menuRef]);
+  }, []);
 
   return (
     <div>
@@ -48,6 +55,7 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
           </Button>
         </div>
       </div>
+
       {/* Mobile Card View */}
       <div className="md:hidden space-y-4">
         {paginatedDemands.map((demand) => (
@@ -96,6 +104,7 @@ const DemandsView = ({ demands }: { demands: typeof senderData.demands }) => {
           </div>
         ))}
       </div>
+
       {/* Desktop Table View */}
       <div className="hidden md:block border rounded-xl">
         <div className="overflow-x-auto">

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui";
 import Input from "@/components/ui/input";
 import Label from "@/components/ui/label";
-import { senderData } from "@/db/data";
+import { PublicProfile } from "@/types/user";
 import { useTranslations } from "next-intl";
 
-const AccountSettingsView = ({ user }: { user: typeof senderData }) => {
+const AccountSettingsView = ({ user }: { user: PublicProfile }) => {
   const t = useTranslations("profile.sender.settings");
   return (
     <form className="space-y-8">
@@ -15,7 +15,10 @@ const AccountSettingsView = ({ user }: { user: typeof senderData }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="name">{t("personalInfo.name")}</Label>
-            <Input id="name" defaultValue={user.name} />
+            <Input
+              id="name"
+              defaultValue={user.firstName + " " + user.lastName}
+            />
           </div>
           <div>
             <Label htmlFor="email">{t("personalInfo.email")}</Label>

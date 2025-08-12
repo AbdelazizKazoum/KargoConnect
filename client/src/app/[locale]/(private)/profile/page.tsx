@@ -43,7 +43,7 @@ export default function App() {
   if (userRole === "sender") {
     return (
       <div className="bg-background">
-        <SenderDashboardPage />
+        <SenderDashboardPage user={user} />
       </div>
     );
   }

@@ -17,12 +17,15 @@ import StatItem from "@/components/ui/StatItem";
 import { Button } from "@/components/ui";
 import { senderData } from "@/db/data";
 import Image from "next/image";
+import { PublicProfile } from "@/types/user";
 
 type DashboardTab = "settings" | "demands" | "bookings";
 
-const SenderDashboardPage = () => {
+const SenderDashboardPage = ({ user }: { user: PublicProfile }) => {
   const [activeTab, setActiveTab] = useState<DashboardTab>("settings");
-  const [coverUrl, setCoverUrl] = useState(senderData.coverUrl);
+  const [coverUrl, setCoverUrl] = useState(
+    user.coverUrl || senderData.coverUrl
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const t = useTranslations("profile.sender");
 
@@ -46,11 +49,11 @@ const SenderDashboardPage = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "settings":
-        return <AccountSettingsView user={senderData} />;
+        return <AccountSettingsView user={user} />;
       case "demands":
-        return <DemandsView demands={senderData.demands} />;
+        return <DemandsView demands={user.demands} />;
       case "bookings":
-        return <BookingsView bookings={senderData.bookings} />;
+        return <BookingsView bookings={user.bookings} />;
       default:
         return null;
     }
@@ -96,8 +99,8 @@ const SenderDashboardPage = () => {
             <aside className="lg:col-span-4 xl:col-span-3">
               <div className="bg-card p-6 rounded-xl border shadow-sm text-center sticky top-24">
                 <Image
-                  src={senderData.avatarUrl}
-                  alt={senderData.name}
+                  src={user.image || senderData.avatarUrl}
+                  alt={user.image ? "User Avatar" : "Default Avatar"}
                   width={96}
                   height={96}
                   className="h-24 w-24 rounded-full mx-auto border-4 border-background"

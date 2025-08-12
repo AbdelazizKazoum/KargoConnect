@@ -17,7 +17,7 @@ type LinkItem = {
 type HeaderProps = {
   state: "public" | "auth" | "private";
   additionalLinksForRoot?: LinkItem[]; // shown on root when authenticated
-  user: Session["user"] | null; // user session for public state
+  user?: Session["user"] | null; // user session for public state
 };
 
 export default function Header({

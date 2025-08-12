@@ -240,6 +240,7 @@ export class UsersService {
       lastName: user.lastName,
       firstName: user.firstName,
       role: user.role,
+      email: user.email,
 
       rating: user.rating,
       image: user.image,

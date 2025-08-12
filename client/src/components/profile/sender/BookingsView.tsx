@@ -5,22 +5,24 @@ import { Button } from "@/components/ui";
 import StatusBadge from "./StatusBadge";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { senderData } from "@/db/data";
+import { PublicProfile } from "@/types/user";
 
 const BookingsView = ({
-  bookings,
+  bookings = [],
 }: {
-  bookings: typeof senderData.bookings;
+  bookings?: PublicProfile["bookings"];
 }) => {
   const t = useTranslations("profile.sender.bookings");
   const [currentPage, setCurrentPage] = useState(1);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const ITEMS_PER_PAGE = 5;
+
   const paginatedBookings = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     return bookings.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [bookings, currentPage]);
+
   const totalPages = Math.ceil(bookings.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
@@ -31,11 +33,12 @@ const BookingsView = ({
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [menuRef]);
+  }, []);
 
   return (
     <div>
       <h3 className="text-lg font-semibold mb-4">{t("title")}</h3>
+
       {/* Mobile Card View */}
       <div className="md:hidden space-y-4">
         {paginatedBookings.map((booking) => (
@@ -87,6 +90,7 @@ const BookingsView = ({
           </div>
         ))}
       </div>
+
       {/* Desktop Table View */}
       <div className="hidden md:block border rounded-xl">
         <div className="overflow-x-auto">
