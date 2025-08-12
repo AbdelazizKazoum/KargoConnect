@@ -18,5 +18,26 @@ export const UserService = {
     return response.data;
   },
 
+  async setProfileCover(
+    id: number,
+    formData: FormData
+  ): Promise<PrivateProfile> {
+    console.log(
+      "🚀 ~ UserService ~ setProfileCover ~ formData:",
+      formData.get("cover")
+    );
+
+    const response = await axiosClient.put<PrivateProfile>(
+      `/users/${id}/cover-picture`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  },
+
   // You can add more user-related API calls here, e.g. login, logout, etc.
 };

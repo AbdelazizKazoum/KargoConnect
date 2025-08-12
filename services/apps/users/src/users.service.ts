@@ -375,8 +375,14 @@ export class UsersService {
     };
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.usersRepository.findOneAndUpdate({ id: +id }, updateUserDto);
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    try {
+      return await this.usersRepository.findOneAndUpdate({ id }, updateUserDto);
+    } catch (error) {
+      throw new RpcInternalServerErrorException(
+        'Failed to update user: ' + error.message,
+      );
+    }
   }
 
   remove(id: number) {

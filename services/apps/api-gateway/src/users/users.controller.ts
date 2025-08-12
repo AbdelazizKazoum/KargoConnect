@@ -1,7 +1,21 @@
 import { MinioService } from '@app/shared';
-import { Controller, Get, Inject, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  UploadedFile,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
+import { File as MulterFile } from 'multer';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users')
 export class UsersController {
@@ -17,6 +31,34 @@ export class UsersController {
     );
 
     return profile;
+  }
+
+  @Put(':id/cover-picture')
+  @UseInterceptors(FileInterceptor('cover'))
+  async setCoverPicture(
+    @Param('id', ParseIntPipe) id: number,
+    @UploadedFile() file: MulterFile,
+  ) {
+    console.log('🚀 ~ UsersController ~ setCoverPicture ~ file:', file);
+
+    // Upload profile picture if present
+    if (file) {
+      const uploadedProfile = await this.minioService.uploadFile(
+        file,
+        'cover-pictures',
+      );
+      const body = { coverUrl: uploadedProfile.key, id };
+
+      // Call the microservice to update the user's cover picture
+      const user = await firstValueFrom(
+        this.client.send({ cmd: 'update_user' }, body),
+      );
+
+      // Return the updated user profile
+      return user;
+    }
+
+    return null;
   }
 
   @Get()

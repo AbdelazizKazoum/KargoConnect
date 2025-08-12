@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BaseUser {
-  id: string;
+  id: number;
   username?: string; // Optional username field
   firstName?: string; // Optional first name field
   lastName?: string; // Optional last name field

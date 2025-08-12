@@ -12,7 +12,6 @@ export default function App() {
   const { data: session, status } = useSession();
 
   const user = useUserStore((state) => state.user);
-  console.log("🚀 ~ App ~ user:", user);
   const setUser = useUserStore((state) => state.setUser);
 
   useEffect(() => {

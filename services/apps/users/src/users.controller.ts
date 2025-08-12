@@ -44,9 +44,9 @@ export class UsersController {
   //   return this.usersService.findOne(+id);
   // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @MessagePattern({ cmd: 'update_user' })
+  async update(updateUserDto: UpdateUserDto) {
+    return await this.usersService.update(updateUserDto.id, updateUserDto);
   }
 
   @Delete(':id')

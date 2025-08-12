@@ -1,5 +1,3 @@
-"use client";
-
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
@@ -9,7 +7,6 @@ import {
   Package,
   Star,
 } from "lucide-react";
-
 import AccountSettingsView from "@/components/profile/sender/AccountSettingsView";
 import BookingsView from "@/components/profile/sender/BookingsView";
 import DemandsView from "@/components/profile/sender/DemandsView";
@@ -18,6 +15,8 @@ import { Button } from "@/components/ui";
 import { senderData } from "@/db/data";
 import Image from "next/image";
 import { PublicProfile } from "@/types/user";
+import { useUserStore } from "@/stores/userStore";
+import { toast } from "sonner";
 
 type DashboardTab = "settings" | "demands" | "bookings";
 
@@ -27,6 +26,7 @@ const SenderDashboardPage = ({ user }: { user: PublicProfile }) => {
     user.coverUrl || senderData.coverUrl
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { setCover } = useUserStore();
   const t = useTranslations("profile.sender");
 
   const navItems = [
@@ -39,10 +39,27 @@ const SenderDashboardPage = ({ user }: { user: PublicProfile }) => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCoverChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
-    if (file) {
-      setCoverUrl(URL.createObjectURL(file));
+    if (!file) return;
+
+    // Show preview immediately
+    setCoverUrl(URL.createObjectURL(file));
+
+    // Prepare FormData
+    const formData = new FormData();
+    formData.append("cover", file);
+
+    try {
+      await setCover(user.id, formData);
+      // if (updatedUser?.coverUrl) {
+      //   setCoverUrl(updatedUser.coverUrl);
+      // }
+    } catch (error) {
+      toast.error(t("error.coverUpdateFailed"));
+      console.error("Error updating cover:", error);
     }
   };
 
@@ -76,7 +93,7 @@ const SenderDashboardPage = ({ user }: { user: PublicProfile }) => {
           <input
             type="file"
             ref={fileInputRef}
-            onChange={handleFileChange}
+            onChange={handleCoverChange}
             className="hidden"
             accept="image/*"
           />

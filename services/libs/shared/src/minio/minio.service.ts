@@ -91,7 +91,7 @@ export class MinioService {
 
   async getSignedUrls(
     fileKeys: string[],
-    expiresIn = 300,
+    expiresIn = 3,
   ): Promise<(string | null)[]> {
     if (!fileKeys || fileKeys.length === 0) {
       return [];

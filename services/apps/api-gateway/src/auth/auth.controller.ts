@@ -6,6 +6,7 @@ import {
   Controller,
   Get,
   Inject,
+  InternalServerErrorException,
   Post,
   Req,
   UploadedFiles,
@@ -16,6 +17,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { firstValueFrom } from 'rxjs';
 import { File as MulterFile } from 'multer';
+import { In } from 'typeorm';
 
 @Controller('auth')
 export class AuthController {
@@ -42,9 +44,6 @@ export class AuthController {
     },
   ) {
     const body = JSON.parse(data) as RegisterDto;
-
-    console.log('🚀 ~ AuthController ~ register ~ files:', files);
-    console.log('🚀 ~ AuthController ~ register ~ body:', body);
 
     // Upload profile picture if present
     if (files.profilePicture?.[0]) {
@@ -81,29 +80,39 @@ export class AuthController {
     const profile = await firstValueFrom(
       this.userClient.send({ cmd: 'getPrivateProfile' }, req.user.id),
     );
+    console.log('🚀 ~ AuthController ~ getProfile ~ profile:', profile);
 
     if (!profile) {
       return null;
     }
 
-    // Replace profile.image with signed URL
-    profile.image = profile.image
-      ? await this.minioService.getSignedUrl(profile.image)
-      : null;
+    try {
+      // Replace profile.image with signed URL
+      profile.image = profile.image
+        ? await this.minioService.getSignedUrl(profile.image)
+        : null;
 
-    // Replace each vehicle's images with signed URLs
-    if (profile.vehicles?.length) {
-      profile.vehicles = await Promise.all(
-        profile.vehicles.map(async (vehicle) => {
-          const signedImages = await this.minioService.getSignedUrls(
-            vehicle.images || [],
-          );
-          return {
-            ...vehicle,
-            images: signedImages,
-          };
-        }),
-      );
+      // Replace profile.coverUrl with signed URL
+      profile.coverUrl = profile.coverUrl
+        ? await this.minioService.getSignedUrl(profile.coverUrl)
+        : null;
+
+      // Replace each vehicle's images with signed URLs
+      if (profile.vehicles?.length) {
+        profile.vehicles = await Promise.all(
+          profile.vehicles.map(async (vehicle) => {
+            const signedImages = await this.minioService.getSignedUrls(
+              vehicle.images || [],
+            );
+            return {
+              ...vehicle,
+              images: signedImages,
+            };
+          }),
+        );
+      }
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to retrieve media URLs');
     }
 
     return profile;
