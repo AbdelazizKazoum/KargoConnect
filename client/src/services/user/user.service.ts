@@ -22,11 +22,6 @@ export const UserService = {
     id: number,
     formData: FormData
   ): Promise<PrivateProfile> {
-    console.log(
-      "🚀 ~ UserService ~ setProfileCover ~ formData:",
-      formData.get("cover")
-    );
-
     const response = await axiosClient.put<PrivateProfile>(
       `/users/${id}/cover-picture`,
       formData,

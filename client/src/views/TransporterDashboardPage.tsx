@@ -19,13 +19,18 @@ import { Button } from "@/components/ui";
 import { transporterData } from "@/db/data";
 import Image from "next/image";
 import { PrivateProfile } from "@/types/user";
+import { useUserStore } from "@/stores/userStore";
+import { toast } from "sonner";
 
 type DashboardTab = "settings" | "trips" | "offers" | "bookings";
 
 const TransporterDashboardPage = ({ user }: { user: PrivateProfile }) => {
   const [activeTab, setActiveTab] = useState<DashboardTab>("settings");
-  const [coverUrl, setCoverUrl] = useState(user.coverUrl);
+  const [coverUrl, setCoverUrl] = useState(
+    user.coverUrl || transporterData.coverUrl
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { setCover } = useUserStore();
   const t = useTranslations("profile.transporter");
 
   const navItems = [
@@ -39,10 +44,28 @@ const TransporterDashboardPage = ({ user }: { user: PrivateProfile }) => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCoverChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
-    if (file) {
-      setCoverUrl(URL.createObjectURL(file));
+    if (!file) return;
+
+    // Show preview immediately
+    setCoverUrl(URL.createObjectURL(file));
+
+    // Prepare FormData
+    const formData = new FormData();
+    formData.append("cover", file);
+
+    try {
+      await setCover(user.id, formData);
+      // Optional: If backend returns updated user with coverUrl
+      // if (updatedUser?.coverUrl) {
+      //   setCoverUrl(updatedUser.coverUrl);
+      // }
+    } catch (error) {
+      toast.error(t("error.coverUpdateFailed"));
+      console.error("Error updating cover:", error);
     }
   };
 
@@ -77,7 +100,7 @@ const TransporterDashboardPage = ({ user }: { user: PrivateProfile }) => {
           <input
             type="file"
             ref={fileInputRef}
-            onChange={handleFileChange}
+            onChange={handleCoverChange}
             className="hidden"
             accept="image/*"
           />
