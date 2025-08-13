@@ -82,4 +82,10 @@ export class Users extends AbstractEntity<Users> {
 
   @OneToMany(() => Vehicle, (vehicle) => vehicle.user, { nullable: true })
   vehicles?: Vehicle[];
+
+  @Column({ nullable: true })
+  provider?: string; // e.g. 'local', 'google', 'facebook'
+
+  @Column({ nullable: true })
+  providerId?: string; // e.g. Google/Facebook user ID
 }

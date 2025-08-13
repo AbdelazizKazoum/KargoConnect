@@ -8,7 +8,7 @@ export interface BaseUser {
   email?: string; // Optional email field
   bio?: string;
   phone?: string; // Optional phone number field
-  role: "admin" | "user" | "transporter" | "sender";
+  role: "admin" | "user" | "transporter" | "sender" | null;
 
   verified?: boolean; // Optional verified field
 
@@ -17,16 +17,20 @@ export interface BaseUser {
   address?: string; // Optional address field
 
   image?: string;
+
   coverUrl?: string; // Optional cover URL
+
+  profilePicture: FileList;
 
   rating?: number; // Optional rating field
 
-  vehicles?: Array<{
-    id: string;
+  vehicle: {
     type: string;
+    capacity_kg: number;
     plate_number: string;
-    images?: string[];
-  }>;
+    description?: string;
+    images?: File[] | string[]; // Allow both File objects and URLs
+  };
 }
 
 export interface review {

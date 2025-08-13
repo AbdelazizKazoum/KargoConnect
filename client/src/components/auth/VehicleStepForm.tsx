@@ -17,7 +17,7 @@ type VehicleFormData = {
     capacity_kg: number;
     plate_number: string;
     description?: string;
-    images?: File[];
+    images?: File[] | string[]; // Allow both File objects and URLs
   };
 };
 
@@ -42,11 +42,11 @@ export const VehicleStepForm = ({
   } = useForm<VehicleFormData>({
     defaultValues: {
       vehicle: {
-        type: initialData.type || "",
-        capacity_kg: initialData.capacity_kg || 0,
-        plate_number: initialData.plate_number || "",
-        description: initialData.description || "",
-        images: initialData.images || [],
+        type: initialData?.type || "",
+        capacity_kg: initialData?.capacity_kg || 0,
+        plate_number: initialData?.plate_number || "",
+        description: initialData?.description || "",
+        images: initialData?.images || [],
       },
     },
     mode: "onTouched",
