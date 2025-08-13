@@ -1,6 +1,7 @@
 // stores/authStore.ts
 import { create } from "zustand";
 import { BaseUser } from "@/types/user";
+import merge from "lodash.merge";
 
 interface AuthRegisterState {
   // current step of the signup
@@ -48,10 +49,11 @@ export const useAuthStore = create<AuthRegisterState>((set, get) => ({
     const currentData = get().formData;
     const role = get().role;
     set({
-      formData: { ...currentData, role, ...stepData },
+      formData: merge({}, currentData, { role }, stepData),
       step: get().step + 1,
     });
   },
+
   prevStep: () => {
     set((state) => ({
       step: state.step > 1 ? state.step - 1 : 1,

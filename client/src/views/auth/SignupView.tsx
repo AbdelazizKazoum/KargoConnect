@@ -3,64 +3,22 @@
 import React, { useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { ArrowLeft, X, CheckCircle2 } from "lucide-react";
-
 import { AccountStepForm } from "@/components/auth/AccountStepForm";
 import { VehicleStepForm } from "@/components/auth/VehicleStepForm";
 import { ProfileStepForm } from "@/components/auth/ProfileStepForm";
+import { RoleStepForm } from "@/components/auth/RoleStepForm";
 import { Button } from "@/components/ui";
 import { register } from "@/services/auth/authService";
 import axios, { AxiosError } from "axios";
 import { useAuthStore } from "@/stores/authStore";
 
-type UserRole = "sender" | "transporter" | null;
-type AuthView = "role_select" | "signup" | "login";
+type AuthView = "signup" | "login";
 
-type SignupViewProps = {
-  role: UserRole;
-  setView: (view: AuthView) => void;
-};
-
-// Success Modal Component
-const SuccessModal = ({
-  isOpen,
-  onClose,
-  onLoginClick,
+export default function SignupView({
+  setView,
 }: {
-  isOpen: boolean;
-  onClose: () => void;
-  onLoginClick: () => void;
-}) => {
-  const t = useTranslations("auth.successModal");
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center">
-      <div className="bg-white rounded-xl shadow-2xl p-8 m-4 max-w-sm w-full text-center relative transform transition-all duration-300 ease-in-out scale-100">
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-          aria-label="Close"
-        >
-          <X size={24} />
-        </button>
-        <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-          <CheckCircle2 className="h-10 w-10 text-green-600" />
-        </div>
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("title")}</h3>
-        <p className="text-gray-600 mb-6">{t("message")}</p>
-        <Button
-          onClick={onLoginClick}
-          className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg"
-        >
-          {t("loginButton")}
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-export default function SignupView({ role, setView }: SignupViewProps) {
+  setView: (view: AuthView) => void;
+}) {
   const t = useTranslations("auth");
   const locale = useLocale();
   const isRTL = locale === "ar";
@@ -80,15 +38,10 @@ export default function SignupView({ role, setView }: SignupViewProps) {
     setSuccess,
     setFormData,
   } = useAuthStore();
+  console.log("🚀 ~ SignupView ~ formData:", formData);
 
-  const totalSteps = role === "transporter" ? 3 : 2;
+  const totalSteps = formData.role === "transporter" ? 4 : 3;
 
-  // Set initial role if not already in store
-  useEffect(() => {
-    if (!formData.role) setFormData({ role });
-  }, [role, formData.role, setFormData]);
-
-  // Handle programmatic redirect
   useEffect(() => {
     if (redirectStep) setStep(redirectStep);
   }, [redirectStep, setStep]);
@@ -97,7 +50,7 @@ export default function SignupView({ role, setView }: SignupViewProps) {
 
   const handlePrevStep = () => {
     if (step === 1) {
-      setView("role_select");
+      setView("login");
     } else {
       prevStep();
     }
@@ -108,7 +61,11 @@ export default function SignupView({ role, setView }: SignupViewProps) {
     setError(null);
 
     try {
-      const completeFormData = { ...formData, ...finalStepData, role };
+      const completeFormData = { ...formData, ...finalStepData };
+      console.log(
+        "🚀 ~ handleFinalSubmit ~ completeFormData:",
+        completeFormData
+      );
 
       const formDataToSend = new FormData();
       const vehicleImages: File[] = [];
@@ -119,7 +76,6 @@ export default function SignupView({ role, setView }: SignupViewProps) {
           if (file instanceof File) vehicleImages.push(file);
         });
       }
-
       if (completeFormData.profilePicture?.[0] instanceof File) {
         profilePictureFile = completeFormData.profilePicture[0];
       }
@@ -131,16 +87,13 @@ export default function SignupView({ role, setView }: SignupViewProps) {
       };
 
       formDataToSend.append("data", JSON.stringify(dataToSerialize));
-
       if (profilePictureFile)
         formDataToSend.append("profilePicture", profilePictureFile);
       vehicleImages.forEach((file) =>
         formDataToSend.append("vehicleImages", file)
       );
 
-      const res = await register(formDataToSend);
-      console.log("✅ Signup Success:", res.data);
-
+      await register(formDataToSend);
       setSuccess(true);
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
@@ -162,11 +115,13 @@ export default function SignupView({ role, setView }: SignupViewProps) {
 
     switch (step) {
       case 1:
+        return <RoleStepForm onSuccess={handleNextStep} />;
+      case 2:
         return (
           <AccountStepForm onSuccess={handleNextStep} initialData={formData} />
         );
-      case 2:
-        if (role === "transporter") {
+      case 3:
+        if (formData.role === "transporter") {
           return (
             <VehicleStepForm
               onSuccess={handleNextStep}
@@ -181,7 +136,7 @@ export default function SignupView({ role, setView }: SignupViewProps) {
             isSubmitting={isSubmitting}
           />
         );
-      case 3:
+      case 4:
         return (
           <ProfileStepForm
             onSuccess={handleFinalSubmit}
@@ -196,11 +151,21 @@ export default function SignupView({ role, setView }: SignupViewProps) {
 
   return (
     <div dir={isRTL ? "rtl" : "ltr"}>
-      <SuccessModal
-        isOpen={success}
-        onClose={() => setSuccess(false)}
-        onLoginClick={() => setView("login")}
-      />
+      {success && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center">
+          <div className="bg-white rounded-xl shadow-2xl p-8 m-4 max-w-sm w-full text-center">
+            <CheckCircle2 className="h-10 w-10 text-green-600 mx-auto mb-4" />
+            <h3 className="text-2xl font-bold">{t("successModal.title")}</h3>
+            <p className="mb-6">{t("successModal.message")}</p>
+            <Button
+              onClick={() => setView("login")}
+              className="w-full bg-primary text-white font-bold"
+            >
+              {t("successModal.loginButton")}
+            </Button>
+          </div>
+        </div>
+      )}
 
       {!success && (
         <div className="flex items-center mb-6">
@@ -215,11 +180,7 @@ export default function SignupView({ role, setView }: SignupViewProps) {
           </Button>
           <div>
             <h1 className="text-3xl font-bold tracking-tight capitalize">
-              {role === "sender"
-                ? t("senderTitle")
-                : role === "transporter"
-                ? t("transporterTitle")
-                : t("signup")}
+              {formData.role ? t(`${formData.role}Title`) : t("signup")}
             </h1>
             <p className="text-muted-foreground">
               {t("stepOf", { step, total: totalSteps })}
