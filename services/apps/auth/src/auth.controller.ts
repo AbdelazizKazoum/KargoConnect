@@ -26,8 +26,6 @@ export class AuthController {
 
   @MessagePattern({ cmd: 'oauth-login' })
   async oauthLogin(data: any) {
-    console.log('🚀 ~ AuthController ~ oauthLogin ~ data:', data);
-
     const user = await this.authService.oauthLogin(data);
     if (!user) throw new RpcUnauthorizedException();
     return await this.authService.login(user);

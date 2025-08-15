@@ -77,7 +77,7 @@ export class Users extends AbstractEntity<Users> {
   @Column({ type: 'timestamp', nullable: true })
   updatedAt?: Date;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   password: string;
 
   @OneToMany(() => Vehicle, (vehicle) => vehicle.user, { nullable: true })

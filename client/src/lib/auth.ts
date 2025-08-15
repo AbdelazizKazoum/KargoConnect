@@ -83,8 +83,8 @@ const authOptions: NextAuthOptions = {
           providerId: account?.providerAccountId,
           email: user.email,
           name: user.name,
-          first_name: profile?.given_name,
-          last_name: profile?.family_name,
+          firstName: profile?.given_name,
+          lastName: profile?.family_name,
           image: user.image,
         }),
       });
