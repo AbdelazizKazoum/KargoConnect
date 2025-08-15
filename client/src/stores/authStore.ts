@@ -47,9 +47,9 @@ export const useAuthStore = create<AuthRegisterState>((set, get) => ({
   setStep: (step) => set({ step }),
   nextStep: (stepData) => {
     const currentData = get().formData;
-    const role = get().role;
+    // const role = get().role;
     set({
-      formData: merge({}, currentData, { role }, stepData),
+      formData: merge({}, currentData, stepData),
       step: get().step + 1,
     });
   },

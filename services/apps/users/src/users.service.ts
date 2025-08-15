@@ -24,8 +24,6 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    console.log('🚀 ~ UsersService ~ create ~ createUserDto:', createUserDto);
-
     const existingUser = await this.usersRepository.findOne({
       email: createUserDto.email,
     });
@@ -39,9 +37,13 @@ export class UsersService {
     await queryRunner.startTransaction();
 
     try {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
-      createUserDto.password = hashedPassword;
+      if (createUserDto.password) {
+        // Hash the password before saving
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
+        createUserDto.password = hashedPassword;
+      }
 
       const vehicleData = createUserDto.vehicle;
       delete createUserDto.vehicle;
@@ -75,6 +77,13 @@ export class UsersService {
 
   async findByEmail(email: string) {
     return await this.usersRepository.findOne({ email });
+  }
+
+  async findByProvider(provider: string, providerId: string) {
+    return await this.usersRepository.findOne({
+      provider,
+      providerId,
+    });
   }
 
   async findAll() {

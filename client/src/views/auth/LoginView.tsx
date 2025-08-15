@@ -57,7 +57,7 @@ export default function LoginView({
   // Handler for OAuth providers
   const handleOAuthSignIn = (provider: "google" | "facebook") => {
     setIsLoading(true); // Optionally show a loading state for OAuth as well
-    signIn(provider, { callbackUrl: "/dashboard" });
+    signIn(provider, { callbackUrl: "/" });
   };
 
   return (

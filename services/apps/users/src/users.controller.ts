@@ -3,7 +3,7 @@ import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { RegisterDto } from '@app/common';
+import { RegisterDto, RpcInternalServerErrorException } from '@app/common';
 
 @Controller('users')
 export class UsersController {
@@ -16,12 +16,26 @@ export class UsersController {
 
   @MessagePattern({ cmd: 'create-user' })
   async create(@Body() createUserDto: RegisterDto) {
-    return await this.usersService.create(createUserDto);
+    try {
+      return await this.usersService.create(createUserDto);
+    } catch (error) {
+      console.log('🚀 ~ UsersController ~ create ~ error:', error);
+
+      throw new RpcInternalServerErrorException(error);
+    }
   }
 
   @MessagePattern({ cmd: 'get_user_by_email' })
   getUserByEmail(email: string) {
     return this.usersService.findByEmail(email);
+  }
+
+  @MessagePattern({ cmd: 'get_user_by_provider' })
+  async getUserByProvider(data: { provider: string; providerId: string }) {
+    return await this.usersService.findByProvider(
+      data.provider,
+      data.providerId,
+    );
   }
 
   @MessagePattern({ cmd: 'getUsers' })

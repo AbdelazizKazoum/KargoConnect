@@ -44,7 +44,7 @@ export class CreateUserDto {
   @IsString()
   phone?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(['admin', 'validator', 'transporter', 'sender'])
   role: 'admin' | 'validator' | 'transporter' | 'sender';
 

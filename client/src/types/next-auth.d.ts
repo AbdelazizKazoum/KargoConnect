@@ -1,38 +1,67 @@
 import "next-auth";
-import { DefaultSession } from "next-auth";
+import {
+  DefaultSession,
+  DefaultUser,
+  Account,
+  Profile as NextAuthProfile,
+} from "next-auth";
 
-// Extend the built-in User type
+// Extend the default Profile type to include Google fields
 declare module "next-auth" {
-  interface User {
-    id: string;
-    username?: string; // Optional username field
-    role?: string; // Optional role field
-    email?: string; // Optional email field
-    image?: string; // Optional image field
+  // This will replace the default Profile type inside callbacks
+  interface Profile extends NextAuthProfile {
+    given_name?: string;
+    family_name?: string;
+    email_verified?: boolean;
+    picture?: string;
+  }
 
-    accessToken?: string; // Token returned from the credentials provider
-    refreshToken?: string; // Optional refresh token field
+  interface User extends DefaultUser {
+    id: string;
+    username?: string;
+    firstName?: string;
+    lastName?: string;
+    role?: string;
+    email?: string;
+    image?: string;
+
+    accessToken?: string;
+    refreshToken?: string;
+    backendToken?: string;
+
+    account?: Account;
+    profile?: Profile;
   }
 
   interface Session {
-    accessToken?: string; // Custom token from JWT
+    accessToken?: string;
+    refreshToken?: string;
+    account?: Account;
+    profile?: Profile;
+
     user: {
       id?: string;
-      accessToken?: string; // Include access token in session
-      username?: string; // Optional username field
-      role?: string; // Optional role field
-      email?: string; // Optional email field
+      username?: string;
+      role?: string;
+      email?: string;
+      image?: string;
     } & DefaultSession["user"];
   }
 }
 
-// Extend the built-in JWT type
 declare module "next-auth/jwt" {
   interface JWT {
-    id?: string; // Add user ID to the token
-    accessToken?: string; // Add apiToken to the token
-    username?: string; // Optional username field
-    role?: string; // Optional role field
-    email?: string; // Optional email field
+    id?: string;
+    username?: string;
+    role?: string;
+    email?: string;
+    picture?: string;
+
+    accessToken?: string;
+    refreshToken?: string;
+    backendToken?: string;
+
+    account?: Account;
+    profile?: Profile;
   }
 }

@@ -39,6 +39,59 @@ export class AuthService {
     }
   }
 
+  async oauthLogin(data: any) {
+    try {
+      // Check if user already exists
+      const existingUser = await firstValueFrom(
+        this.usersCLient.send(
+          { cmd: 'get_user_by_provider' },
+          {
+            provider: data.provider,
+            providerId: data.providerId,
+          },
+        ),
+      );
+
+      console.log(
+        '🚀 ~ AuthService ~ oauthLogin ~ existingUser:',
+        existingUser,
+      );
+      if (existingUser) {
+        return existingUser; // User already exists, return it
+      }
+
+      // If user does not exist, create a new one
+      const newUser = await firstValueFrom(
+        this.usersCLient.send(
+          { cmd: 'create-user' },
+          {
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            image: data.image,
+            provider: data.provider,
+            providerId: data.providerId,
+            isEmailVerified: true, // Assuming OAuth users are verified
+            isProfileComplete: false, // For OAuth, we might not have all details
+            role: 'sender', // Default role, can be changed later
+            // password: data.password, // No password for OAuth users
+          },
+        ),
+      );
+
+      if (!newUser) {
+        throw new RpcUnauthorizedException('Failed to create user');
+      }
+
+      // Return the newly created user
+      return newUser;
+    } catch (error) {
+      console.log('🚀 ~ AuthService ~ oauthLogin ~ error:', error);
+
+      throw new RpcException(error); // preserves shape
+    }
+  }
+
   async login(user: User) {
     const payload = {
       sub: user.id,
@@ -50,7 +103,10 @@ export class AuthService {
       user: {
         id: user.id,
         email: user.email,
-        username: user.username,
+        // username: user.username,
+        lastName: user.lastName,
+        firstName: user.firstName,
+        image: user.image,
         role: user.role,
       },
       access_token: this.jwtService.sign(payload),

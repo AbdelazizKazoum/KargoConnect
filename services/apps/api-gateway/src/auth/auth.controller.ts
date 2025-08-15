@@ -71,7 +71,12 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() body: LoginDto) {
-    return this.client.send({ cmd: 'login' }, body);
+    return await this.client.send({ cmd: 'login' }, body);
+  }
+
+  @Post('oauth-login')
+  async oauthLogin(@Body() body: any) {
+    return await this.client.send({ cmd: 'oauth-login' }, body);
   }
 
   @UseGuards(JwtAuthGuard)

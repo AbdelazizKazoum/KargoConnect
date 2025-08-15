@@ -20,11 +20,11 @@ export class RegisterDto {
   // username: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   password: string;
 
   @IsEnum(['admin', 'validator', 'transporter', 'sender'])
-  @IsNotEmpty()
+  @IsOptional()
   role: 'admin' | 'validator' | 'transporter' | 'sender';
 
   @IsString()
@@ -39,7 +39,7 @@ export class RegisterDto {
   @IsString()
   identity_number?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   country?: string;
 
@@ -63,4 +63,12 @@ export class RegisterDto {
 
   @IsOptional()
   vehicle: IVehicle;
+
+  @IsOptional()
+  @IsString()
+  provider?: string;
+
+  @IsOptional()
+  @IsString()
+  providerId?: string;
 }
