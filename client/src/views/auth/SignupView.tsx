@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { ArrowLeft, X, CheckCircle2 } from "lucide-react";
 import { AccountStepForm } from "@/components/auth/AccountStepForm";
@@ -11,13 +11,16 @@ import { Button } from "@/components/ui";
 import { register } from "@/services/auth/authService";
 import axios, { AxiosError } from "axios";
 import { useAuthStore } from "@/stores/authStore";
+import merge from "lodash.merge";
 
 type AuthView = "signup" | "login";
 
 export default function SignupView({
   setView,
+  isCompletingProfile,
 }: {
   setView: (view: AuthView) => void;
+  isCompletingProfile: boolean;
 }) {
   const t = useTranslations("auth");
   const locale = useLocale();
@@ -30,29 +33,57 @@ export default function SignupView({
     error,
     success,
     redirectStep,
-    nextStep,
-    prevStep,
+    nextStep: storeNextStep,
+    prevStep: storePrevStep,
     setStep,
     setError,
     setSubmitting,
     setSuccess,
     setFormData,
   } = useAuthStore();
-  console.log("🚀 ~ SignupView ~ formData:", formData);
 
-  const totalSteps = formData.role === "transporter" ? 4 : 3;
+  // Local state to manage the displayed step number for a better user experience
+  const [displayStep, setDisplayStep] = useState(1);
+
+  // Determine the total number of steps based on the user's role and flow type
+  const isTransporter = formData.role === "transporter";
+  const totalSteps = isCompletingProfile
+    ? 1 + (isTransporter ? 1 : 0) + 1 // Role + optional Vehicle + Profile
+    : 1 + 1 + (isTransporter ? 1 : 0) + 1; // Role + Account + optional Vehicle + Profile
 
   useEffect(() => {
     if (redirectStep) setStep(redirectStep);
   }, [redirectStep, setStep]);
 
-  const handleNextStep = (stepData: object) => nextStep(stepData);
-
-  const handlePrevStep = () => {
-    if (step === 1) {
-      setView("login");
+  // Custom handler for the next step to inject profile completion logic
+  const handleNextStep = (stepData: object) => {
+    // If completing profile and we just finished the role step (step 1),
+    // skip the account step (step 2) and go directly to step 3.
+    if (isCompletingProfile && step === 1) {
+      const currentData = useAuthStore.getState().formData;
+      const newData = merge({}, currentData, stepData);
+      setFormData(newData); // Manually update form data with the role
+      setStep(3); // Jump to step 3
+      setDisplayStep(2); // UI shows step 2
     } else {
-      prevStep();
+      storeNextStep(stepData);
+      setDisplayStep((s) => s + 1);
+    }
+  };
+
+  // Custom handler for the previous step
+  const handlePrevStep = () => {
+    // If we jumped from step 1 to 3, we need to jump back from 3 to 1.
+    if (isCompletingProfile && step === 3) {
+      setStep(1);
+      setDisplayStep(1);
+      return;
+    }
+
+    // Default behavior for new signups or other steps
+    if (step > 1) {
+      storePrevStep();
+      setDisplayStep((s) => s - 1);
     }
   };
 
@@ -62,11 +93,6 @@ export default function SignupView({
 
     try {
       const completeFormData = { ...formData, ...finalStepData };
-      console.log(
-        "🚀 ~ handleFinalSubmit ~ completeFormData:",
-        completeFormData
-      );
-
       const formDataToSend = new FormData();
       const vehicleImages: File[] = [];
       let profilePictureFile: File | null = null;
@@ -117,6 +143,7 @@ export default function SignupView({
       case 1:
         return <RoleStepForm onSuccess={handleNextStep} />;
       case 2:
+        // This case is now skipped during profile completion
         return (
           <AccountStepForm onSuccess={handleNextStep} initialData={formData} />
         );
@@ -167,7 +194,8 @@ export default function SignupView({
         </div>
       )}
 
-      {!success && (
+      {/* The header is now only displayed from step 2 onwards */}
+      {!success && step > 1 && (
         <div className="flex items-center mb-6">
           <Button
             type="button"
@@ -180,16 +208,17 @@ export default function SignupView({
           </Button>
           <div>
             <h1 className="text-3xl font-bold tracking-tight capitalize">
-              {formData.role ? t(`${formData.role}Title`) : t("signup")}
+              {t(`${formData.role}Title`)}
             </h1>
             <p className="text-muted-foreground">
-              {t("stepOf", { step, total: totalSteps })}
+              {t("stepOf", { step: displayStep, total: totalSteps })}
             </p>
           </div>
         </div>
       )}
 
-      {renderStep()}
+      {/* Add some margin to the top of the form on step 1 to compensate for the hidden header */}
+      <div className={step === 1 ? "mt-12" : ""}>{renderStep()}</div>
 
       {error && !success && (
         <div className="mt-6 rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-700 flex items-start gap-2 max-w-md mx-auto">
@@ -198,7 +227,8 @@ export default function SignupView({
         </div>
       )}
 
-      {!success && (
+      {/* Hide the "already have an account" link when completing a profile */}
+      {!success && !isCompletingProfile && (
         <p className="mt-6 text-center text-sm">
           {t("alreadyAccount")}{" "}
           <button

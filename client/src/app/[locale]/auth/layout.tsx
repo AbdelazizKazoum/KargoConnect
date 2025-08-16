@@ -1,4 +1,5 @@
 import Header from "@/components/layout/Header";
+import AuthProvider from "@/providers/AuthProvider";
 import React from "react";
 
 export default async function RootLayout({
@@ -8,8 +9,10 @@ export default async function RootLayout({
 }>) {
   return (
     <>
-      <Header state="auth" />
-      <div>{children}</div>
+      <AuthProvider>
+        <Header state="auth" />
+        <div>{children}</div>
+      </AuthProvider>
     </>
   );
 }

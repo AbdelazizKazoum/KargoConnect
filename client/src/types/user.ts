@@ -9,6 +9,7 @@ export interface BaseUser {
   bio?: string;
   phone?: string; // Optional phone number field
   role: "admin" | "user" | "transporter" | "sender" | null;
+  isProfileComplete?: boolean;
 
   verified?: boolean; // Optional verified field
 

@@ -122,6 +122,7 @@
     "transporterDesc": "أرغب في كسب المال أثناء القيادة.",
     "alreadyAccount": "هل لديك حساب بالفعل؟",
     "login": "تسجيل الدخول",
+    "completeProfile": "أكمل ملفك الشخصي",
     "errors": {
       "required": "هذا الحقل مطلوب",
       "invalidEmail": "الرجاء إدخال بريد إلكتروني صحيح",

@@ -68,7 +68,8 @@ const authOptions: NextAuthOptions = {
   secret: env.NEXTAUTH_SECRET,
   // Custom sign-in page
   pages: {
-    signIn: "/login",
+    signIn: "/fr/login",
+    error: "/fr/login", // Error page
   },
 
   callbacks: {
@@ -90,7 +91,6 @@ const authOptions: NextAuthOptions = {
       });
 
       const data = await res.json();
-      console.log("🚀 ~ signIn ~ data:", data);
 
       if (!res.ok) return false;
 
@@ -102,32 +102,47 @@ const authOptions: NextAuthOptions = {
       user.firstName = data.user.firstName || "";
       user.lastName = data.user.lastName || "";
       user.image = data.user.image || "";
+      user.accessToken = data.access_token;
+      user.refreshToken = data.refresh_token;
+      user.isProfileComplete = data.user.isProfileComplete;
 
       return true;
     },
 
+    // async redirect({ url, baseUrl }) {
+    //   // If relative URL, allow it
+    //   if (url.startsWith("/")) return `${baseUrl}${url}`;
+    //   // If same origin
+    //   if (new URL(url).origin === baseUrl) return url;
+    //   return baseUrl; // default
+    // },
+
     //-------------------------------------------------------------------------------------
 
     async jwt({ token, user }) {
-      console.log("🚀 ~ jwt ~ user:", user);
-
       if (user) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.id = user.id;
         token.role = user.role;
         token.email = user.email;
-        token.firsName = user.firstName;
+        token.firstName = user.firstName;
         token.lastName = user.lastName;
+        token.isProfileComplete = user.isProfileComplete;
       }
       return token;
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
       session.user.id = token.id;
-      session.user.username = token.username;
-      session.user.role = token.role;
-      session.user.email = token.email;
+      session.user = {
+        id: token.id,
+        firstName: token.firstName,
+        lastName: token.lastName,
+        role: token.role,
+        email: token.email,
+        isProfileComplete: token.isProfileComplete,
+      };
 
       return session;
     },

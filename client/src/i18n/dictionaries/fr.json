@@ -124,6 +124,7 @@
     "transporterTitle": "Je suis un transporteur",
     "transporterDesc": "Je veux gagner de l'argent en conduisant.",
     "alreadyAccount": "Vous avez déjà un compte ?",
+    "completeProfileTitle": "Complétez votre profil",
     "login": "Se connecter",
     "errors": {
       "required": "Ce champ est obligatoire",

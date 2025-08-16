@@ -1,10 +1,5 @@
 import "next-auth";
-import {
-  DefaultSession,
-  DefaultUser,
-  Account,
-  Profile as NextAuthProfile,
-} from "next-auth";
+import { DefaultUser, Account, Profile as NextAuthProfile } from "next-auth";
 
 // Extend the default Profile type to include Google fields
 declare module "next-auth" {
@@ -24,6 +19,7 @@ declare module "next-auth" {
     role?: string;
     email?: string;
     image?: string;
+    isProfileComplete?: boolean;
 
     accessToken?: string;
     refreshToken?: string;
@@ -45,17 +41,22 @@ declare module "next-auth" {
       role?: string;
       email?: string;
       image?: string;
-    } & DefaultSession["user"];
+      lastName?: string;
+      firstName?: string;
+      isProfileComplete?: boolean;
+    };
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     id?: string;
-    username?: string;
+    firstName?: string;
+    lastName?: string;
     role?: string;
     email?: string;
     picture?: string;
+    isProfileComplete?: boolean;
 
     accessToken?: string;
     refreshToken?: string;

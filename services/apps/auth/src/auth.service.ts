@@ -73,7 +73,6 @@ export class AuthService {
             providerId: data.providerId,
             isEmailVerified: true, // Assuming OAuth users are verified
             isProfileComplete: false, // For OAuth, we might not have all details
-            role: 'sender', // Default role, can be changed later
             // password: data.password, // No password for OAuth users
           },
         ),
@@ -108,6 +107,7 @@ export class AuthService {
         firstName: user.firstName,
         image: user.image,
         role: user.role,
+        isProfileComplete: user.isProfileComplete,
       },
       access_token: this.jwtService.sign(payload),
       refresh_token: this.jwtService.sign(payload, {

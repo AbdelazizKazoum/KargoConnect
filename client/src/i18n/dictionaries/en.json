@@ -121,6 +121,7 @@
     "transporterTitle": "I'm a Transporter",
     "transporterDesc": "I want to earn money while driving.",
     "alreadyAccount": "Already have an account?",
+    "completeProfileTitle": "Complete Your Profile",
     "login": "Log In",
     "errors": {
       "required": "This field is required",
