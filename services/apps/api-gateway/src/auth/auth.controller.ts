@@ -17,14 +17,12 @@ import { ClientProxy } from '@nestjs/microservices';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { firstValueFrom } from 'rxjs';
 import { File as MulterFile } from 'multer';
-import { In } from 'typeorm';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     @Inject('AUTH_SERVICE') private client: ClientProxy,
     @Inject('USERS_SERVICE') private userClient: ClientProxy,
-
     private readonly minioService: MinioService,
   ) {}
 
@@ -45,7 +43,6 @@ export class AuthController {
   ) {
     const body = JSON.parse(data) as RegisterDto;
 
-    // Upload profile picture if present
     if (files.profilePicture?.[0]) {
       const uploadedProfile = await this.minioService.uploadFile(
         files.profilePicture[0],
@@ -54,7 +51,6 @@ export class AuthController {
       body.image = uploadedProfile.key;
     }
 
-    // Upload vehicle images if present
     if (files.vehicleImages?.length) {
       const uploadedVehicles = await this.minioService.uploadMultipleFiles(
         files.vehicleImages,
@@ -79,6 +75,54 @@ export class AuthController {
     return await this.client.send({ cmd: 'oauth-login' }, body);
   }
 
+  // ✅ New method for completing profile after OAuth login
+  @UseGuards(JwtAuthGuard)
+  @Post('complete-profile')
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'profilePicture', maxCount: 1 },
+      { name: 'vehicleImages', maxCount: 5 },
+    ]),
+  )
+  async completeProfile(
+    @Req() req,
+    @Body('data') data: string,
+    @UploadedFiles()
+    files: {
+      profilePicture?: MulterFile[];
+      vehicleImages?: MulterFile[];
+    },
+  ) {
+    const body = JSON.parse(data) as RegisterDto;
+    const userId = req.user.id;
+
+    // Handle profile picture upload
+    if (files.profilePicture?.[0]) {
+      const uploadedProfile = await this.minioService.uploadFile(
+        files.profilePicture[0],
+        'profile-pictures',
+      );
+      body.image = uploadedProfile.key;
+    }
+
+    // Handle vehicle images upload
+    if (files.vehicleImages?.length) {
+      const uploadedVehicles = await this.minioService.uploadMultipleFiles(
+        files.vehicleImages,
+        'vehicles',
+      );
+      body.vehicle = {
+        ...body.vehicle,
+        images: uploadedVehicles.map((f) => f.key),
+      };
+    }
+
+    // Call the update-user command
+    return await firstValueFrom(
+      this.userClient.send({ cmd: 'update-user' }, { id: userId, ...body }),
+    );
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async getProfile(@Req() req) {
@@ -91,27 +135,21 @@ export class AuthController {
     }
 
     try {
-      // Replace profile.image with signed URL
       profile.image = profile.image
         ? await this.minioService.getSignedUrl(profile.image)
         : null;
 
-      // Replace profile.coverUrl with signed URL
       profile.coverUrl = profile.coverUrl
         ? await this.minioService.getSignedUrl(profile.coverUrl)
         : null;
 
-      // Replace each vehicle's images with signed URLs
       if (profile.vehicles?.length) {
         profile.vehicles = await Promise.all(
           profile.vehicles.map(async (vehicle) => {
             const signedImages = await this.minioService.getSignedUrls(
               vehicle.images || [],
             );
-            return {
-              ...vehicle,
-              images: signedImages,
-            };
+            return { ...vehicle, images: signedImages };
           }),
         );
       }
