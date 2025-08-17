@@ -37,7 +37,7 @@ export class AuthService {
       );
       return data;
     } catch (error) {
-      throw new RpcException(error); // preserves shape
+      throw new RpcException(error.getResponse ? error.getResponse() : error);
     }
   }
 

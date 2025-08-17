@@ -126,10 +126,20 @@ export default function SignupView({
     } catch (err: unknown) {
       console.error("Registration error:", err);
       if (axios.isAxiosError(err)) {
-        const axiosError = err as AxiosError<{ message?: string }>;
+        const axiosError = err as AxiosError<
+          { message?: string } | { message: { message: string } }
+        >;
+        let backendMessage: string | undefined;
 
-        const backendMessage = axiosError?.response?.data?.message;
+        const msg = axiosError?.response?.data?.message;
 
+        if (typeof msg === "string") {
+          backendMessage = msg;
+        } else if (msg && typeof msg === "object" && "message" in msg) {
+          backendMessage = msg.message;
+        } else {
+          backendMessage = undefined;
+        }
         console.log("🚀 ~ handleFinalSubmit ~ backendMessage:", backendMessage);
 
         const translated =

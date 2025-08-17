@@ -1,30 +1,20 @@
-// apps/api-gateway/src/rpc-exception.filter.ts
-
 import {
   Catch,
   ArgumentsHost,
-  RpcExceptionFilter as BaseRpcExceptionFilter,
-  HttpException,
+  ExceptionFilter,
   HttpStatus,
 } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 
 @Catch(RpcException)
-export class RpcExceptionFilter
-  implements BaseRpcExceptionFilter<RpcException>
-{
+export class RpcExceptionFilter implements ExceptionFilter {
   catch(exception: RpcException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
 
-    const error = exception.getError();
+    const error = exception.getError?.() ?? exception;
 
-    // If the microservice returned a structured error
-    if (
-      typeof error === 'object' &&
-      'statusCode' in error &&
-      'message' in error
-    ) {
+    if (typeof error === 'object' && 'statusCode' in error) {
       const { statusCode, message } = error as any;
       return response.status(statusCode).json({
         statusCode,
@@ -33,10 +23,9 @@ export class RpcExceptionFilter
       });
     }
 
-    // Fallback for unknown errors
-    return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-      statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-      message: (error as any)?.toString?.() ?? 'Internal server error',
+    return response.status(500).json({
+      statusCode: 500,
+      message: error?.toString?.() ?? 'Internal server error',
       error: 'Internal Server Error',
     });
   }
