@@ -385,12 +385,45 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
     try {
-      return await this.usersRepository.findOneAndUpdate({ id }, updateUserDto);
+      const userRepository = queryRunner.manager.getRepository(Users);
+      const vehicleRepository = queryRunner.manager.getRepository(Vehicle);
+
+      const { vehicle, ...userData } = updateUserDto;
+
+      // Update user fields
+      await userRepository.update(id, userData);
+
+      // If vehicles are included
+      if (vehicle) {
+        const vehiclesArray = Array.isArray(vehicle) ? vehicle : [vehicle];
+        for (const vehicleData of vehiclesArray) {
+          if (vehicleData.id) {
+            await vehicleRepository.update(vehicleData.id, vehicleData);
+          } else {
+            const newVehicle = vehicleRepository.create({
+              ...vehicleData,
+              user_id: id,
+            });
+            await vehicleRepository.save(newVehicle);
+          }
+        }
+      }
+
+      await queryRunner.commitTransaction();
+      return await userRepository.findOne({
+        where: { id },
+        relations: ['vehicles'],
+      });
     } catch (error) {
-      throw new RpcInternalServerErrorException(
-        'Failed to update user: ' + error.message,
-      );
+      await queryRunner.rollbackTransaction();
+      throw new RpcInternalServerErrorException(error.message);
+    } finally {
+      await queryRunner.release();
     }
   }
 

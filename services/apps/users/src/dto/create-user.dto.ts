@@ -113,5 +113,5 @@ export class CreateUserDto {
   password: string;
 
   @IsOptional()
-  vehicle?: IVehicle;
+  vehicle?: IVehicle | IVehicle[];
 }
