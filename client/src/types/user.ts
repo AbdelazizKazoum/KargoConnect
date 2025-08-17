@@ -6,6 +6,7 @@ export interface BaseUser {
   lastName?: string; // Optional last name field
   identity_number?: string; // Optional identity number field
   email?: string; // Optional email field
+  password?: string; // Optional password field
   bio?: string;
   phone?: string; // Optional phone number field
   role: "admin" | "user" | "transporter" | "sender" | null;

@@ -119,7 +119,10 @@ export class AuthController {
 
     // Call the update-user command
     return await firstValueFrom(
-      this.userClient.send({ cmd: 'update-user' }, { id: userId, ...body }),
+      this.userClient.send(
+        { cmd: 'update_user' },
+        { id: userId, ...body, isProfileComplete: true },
+      ),
     );
   }
 

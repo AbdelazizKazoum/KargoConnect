@@ -11,3 +11,11 @@ export const register = (data: FormData) => {
     },
   });
 };
+
+export const completeProfile = (data: FormData) => {
+  return axiosClient.post("/auth/complete-profile", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

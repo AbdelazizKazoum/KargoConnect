@@ -91,6 +91,7 @@ const authOptions: NextAuthOptions = {
       });
 
       const data = await res.json();
+      console.log("🚀 ~ signIn ~ data:", data);
 
       if (!res.ok) return false;
 

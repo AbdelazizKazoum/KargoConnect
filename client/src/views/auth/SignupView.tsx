@@ -8,10 +8,11 @@ import { VehicleStepForm } from "@/components/auth/VehicleStepForm";
 import { ProfileStepForm } from "@/components/auth/ProfileStepForm";
 import { RoleStepForm } from "@/components/auth/RoleStepForm";
 import { Button } from "@/components/ui";
-import { register } from "@/services/auth/authService";
+import { completeProfile, register } from "@/services/auth/authService";
 import axios, { AxiosError } from "axios";
 import { useAuthStore } from "@/stores/authStore";
 import merge from "lodash.merge";
+import { signIn, useSession } from "next-auth/react";
 
 type AuthView = "signup" | "login";
 
@@ -22,6 +23,8 @@ export default function SignupView({
   setView: (view: AuthView) => void;
   isCompletingProfile: boolean;
 }) {
+  const { update } = useSession();
+
   const t = useTranslations("auth");
   const t_global = useTranslations();
 
@@ -43,6 +46,7 @@ export default function SignupView({
     setSuccess,
     setFormData,
   } = useAuthStore();
+  console.log("🚀 ~ SignupView ~ formData:", formData);
 
   // Local state to manage the displayed step number for a better user experience
   const [displayStep, setDisplayStep] = useState(1);
@@ -121,7 +125,14 @@ export default function SignupView({
         formDataToSend.append("vehicleImages", file)
       );
 
-      await register(formDataToSend);
+      // ✅ Conditionally call register or completeProfile
+      if (isCompletingProfile) {
+        await completeProfile(formDataToSend);
+        await signIn("google", { redirect: false });
+      } else {
+        await register(formDataToSend);
+      }
+
       setSuccess(true);
     } catch (err: unknown) {
       console.error("Registration error:", err);
