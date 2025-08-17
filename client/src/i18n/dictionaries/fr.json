@@ -489,6 +489,23 @@
     "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
     "forbidden": "Accès interdit.",
     "bad_request": "Requête incorrecte. Veuillez vérifier vos données.",
-    "conflict": "Un conflit est survenu. Veuillez réessayer."
+    "conflict": "Un conflit est survenu. Veuillez réessayer.",
+    "undefined": "Une erreur indéfinie est survenue. Veuillez réessayer.",
+    "auth": {
+      "required": "Ce champ est requis",
+      "invalidEmail": "Veuillez entrer une adresse e-mail valide",
+      "passwordLength": "Le mot de passe doit comporter au moins 8 caractères",
+
+      "user_already_exists": "L'utilisateur existe déjà.",
+      "invalid_credentials": "Adresse e-mail ou mot de passe invalide.",
+      "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
+      "account_not_found": "Compte introuvable.",
+      "email_not_verified": "L'e-mail n'est pas vérifié.",
+      "token_expired": "Votre session a expiré. Veuillez vous reconnecter.",
+      "forbidden": "Accès interdit.",
+      "weak_password": "Le mot de passe est trop faible.",
+      "passwords_do_not_match": "Les mots de passe ne correspondent pas.",
+      "user_disabled": "Votre compte a été désactivé. Veuillez contacter le support."
+    }
   }
 }

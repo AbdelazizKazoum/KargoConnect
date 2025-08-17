@@ -118,7 +118,7 @@ export default function AuthFlow() {
       </div>
 
       {/* Right side with the authentication forms */}
-      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-background">
+      <div className="flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="mx-auto w-full max-w-md space-y-6">
           {/* View for users who need to complete their profile */}
           {view === "completeProfile" && session?.user && (

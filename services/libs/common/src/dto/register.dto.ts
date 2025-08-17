@@ -19,12 +19,12 @@ export class RegisterDto {
   // @IsString()
   // username: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   password: string;
 
-  @IsEnum(['admin', 'validator', 'transporter', 'sender'])
   @IsOptional()
+  @IsEnum(['admin', 'validator', 'transporter', 'sender'])
   role: 'admin' | 'validator' | 'transporter' | 'sender';
 
   @IsString()

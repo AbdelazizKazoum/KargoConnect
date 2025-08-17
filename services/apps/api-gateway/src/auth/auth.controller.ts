@@ -85,7 +85,6 @@ export class AuthController {
     const profile = await firstValueFrom(
       this.userClient.send({ cmd: 'getPrivateProfile' }, req.user.id),
     );
-    console.log('🚀 ~ AuthController ~ getProfile ~ profile:', profile);
 
     if (!profile) {
       return null;

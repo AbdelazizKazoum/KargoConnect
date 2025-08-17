@@ -16,6 +16,11 @@ export class UsersController {
 
   @MessagePattern({ cmd: 'create-user' })
   async create(@Body() createUserDto: RegisterDto) {
+    console.log(
+      '🚀 ~ UsersController ~ create ~ createUserDto:',
+      createUserDto,
+    );
+
     try {
       return await this.usersService.create(createUserDto);
     } catch (error) {

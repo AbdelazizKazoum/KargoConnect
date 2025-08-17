@@ -19,24 +19,24 @@ export class RpcExceptionFilter
 
     const error = exception.getError();
 
-    // Handle structured error object
+    // If the microservice returned a structured error
     if (
       typeof error === 'object' &&
       'statusCode' in error &&
       'message' in error
     ) {
-      const { statusCode, message } = error;
+      const { statusCode, message } = error as any;
       return response.status(statusCode).json({
         statusCode,
         message,
-        error: (error as any)?.error ?? 'Error',
+        error: HttpStatus[statusCode] ?? 'Error',
       });
     }
 
-    // Fallback
+    // Fallback for unknown errors
     return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-      message: error?.toString?.() ?? 'Internal server error',
+      message: (error as any)?.toString?.() ?? 'Internal server error',
       error: 'Internal Server Error',
     });
   }

@@ -24,14 +24,12 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    console.log('🚀 ~ UsersService ~ create ~ createUserDto:', createUserDto);
-
     const existingUser = await this.usersRepository.findOne({
       email: createUserDto.email,
     });
 
     if (existingUser) {
-      throw new RpcConflictException('errors.user_already_exists');
+      throw new RpcConflictException('errors.auth.user_already_exists');
     }
 
     const queryRunner = this.dataSource.createQueryRunner();

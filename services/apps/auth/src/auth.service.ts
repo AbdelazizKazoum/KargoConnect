@@ -29,6 +29,8 @@ export class AuthService {
   }
 
   async register(user: RegisterDto) {
+    console.log('🚀 ~ AuthService ~ register ~ user:', user);
+
     try {
       const data = await firstValueFrom(
         this.usersCLient.send({ cmd: 'create-user' }, user),
@@ -52,10 +54,6 @@ export class AuthService {
         ),
       );
 
-      console.log(
-        '🚀 ~ AuthService ~ oauthLogin ~ existingUser:',
-        existingUser,
-      );
       if (existingUser) {
         return existingUser; // User already exists, return it
       }

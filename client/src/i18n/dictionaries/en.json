@@ -487,6 +487,23 @@
     "unauthorized": "You are not authorized to perform this action.",
     "forbidden": "Access forbidden.",
     "bad_request": "Bad request. Please check your input.",
-    "conflict": "Conflict occurred. Please try again."
+    "conflict": "Conflict occurred. Please try again.",
+    "undefined": "Undefined error occurred. Please try again.",
+    "auth": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address",
+      "passwordLength": "Password must be at least 8 characters",
+
+      "user_already_exists": "User already exists.",
+      "invalid_credentials": "Invalid email or password.",
+      "unauthorized": "You are not authorized to perform this action.",
+      "account_not_found": "Account not found.",
+      "email_not_verified": "Email is not verified.",
+      "token_expired": "Your session has expired. Please log in again.",
+      "forbidden": "Access forbidden.",
+      "weak_password": "The password is too weak.",
+      "passwords_do_not_match": "Passwords do not match.",
+      "user_disabled": "Your account has been disabled. Please contact support."
+    }
   }
 }

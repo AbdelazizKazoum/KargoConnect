@@ -23,6 +23,8 @@ export default function SignupView({
   isCompletingProfile: boolean;
 }) {
   const t = useTranslations("auth");
+  const t_global = useTranslations();
+
   const locale = useLocale();
   const isRTL = locale === "ar";
 
@@ -122,14 +124,19 @@ export default function SignupView({
       await register(formDataToSend);
       setSuccess(true);
     } catch (err: unknown) {
+      console.error("Registration error:", err);
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError<{ message?: string }>;
+
         const backendMessage = axiosError?.response?.data?.message;
+
+        console.log("🚀 ~ handleFinalSubmit ~ backendMessage:", backendMessage);
+
         const translated =
-          t.raw(`${backendMessage}`) || t("errors.server_error");
+          t_global.raw(`${backendMessage}`) || t_global("server_error");
         setError(translated);
       } else {
-        setError(t("errors.server_error"));
+        setError(t_global("server_error"));
       }
     } finally {
       setSubmitting(false);
