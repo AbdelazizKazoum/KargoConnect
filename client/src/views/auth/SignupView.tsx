@@ -133,7 +133,8 @@ export default function SignupView({
       } else {
         await register(formDataToSend);
         await signIn("credentials", {
-          redirect: false,
+          redirect: true,
+          callbackUrl: "/", // 👈 redirect to home
           email: completeFormData.email,
           password: completeFormData.password,
         });

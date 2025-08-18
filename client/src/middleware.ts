@@ -56,10 +56,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Match all paths except for static files, API routes, and image optimization folders.
   matcher: [
     "/",
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    // Exclude API, Next.js internals, favicon, and static asset folders
+    "/((?!api|_next|favicon.ico|images|videos|profile-pictures).*)",
     "/(ar|en|fr)/:path*",
   ],
 };

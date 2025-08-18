@@ -16,11 +16,13 @@ export default function HeroSection({ locale }: HeroSectionProps) {
       <div className="absolute top-0 left-0 w-full h-full z-0">
         {/* Background Video */}
         <video
-          src="/videos/hero_video1.mp4"
+          src={`/videos/hero_video1.mp4`} // forces root (no /en/)
+          poster="/images/hero_fallback.jpg"
           autoPlay
           loop
           muted
           playsInline
+          preload="none" // Lazy load (won’t preload video data)
           className="w-full h-full object-cover"
         >
           Your browser does not support the video tag.

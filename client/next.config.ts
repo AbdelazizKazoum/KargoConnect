@@ -5,6 +5,8 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   images: {
+    unoptimized: true, // prevents weird locale prefixing
+
     remotePatterns: [
       {
         protocol: "https",
