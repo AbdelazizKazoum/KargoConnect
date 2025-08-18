@@ -126,11 +126,17 @@ export default function SignupView({
       );
 
       // ✅ Conditionally call register or completeProfile
+
       if (isCompletingProfile) {
         await completeProfile(formDataToSend);
         await signIn("google", { redirect: false });
       } else {
         await register(formDataToSend);
+        await signIn("credentials", {
+          redirect: false,
+          email: completeFormData.email,
+          password: completeFormData.password,
+        });
       }
 
       setSuccess(true);
@@ -151,7 +157,6 @@ export default function SignupView({
         } else {
           backendMessage = undefined;
         }
-        console.log("🚀 ~ handleFinalSubmit ~ backendMessage:", backendMessage);
 
         const translated =
           t_global.raw(`${backendMessage}`) || t_global("server_error");

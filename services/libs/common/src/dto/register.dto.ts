@@ -65,6 +65,9 @@ export class RegisterDto {
   vehicle: IVehicle;
 
   @IsOptional()
+  isProfileComplete?: boolean;
+
+  @IsOptional()
   @IsString()
   provider?: string;
 

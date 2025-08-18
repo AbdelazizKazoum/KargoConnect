@@ -8,6 +8,7 @@ import { DataSource } from 'typeorm'; // import this at the top
 
 import * as bcrypt from 'bcrypt';
 import {
+  RegisterDto,
   RpcConflictException,
   RpcInternalServerErrorException,
 } from '@app/common';
@@ -23,7 +24,7 @@ export class UsersService {
     private readonly dataSource: DataSource, // inject DataSource
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: RegisterDto) {
     const existingUser = await this.usersRepository.findOne({
       email: createUserDto.email,
     });

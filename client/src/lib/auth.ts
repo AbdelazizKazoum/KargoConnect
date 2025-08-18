@@ -75,7 +75,14 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     // 1) On OAuth sign-in, ask Nest if the user exists / is complete
     async signIn({ user, account, profile }) {
-      // Call your NestJS backend to handle linking or account creation
+      console.log("🚀 ~ signIn ~ account:", account);
+
+      if (account?.provider === "credentials") {
+        // ✅ Already handled inside `authorize`
+        return true;
+      }
+
+      // ✅ OAuth providers (Google, Facebook, etc.)
       const res = await fetch(`${env.EXTERNAL_API_URL}/auth/oauth-login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -90,16 +97,14 @@ const authOptions: NextAuthOptions = {
         }),
       });
 
-      const data = await res.json();
-      console.log("🚀 ~ signIn ~ data:", data);
-
       if (!res.ok) return false;
 
-      // Attach backend response to the session token
-      user.backendToken = data.token;
+      const data = await res.json();
 
+      // Attach backend response to user object
+      user.backendToken = data.token;
       user.role = data.user.role;
-      user.id = data.user.id; // Ensure user ID is set from backend
+      user.id = data.user.id;
       user.firstName = data.user.firstName || "";
       user.lastName = data.user.lastName || "";
       user.image = data.user.image || "";

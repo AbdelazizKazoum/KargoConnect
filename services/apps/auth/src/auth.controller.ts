@@ -34,6 +34,8 @@ export class AuthController {
   @MessagePattern({ cmd: 'login' })
   async login(data: LoginDto) {
     const user = await this.authService.validateUser(data.email, data.password);
+    console.log('🚀 ~ AuthController ~ login ~ user:', user);
+
     if (!user) throw new RpcUnauthorizedException();
     return await this.authService.login(user);
   }

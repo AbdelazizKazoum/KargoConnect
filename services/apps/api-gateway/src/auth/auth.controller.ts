@@ -42,6 +42,7 @@ export class AuthController {
     },
   ) {
     const body = JSON.parse(data) as RegisterDto;
+    console.log('🚀 ~ AuthController ~ register ~ body:', body);
 
     if (files.profilePicture?.[0]) {
       const uploadedProfile = await this.minioService.uploadFile(

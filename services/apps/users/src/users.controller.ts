@@ -20,7 +20,6 @@ export class UsersController {
       '🚀 ~ UsersController ~ create ~ createUserDto:',
       createUserDto,
     );
-
     try {
       return await this.usersService.create(createUserDto);
     } catch (error) {

@@ -23,17 +23,23 @@ export class AuthService {
     if (!user) return null;
 
     const isPasswordMatch = await bcrypt.compare(pass, user.password);
+    console.log(
+      '🚀 ~ AuthService ~ validateUser ~ isPasswordMatch:',
+      isPasswordMatch,
+    );
+
     if (!isPasswordMatch) return null;
 
     return user;
   }
 
   async register(user: RegisterDto) {
-    console.log('🚀 ~ AuthService ~ register ~ user:', user);
-
     try {
       const data = await firstValueFrom(
-        this.usersCLient.send({ cmd: 'create-user' }, user),
+        this.usersCLient.send(
+          { cmd: 'create-user' },
+          { ...user, isProfileComplete: true },
+        ),
       );
       return data;
     } catch (error) {
