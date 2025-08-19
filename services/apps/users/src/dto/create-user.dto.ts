@@ -13,7 +13,6 @@ import {
 import { IVehicle } from '@app/common/interfaces/vehicle.interface';
 
 export class CreateUserDto {
-  @IsOptional()
   id?: number;
 
   // @IsOptional()

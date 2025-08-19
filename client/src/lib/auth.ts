@@ -44,7 +44,7 @@ const authOptions: NextAuthOptions = {
           if (data && data.access_token) {
             // the backend returns user details along with tokens
             return {
-              id: credentials.email, // or fetch the actual user ID
+              // id: credentials.email, // or fetch the actual user ID
               email: credentials.email,
               username: data.user.username || credentials.email.split("@")[0], // Fallback to email prefix
               firstName: data.user.firstName || "",
