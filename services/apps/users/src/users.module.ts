@@ -10,7 +10,6 @@ import { ConfigModule } from '@app/shared/config/config.module';
 import { DatabaseModule } from '@app/shared/database.index';
 import { Vehicle } from './entities/vehicle.entity';
 import { VehicleRepository } from './vehicle.repository';
-import { MinioModule } from '@app/shared';
 
 @Module({
   imports: [

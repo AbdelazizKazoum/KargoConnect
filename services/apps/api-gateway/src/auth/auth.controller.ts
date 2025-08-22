@@ -158,7 +158,7 @@ export class AuthController {
         );
       }
     } catch (error) {
-      throw new InternalServerErrorException('Failed to retrieve media URLs');
+      throw new InternalServerErrorException(error.message);
     }
 
     return profile;

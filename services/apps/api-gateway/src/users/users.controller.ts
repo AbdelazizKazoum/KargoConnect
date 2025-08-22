@@ -1,15 +1,12 @@
 import { MinioService } from '@app/shared';
 import {
-  Body,
   Controller,
   Get,
   Inject,
   Param,
   ParseIntPipe,
-  Post,
   Put,
   UploadedFile,
-  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -39,8 +36,6 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
     @UploadedFile() file: MulterFile,
   ) {
-    console.log('🚀 ~ UsersController ~ setCoverPicture ~ file:', file);
-
     // Upload profile picture if present
     if (file) {
       const uploadedProfile = await this.minioService.uploadFile(

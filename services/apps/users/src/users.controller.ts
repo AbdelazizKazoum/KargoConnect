@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 import { MessagePattern } from '@nestjs/microservices';
@@ -64,6 +64,11 @@ export class UsersController {
 
   @MessagePattern({ cmd: 'update_user' })
   async update(updateUserDto: UpdateUserDto) {
+    console.log(
+      '🚀 ~ UsersController ~ update ~ updateUserDto:',
+      updateUserDto,
+    );
+
     return await this.usersService.update(updateUserDto.id, updateUserDto);
   }
 
