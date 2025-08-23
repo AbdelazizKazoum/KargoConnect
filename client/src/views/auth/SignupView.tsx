@@ -13,7 +13,7 @@ import axios, { AxiosError } from "axios";
 import { useAuthStore } from "@/stores/authStore";
 import merge from "lodash.merge";
 import { signIn } from "next-auth/react";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 
 type AuthView = "signup" | "login";
 
@@ -115,7 +115,7 @@ export default function SignupView({
       if (isCompletingProfile) {
         await completeProfile(formDataToSend);
         await signIn("google", { redirect: true, callbackUrl: "/profile" });
-        toast.success(t("registration_successful"));
+        toast.success(t("successModal.title"));
       } else {
         await register(formDataToSend);
         await signIn("credentials", {
@@ -124,7 +124,7 @@ export default function SignupView({
           email: completeFormData.email,
           password: completeFormData.password,
         });
-        toast.success(t("registration_successful"));
+        toast.success(t("successModal.title"));
       }
     } catch (err: unknown) {
       console.error("Registration error:", err);
@@ -214,7 +214,7 @@ export default function SignupView({
         </div>
       )}
 
-      <div className={step === 1 ? "mt-12" : ""}>{renderStep()}</div>
+      <div className="">{renderStep()}</div>
 
       {error && (
         <div className="mt-6 rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-700 flex items-start gap-2 max-w-md mx-auto">

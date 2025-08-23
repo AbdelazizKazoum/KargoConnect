@@ -31,7 +31,7 @@ export function RoleStepForm({ onSuccess }: RoleStepFormProps) {
           <div className="flex-shrink-0 bg-secondary p-3 rounded-md">
             <Package className="h-6 w-6 text-secondary-foreground" />
           </div>
-          <div>
+          <div className="text-start">
             <h3 className="font-semibold">{t("senderTitle")}</h3>
             <p className="text-sm text-muted-foreground">{t("senderDesc")}</p>
           </div>
@@ -43,7 +43,7 @@ export function RoleStepForm({ onSuccess }: RoleStepFormProps) {
           <div className="flex-shrink-0 bg-secondary p-3 rounded-md">
             <Truck className="h-6 w-6 text-secondary-foreground" />
           </div>
-          <div>
+          <div className="text-start">
             <h3 className="font-semibold">{t("transporterTitle")}</h3>
             <p className="text-sm text-muted-foreground">
               {t("transporterDesc")}

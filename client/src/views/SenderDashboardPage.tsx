@@ -16,7 +16,7 @@ import { senderData } from "@/db/data";
 import Image from "next/image";
 import { PublicProfile } from "@/types/user";
 import { useUserStore } from "@/stores/userStore";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 
 type DashboardTab = "settings" | "demands" | "bookings";
 

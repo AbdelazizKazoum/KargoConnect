@@ -7,7 +7,7 @@ import { routing } from "@/i18n/routing";
 import "./globals.css";
 import { notFound } from "next/navigation";
 import Footer from "@/components/layout/Footer";
-import { Toaster } from "sonner";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -80,7 +80,7 @@ export default async function RootLayout({
             <main className="min-h-screen flex flex-col">{children}</main>
             <Footer />
           </div>
-          <Toaster position="top-right" richColors /> {/* toast config */}
+          <ToastContainer />
         </NextIntlClientProvider>
       </body>
     </html>
